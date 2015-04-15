@@ -58,16 +58,21 @@ public class Tamagotchi
 	private static final double CAREZZA_AFFETTO = 1, BISCOTTO_SAZIETA = 0.10;
 	public static final double AFFETTO_BASSO = 30, SAZIETA_BASSA = 30, SAZIETA_ALTA = 90;
 	public static final int FELICE = 2, INFELICE = 1, MORTO = 0;
-
+	
+	public Tamagotchi ()
+	{
+		this ( DEFAULT_SAZIETA, DEFAULT_AFFETTO );
+	}
+	
+	/**
+	 * Costruttore che inizializza i due attributi
+	 * @param sazieta valore d'inizializzazione per il grado di sazietà
+	 * @param affetto valore d'inizializzazione per il grado d'affetto
+	 */
 	public Tamagotchi ( double sazieta, double affetto )
 	{
 		this.sazieta = sazieta;
 		this.affetto = affetto;
-	}
-
-	public Tamagotchi ()
-	{
-		this ( DEFAULT_SAZIETA, DEFAULT_AFFETTO );
 	}
 
 	public void daiCarezza ( int numCarezze )
