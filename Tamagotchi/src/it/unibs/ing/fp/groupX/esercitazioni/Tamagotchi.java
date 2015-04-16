@@ -74,7 +74,11 @@ public class Tamagotchi
 		this.sazieta = sazieta;
 		this.affetto = affetto;
 	}
-
+	
+	/**
+	 * Modifica opportunamente il grado di sazietà e quello d'affetto in base al numero di carezze date
+	 * @param numCarezze numero di carezze da dare
+	 */
 	public void daiCarezza ( int numCarezze )
 	{
 		if ( ( affetto + numCarezze * CAREZZA_AFFETTO ) <= MAX_AFFETTO )

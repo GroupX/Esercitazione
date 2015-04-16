@@ -3,6 +3,8 @@
  */
 package it.unibs.ing.fp.groupX.libraries;
 
+import java.util.Scanner;
+
 
 /**
  * @author Gruppo X ( Manuel Mazzardi, Paolo Pasquali, Davide Tosatto )
