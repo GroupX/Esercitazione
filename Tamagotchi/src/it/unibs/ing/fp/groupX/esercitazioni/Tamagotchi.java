@@ -92,6 +92,10 @@ public class Tamagotchi
 			sazieta = MIN_SAZIETA;
 	}
 
+	/**
+	 * Modifica opportunamente il grado di sazietà e quello d'affetto in base al numero di biscotti dati
+	 * @param numBiscotti numero di biscotti da dare
+	 */
 	public void daiBiscotto ( int numBiscotti )
 	{
 		if ( ( sazieta + numBiscotti * BISCOTTO_SAZIETA ) <= MAX_SAZIETA )
