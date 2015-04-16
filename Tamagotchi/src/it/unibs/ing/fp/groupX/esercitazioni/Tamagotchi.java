@@ -59,6 +59,9 @@ public class Tamagotchi
 	public static final double AFFETTO_BASSO = 30, SAZIETA_BASSA = 30, SAZIETA_ALTA = 90;
 	public static final int FELICE = 2, INFELICE = 1, MORTO = 0;
 	
+	/**
+	 * Costruttore che inizializza i due attributi utilizzando i valori di default
+	 */
 	public Tamagotchi ()
 	{
 		this ( DEFAULT_SAZIETA, DEFAULT_AFFETTO );
