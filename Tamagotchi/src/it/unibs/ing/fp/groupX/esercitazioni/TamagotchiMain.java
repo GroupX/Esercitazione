@@ -41,6 +41,6 @@ public class TamagotchiMain
 		IOLib.printLine ( CREAZIONE_AFFETTO );
 		gradoAffetto = IOLib.readDouble ();
 		
-		return new Tamagotchi(gradoSazieta, gradoAffetto);
+		return new Tamagotchi("Tamagotchi", gradoSazieta, gradoAffetto);
 	}
 }
