@@ -41,5 +41,15 @@ public class IOLib
 		return scnr.nextDouble ();
 	}
 	
+	/**
+	 * Legge da tastiera una stringa (si ferma a \n)
+	 * @return Stringa letta
+	 */
+	public static String readLine ()
+	{
+		Scanner scnr = new Scanner(System.in);
+		return scnr.nextLine();
+	}
+	
 	
 }

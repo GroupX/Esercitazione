@@ -186,5 +186,14 @@ public class Tamagotchi
 	{
 		return affetto;
 	}
+	
+	/**
+	 * Ritorna il nome del tamagotchi
+	 * @return nome
+	 */
+	public String getNome ()
+	{
+		return nome;
+	}
 
 }
