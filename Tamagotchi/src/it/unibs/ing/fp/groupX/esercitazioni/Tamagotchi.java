@@ -59,29 +59,29 @@ public class Tamagotchi
 	private String nome;
 	private double sazieta, affetto;
 	
-	/// Massimo valore della sazietà
+	/** Massimo valore della sazietà */
 	public static final double MAX_SAZIETA = 100;
-	/// Massimo valore dell'affetto
+	/** Massimo valore dell'affetto */
 	public static final double MAX_AFFETTO = 100;
 	
-	/// Minimo valore della sazietà
+	/** Minimo valore della sazietà */
 	public static final double MIN_SAZIETA = 0;
-	/// Minimo valore dell'affetto
+	/** Minimo valore dell'affetto */
 	public static final double MIN_AFFETTO = 0;
 	
-	/// Soglia di tristezza per poco affetto
+	/** Soglia di tristezza per poco affetto */
 	public static final double AFFETTO_BASSO = 30;
-	/// Soglia di tristezza per poca sazietà
+	/** Soglia di tristezza per poca sazietà */
 	public static final double SAZIETA_BASSA = 30;
 	
-	/// Soglia di tristezza per troppo sazietà
+	/** Soglia di tristezza per troppo sazietà */
 	public static final double SAZIETA_ALTA = 90;
 	
-	/// Stato del Tamagotchi felice
+	/** Stato del Tamagotchi felice */
 	public static final int FELICE = 2;
-	/// Stato del Tamagotchi infelice
+	/** Stato del Tamagotchi infelice */
 	public static final int INFELICE = 1;
-	/// Stato del Tamagotchi morto
+	/** Stato del Tamagotchi morto */
 	public static final int MORTO = 0;
 	
 	private static final String DEFAULT_NOME = "Tamagotchi";
