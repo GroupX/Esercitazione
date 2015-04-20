@@ -253,5 +253,23 @@ public class Tamagotchi
 	{
 		return nome;
 	}
+	
+	/**
+	 * Ritorna l'effetto che ha ogni carezza sul grado di affetto del Tamagotchi
+	 * @return effetto di ogni carezza
+	 */
+	public double getEffettoCarezza ()
+	{
+		return effettoCarezza;
+	}
+	
+	/**
+	 * Ritorna l'effetto che ha ogni biscotto sul grado di sazietà del Tamagotchi
+	 * @return effetto di ogni biscotto
+	 */
+	public double getEffettoBiscotto ()
+	{
+		return effettoBiscotto;
+	}
 
 }

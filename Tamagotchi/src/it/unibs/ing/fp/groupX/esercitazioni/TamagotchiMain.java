@@ -101,6 +101,7 @@ public class TamagotchiMain
 			}
 			
 			//IOLib.printLine("Affetto: " + tama.getAffetto() + "   Sazietà: " + tama.getSazieta());
+			//IOLib.printLine ( "Effetto carezza: " + tama.getEffettoCarezza () + "   Effetto biscotto: " + tama.getEffettoBiscotto () );
 		} while ((tama.controllaStato() != Tamagotchi.MORTO || tama.getNome().equals("Gesù")) && scelta!=SCELTA_ESCI);
 		
 		IOLib.printLine("Ciaoo");
