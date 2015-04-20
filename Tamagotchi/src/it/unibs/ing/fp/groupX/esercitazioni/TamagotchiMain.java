@@ -12,10 +12,10 @@ import it.unibs.ing.fp.groupX.libraries.IOLib;
 
 public class TamagotchiMain
 {
-	private static final String SALUTO = "CIAU! Sono il tuo nuovo Tamagotchi! Divertiamoci insieme!";
-	private static final String CREAZIONE_SAZIETA = "Inserisci il grado di sazieta' iniziale: ";
-	private static final String CREAZIONE_AFFETTO = "Inserisci il grado di affetto iniziale";
-	private static final String CREAZIONE_NOME = "Inserisci il nome del Tamagotchi";
+	private static final String SALUTO = "CIAO! Sono il tuo nuovo Tamagotchi!";
+	private static final String CREAZIONE_SAZIETA = "Inserisci il grado di sazietà iniziale: ";
+	private static final String CREAZIONE_AFFETTO = "Inserisci il grado di affetto iniziale: ";
+	private static final String CREAZIONE_NOME = "Inserisci il nome del Tamagotchi: ";
 	
 	private static final int SCELTA_CAREZZE = 1;
 	private static final int SCELTA_BISCOTTI = 2;
@@ -34,7 +34,7 @@ public class TamagotchiMain
 		{
 			if (tama.getNome().equals("Gesù")&&tama.controllaStato()==Tamagotchi.MORTO)
 			{
-				IOLib.printLine("Gesù non muore, resuscita!!! :D");
+				IOLib.printLine("Gesù non muore, resuscita! :D");
 			}
 			
 			IOLib.printLine("Scegli cosa fare:");
@@ -88,7 +88,7 @@ public class TamagotchiMain
 					break;
 			}
 			
-			IOLib.printLine("Affetto: " + tama.getAffetto() + "   Sazieta: " + tama.getSazieta());
+			IOLib.printLine("Affetto: " + tama.getAffetto() + "   Sazietà: " + tama.getSazieta());
 		}while ((tama.controllaStato() != Tamagotchi.MORTO || tama.getNome().equals("Gesù")) && scelta!=SCELTA_ESCI);
 		
 		IOLib.printLine("Ciaoo");
