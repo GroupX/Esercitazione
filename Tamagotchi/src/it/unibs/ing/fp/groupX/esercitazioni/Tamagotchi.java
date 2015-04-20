@@ -132,7 +132,7 @@ public class Tamagotchi
 	 */
 	public void daiCarezza ( int numCarezze )
 	{
-		if (controllaStato() != MORTO && !nome.equals(IL_REDENTORE))
+		if (controllaStato() != MORTO || nome.equals(IL_REDENTORE))
 		{
 			if ( ( affetto + numCarezze * CAREZZA_AFFETTO ) <= MAX_AFFETTO )
 				affetto += numCarezze * CAREZZA_AFFETTO;
@@ -152,7 +152,7 @@ public class Tamagotchi
 	 */
 	public void daiBiscotto ( int numBiscotti )
 	{
-		if (controllaStato() != MORTO && !nome.equals(IL_REDENTORE))
+		if (controllaStato() != MORTO || nome.equals(IL_REDENTORE))
 		{
 			if ( ( sazieta + numBiscotti * BISCOTTO_SAZIETA ) <= MAX_SAZIETA )
 				sazieta += numBiscotti * BISCOTTO_SAZIETA;

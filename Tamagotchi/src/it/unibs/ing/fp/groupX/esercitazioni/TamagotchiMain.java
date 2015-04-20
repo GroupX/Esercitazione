@@ -31,12 +31,7 @@ public class TamagotchiMain
 		int scelta;
 		
 		do
-		{
-			if (tama.getNome().equals("Gesù")&&tama.controllaStato()==Tamagotchi.MORTO)
-			{
-				IOLib.printLine("Gesù non muore, resuscita! :D");
-			}
-			
+		{	
 			IOLib.printLine("Scegli cosa fare:");
 			
 			IOLib.printLine("1 - Dai carezze");
@@ -75,6 +70,7 @@ public class TamagotchiMain
 					break;
 			}
 			
+			
 			switch (tama.controllaStato())
 			{
 				case Tamagotchi.FELICE:
@@ -86,9 +82,13 @@ public class TamagotchiMain
 				case Tamagotchi.MORTO:
 					IOLib.printLine(tama.getNome() + " è morto DX");
 					break;
+				case Tamagotchi.MORTO_E_RISORTO:
+					IOLib.printLine(tama.getNome() + " è morto DX\n.\n.\n.");
+					IOLib.printLine(tama.getNome() + " è risorto dai morti, come riportato dalle Sacre Scritture! Lodatelo ed esultate.");
+					break;
 			}
 			
-			IOLib.printLine("Affetto: " + tama.getAffetto() + "   Sazietà: " + tama.getSazieta());
+			//IOLib.printLine("Affetto: " + tama.getAffetto() + "   Sazietà: " + tama.getSazieta());
 		}while ((tama.controllaStato() != Tamagotchi.MORTO || tama.getNome().equals("Gesù")) && scelta!=SCELTA_ESCI);
 		
 		IOLib.printLine("Ciaoo");
