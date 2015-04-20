@@ -58,6 +58,7 @@ public class Tamagotchi
 {
 	private String nome;
 	private double sazieta, affetto;
+	private double effettoCarezza, effettoBiscotto;
 	
 	/** Massimo valore della sazietà */
 	public static final double MAX_SAZIETA = 100;
@@ -92,8 +93,8 @@ public class Tamagotchi
 	private static final String DEFAULT_NOME = "Tamagotchi";
 	private static final double DEFAULT_SAZIETA = 50, DEFAULT_AFFETTO = 50;
 	private static final double CAREZZA_SAZIETA = 0.5, BISCOTTO_AFFETTO = 0.25;
-	private static final double CAREZZA_AFFETTO = 1, BISCOTTO_SAZIETA = 0.10;
-	
+	private static final double CAREZZA_AFFETTO = 1, BISCOTTO_SAZIETA = 0.30;
+	private static final double DIMINUZIONE_EFFETTO = 0.01, AUMENTO_EFFETTO = 0.10, MINIMO_EFFETTO = 0.01;
 	
 	
 	/**
@@ -124,6 +125,8 @@ public class Tamagotchi
 		this.nome = nome;
 		this.sazieta = sazieta;
 		this.affetto = affetto;
+		this.effettoCarezza = CAREZZA_AFFETTO;
+		this.effettoBiscotto = BISCOTTO_SAZIETA;
 	}
 	
 	/**
@@ -134,11 +137,30 @@ public class Tamagotchi
 	{
 		if (controllaStato() != MORTO || nome.equals(IL_REDENTORE))
 		{
-			if ( ( affetto + numCarezze * CAREZZA_AFFETTO ) <= MAX_AFFETTO )
-				affetto += numCarezze * CAREZZA_AFFETTO;
+			/* EVOLUZIONE:  l'effetto delle carezze diminuisce con l'aumentare di carezze date, ma aumenta l'effetto dei biscotti.
+			 * 				Se l'effetto delle carezze è al minimo, l'effetto dei biscotti è al massimo. */
+			if ( (effettoCarezza - effettoCarezza * DIMINUZIONE_EFFETTO * numCarezze) > MINIMO_EFFETTO )
+			{
+				effettoCarezza -= effettoCarezza * DIMINUZIONE_EFFETTO * numCarezze;
+				
+				if ( (effettoBiscotto + effettoBiscotto * AUMENTO_EFFETTO * numCarezze) < BISCOTTO_SAZIETA )
+					effettoBiscotto += effettoBiscotto * AUMENTO_EFFETTO * numCarezze;
+				else
+					effettoBiscotto = BISCOTTO_SAZIETA;
+			}
+			else
+			{
+				effettoCarezza = MINIMO_EFFETTO;
+				effettoBiscotto = BISCOTTO_SAZIETA;
+			}
+			
+			
+			
+			if ( ( affetto + numCarezze * effettoCarezza ) <= MAX_AFFETTO )
+				affetto += numCarezze * effettoCarezza;
 			else
 				affetto = MAX_AFFETTO;
-	
+			
 			if ( ( sazieta - numCarezze * CAREZZA_SAZIETA ) >= MIN_SAZIETA )
 				sazieta -= numCarezze * CAREZZA_SAZIETA;
 			else
@@ -154,11 +176,30 @@ public class Tamagotchi
 	{
 		if (controllaStato() != MORTO || nome.equals(IL_REDENTORE))
 		{
-			if ( ( sazieta + numBiscotti * BISCOTTO_SAZIETA ) <= MAX_SAZIETA )
-				sazieta += numBiscotti * BISCOTTO_SAZIETA;
+			/* EVOLUZIONE:  l'effetto dei biscotti diminuisce con l'aumentare di biscotti dati, ma aumenta l'effetto delle carezze.
+			 * 				Se l'effetto dei biscotti è al minimo, l'effetto delle carezze è al massimo. */
+			if ( (effettoBiscotto - effettoBiscotto * DIMINUZIONE_EFFETTO * numBiscotti) >= MINIMO_EFFETTO )
+			{
+				effettoBiscotto -= effettoBiscotto * DIMINUZIONE_EFFETTO * numBiscotti;
+				
+				if ( (effettoCarezza + effettoCarezza * AUMENTO_EFFETTO * numBiscotti) < CAREZZA_AFFETTO )
+					effettoCarezza += effettoCarezza * AUMENTO_EFFETTO * numBiscotti;
+				else
+					effettoCarezza = CAREZZA_AFFETTO;
+			}
+			else
+			{
+				effettoBiscotto = MINIMO_EFFETTO;
+				effettoCarezza = CAREZZA_AFFETTO;
+			}
+			
+			
+			
+			if ( ( sazieta + numBiscotti * effettoBiscotto ) <= MAX_SAZIETA )
+				sazieta += numBiscotti * effettoBiscotto;
 			else
 				sazieta = MAX_SAZIETA;
-	
+			
 			if ( ( affetto - numBiscotti * BISCOTTO_AFFETTO ) >= MIN_AFFETTO )
 				affetto -= numBiscotti * BISCOTTO_AFFETTO;
 			else
