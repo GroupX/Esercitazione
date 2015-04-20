@@ -10,6 +10,11 @@ package it.unibs.ing.fp.groupX.esercitazioni;
 
 import it.unibs.ing.fp.groupX.libraries.IOLib;
 
+/**
+ * Classe principale del programma
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class TamagotchiMain
 {
 	private static final String SALUTO = "CIAO! Sono il tuo nuovo Tamagotchi!";
@@ -21,6 +26,10 @@ public class TamagotchiMain
 	private static final int SCELTA_BISCOTTI = 2;
 	private static final int SCELTA_ESCI = 3;
 
+	/** 
+	 * Metodo principale del programma
+	 * @param args Argomenti da linea di comando
+	 */
 	public static void main(String[] args)
 	{
 		Tamagotchi tama;
@@ -39,6 +48,7 @@ public class TamagotchiMain
 			IOLib.printLine("3 - Esci dal programma");
 			IOLib.printLine("Scelta: ");
 			
+			//Attende che ci sia la scelta corretta
 			scelta = IOLib.readInt();
 			while (scelta < 1 || scelta > 3)
 			{
@@ -49,7 +59,8 @@ public class TamagotchiMain
 			switch(scelta)
 			{
 				case SCELTA_CAREZZE:
-					IOLib.printLine("Quante carezze vuoi dare?");
+					IOLib.printLine("Quante carezze vuoi dare?"); 
+					//Controlla che non vengano date carezze in numero negativo
 					int numCarezze = IOLib.readInt();
 					while (numCarezze < 0)
 					{
@@ -59,7 +70,8 @@ public class TamagotchiMain
 					tama.daiCarezza(numCarezze);
 					break;
 				case SCELTA_BISCOTTI:
-					IOLib.printLine("Quanti biscotti vuoi dare?");
+					IOLib.printLine("Quanti biscotti vuoi dare?"); 
+					//Controlla che non vengano dati biscotti in numero negativo
 					int numBiscotti = IOLib.readInt();
 					while (numBiscotti < 0)
 					{
@@ -89,7 +101,7 @@ public class TamagotchiMain
 			}
 			
 			//IOLib.printLine("Affetto: " + tama.getAffetto() + "   Sazietà: " + tama.getSazieta());
-		}while ((tama.controllaStato() != Tamagotchi.MORTO || tama.getNome().equals("Gesù")) && scelta!=SCELTA_ESCI);
+		} while ((tama.controllaStato() != Tamagotchi.MORTO || tama.getNome().equals("Gesù")) && scelta!=SCELTA_ESCI);
 		
 		IOLib.printLine("Ciaoo");
 	}
