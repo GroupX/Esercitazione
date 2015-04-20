@@ -83,11 +83,17 @@ public class Tamagotchi
 	public static final int INFELICE = 1;
 	/** Stato del Tamagotchi morto */
 	public static final int MORTO = 0;
+	/** Stato del Tamagotchi dopo la resurrezione */
+	public static final int MORTO_E_RISORTO = 3;
+	
+	/** Nome del redentore (per ammettere altri credo religiosi) */
+	public static final String IL_REDENTORE = "Gesù";
 	
 	private static final String DEFAULT_NOME = "Tamagotchi";
 	private static final double DEFAULT_SAZIETA = 50, DEFAULT_AFFETTO = 50;
 	private static final double CAREZZA_SAZIETA = 0.5, BISCOTTO_AFFETTO = 0.25;
 	private static final double CAREZZA_AFFETTO = 1, BISCOTTO_SAZIETA = 0.10;
+	
 	
 	
 	/**
@@ -126,15 +132,18 @@ public class Tamagotchi
 	 */
 	public void daiCarezza ( int numCarezze )
 	{
-		if ( ( affetto + numCarezze * CAREZZA_AFFETTO ) <= MAX_AFFETTO )
-			affetto += numCarezze * CAREZZA_AFFETTO;
-		else
-			affetto = MAX_AFFETTO;
-
-		if ( ( sazieta - numCarezze * CAREZZA_SAZIETA ) >= MIN_SAZIETA )
-			sazieta -= numCarezze * CAREZZA_SAZIETA;
-		else
-			sazieta = MIN_SAZIETA;
+		if (controllaStato() != MORTO && !nome.equals(IL_REDENTORE))
+		{
+			if ( ( affetto + numCarezze * CAREZZA_AFFETTO ) <= MAX_AFFETTO )
+				affetto += numCarezze * CAREZZA_AFFETTO;
+			else
+				affetto = MAX_AFFETTO;
+	
+			if ( ( sazieta - numCarezze * CAREZZA_SAZIETA ) >= MIN_SAZIETA )
+				sazieta -= numCarezze * CAREZZA_SAZIETA;
+			else
+				sazieta = MIN_SAZIETA;
+		}
 	}
 
 	/**
@@ -143,15 +152,18 @@ public class Tamagotchi
 	 */
 	public void daiBiscotto ( int numBiscotti )
 	{
-		if ( ( sazieta + numBiscotti * BISCOTTO_SAZIETA ) <= MAX_SAZIETA )
-			sazieta += numBiscotti * BISCOTTO_SAZIETA;
-		else
-			sazieta = MAX_SAZIETA;
-
-		if ( ( affetto - numBiscotti * BISCOTTO_AFFETTO ) >= MIN_AFFETTO )
-			affetto -= numBiscotti * BISCOTTO_AFFETTO;
-		else
-			affetto = MIN_AFFETTO;
+		if (controllaStato() != MORTO && !nome.equals(IL_REDENTORE))
+		{
+			if ( ( sazieta + numBiscotti * BISCOTTO_SAZIETA ) <= MAX_SAZIETA )
+				sazieta += numBiscotti * BISCOTTO_SAZIETA;
+			else
+				sazieta = MAX_SAZIETA;
+	
+			if ( ( affetto - numBiscotti * BISCOTTO_AFFETTO ) >= MIN_AFFETTO )
+				affetto -= numBiscotti * BISCOTTO_AFFETTO;
+			else
+				affetto = MIN_AFFETTO;
+		}
 	}
 	
 	/**
@@ -160,8 +172,13 @@ public class Tamagotchi
 	 */
 	public int controllaStato ()
 	{
-		if ( sazieta == MAX_SAZIETA || sazieta == MIN_SAZIETA || affetto == MIN_AFFETTO )
-			return MORTO;
+		if (sazieta == MAX_SAZIETA || sazieta == MIN_SAZIETA || affetto == MIN_AFFETTO)
+		{
+			if (nome.equals(IL_REDENTORE))
+				return MORTO_E_RISORTO;
+			else
+				return MORTO;
+		}
 
 		if ( sazieta < SAZIETA_BASSA || sazieta > SAZIETA_ALTA || affetto < AFFETTO_BASSO )
 			return INFELICE;
