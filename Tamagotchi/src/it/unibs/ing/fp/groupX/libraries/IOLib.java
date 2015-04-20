@@ -2,11 +2,10 @@ package it.unibs.ing.fp.groupX.libraries;
 
 import java.util.Scanner;
 
-
 /**
  * Classe generale di gestione Input / Output
  * 
- * @author Gruppo X ( Manuel Mazzardi, Paolo Pasquali, Davide Tosatto )
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
 public class IOLib
@@ -49,6 +48,5 @@ public class IOLib
 		Scanner scnr = new Scanner(System.in);
 		return scnr.nextLine();
 	}
-	
 	
 }

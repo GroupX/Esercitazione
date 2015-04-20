@@ -1,52 +1,3 @@
-/*
- * Autori: Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
- * 
- * Classe per la gestione dell'"esserino" Tamagotchi
- * 
- * possiede due attriuti: 
- * 		il valore di sazietà
- * 		quanto affetto prova per il creatore
- * 
- * vengono create delle costanti:
- * 		MAX_SAZIETA --> valore massimo per la sazietà del tamagotchi (se assunto provoca morte)
- * 		MAX_AFFETTO --> valore massimo per l'affetto del tamagotchi
- * 		MIN_SAZIETA --> valore minimo per la sazietà del tamagotchi (se assunto provoca morte)
- * 		MIN_AFFETTO --> valore minimo per l'affetto del tamagotchi (se assunto provoca morte)
- * 		DEFAULT_SAZIETA --> valore iniziale della sazietà se non indicato
- * 		DEFAULT_AFFETTO --> valore iniziale dell'affetto se non indicato
- * 		CAREZZA_SAZIETA --> rapporto di quanta sazietà togliere con una carezza
- * 		BISCOTTO_AFFETTO --> rapporto di quanto affetto togliere con un biscotto
- * 		CAREZZA_AFFETTO --> coefficiente d'aumento dell'affetto in base a quante carezze ricevute
- * 		BISCOTTO_SAZIETA --> coefficiente d'aumento della sazietà in base a quanti biscotti ricevuti
- * 		AFFETTO_BASSO --> soglia per l'infelicità del tamagotchi
- * 		SAZIETA_BASSA --> soglia per l'essere affamato del tamagotchi
- * 		SAZIETA_ALTO --> soglia per l'essere più che pieno del tamagotchi
- * 		FELICE --> stato di felicità del tamagotchi
- * 		INFELICE --> stato di infelicità del tamagotchi
- * 		MORTO --> il tamagotchi è morto...
- * 
- * Due costruttori: uno permette di indicare i valori, l'altro imposta quelli di default
- * 
- * Metodi:
- * 		daiCarezza
- * 			non ritorna valori; riceve un parametro in ingresso (il numero di carezze), sistema quindi di conseguenza i due 
- * 			parametri del tamagotchi effettuando gli opportuni controlli
- * 
- * 		daiBiscotto
- * 			non ritorna valori; riceve un parametro in ingresso (il numero di biscotti), sistema quindi di conseguenza i due
- * 			parametri del tamagotchi effettuando gli opportuni controlli
- * 
- * 		controllaStato
- * 			ritorna lo stato ( FELICE, INFELICE, MORTO ) del tamagotchi; non riceve parametri in ingresso
- * 		
- * 		getSazieta
- * 			ritorna il valore di sazietà del tamagotchi; non riceve parametri in ingresso
- * 
- * 		getAffetto
- * 			ritorna il valore dell'affetto del tamagotchi; non riceve parametri in ingresso
- * 
- */
-
 package it.unibs.ing.fp.groupX.esercitazioni;
 
 /**
@@ -96,13 +47,12 @@ public class Tamagotchi
 	private static final double CAREZZA_AFFETTO = 1, BISCOTTO_SAZIETA = 0.30;
 	private static final double DIMINUZIONE_EFFETTO = 0.01, AUMENTO_EFFETTO = 0.10, MINIMO_EFFETTO = 0.01;
 	
-	
 	/**
 	 * Costruttore che inizializza gli attributi utilizzando i valori di default
 	 */
 	public Tamagotchi ()
 	{
-		this ( DEFAULT_NOME );
+		this (DEFAULT_NOME);
 	}
 	
 	/**
@@ -111,7 +61,7 @@ public class Tamagotchi
 	 */
 	public Tamagotchi (String nome)
 	{
-		this (nome, DEFAULT_SAZIETA, DEFAULT_AFFETTO );
+		this (nome, DEFAULT_SAZIETA, DEFAULT_AFFETTO);
 	}
 	
 	/**
@@ -120,7 +70,7 @@ public class Tamagotchi
 	 * @param sazieta valore d'inizializzazione per il grado di sazietà
 	 * @param affetto valore d'inizializzazione per il grado d'affetto
 	 */
-	public Tamagotchi ( String nome, double sazieta, double affetto )
+	public Tamagotchi (String nome, double sazieta, double affetto)
 	{
 		this.nome = nome;
 		this.sazieta = sazieta;
@@ -133,17 +83,17 @@ public class Tamagotchi
 	 * Modifica opportunamente il grado di sazietà e quello d'affetto in base al numero di carezze date
 	 * @param numCarezze numero di carezze da dare
 	 */
-	public void daiCarezza ( int numCarezze )
+	public void daiCarezza (int numCarezze)
 	{
 		if (controllaStato() != MORTO || nome.equals(IL_REDENTORE))
 		{
 			/* EVOLUZIONE:  l'effetto delle carezze diminuisce con l'aumentare di carezze date, ma aumenta l'effetto dei biscotti.
 			 * 				Se l'effetto delle carezze è al minimo, l'effetto dei biscotti è al massimo. */
-			if ( (effettoCarezza - effettoCarezza * DIMINUZIONE_EFFETTO * numCarezze) > MINIMO_EFFETTO )
+			if ((effettoCarezza - effettoCarezza * DIMINUZIONE_EFFETTO * numCarezze) > MINIMO_EFFETTO)
 			{
 				effettoCarezza -= effettoCarezza * DIMINUZIONE_EFFETTO * numCarezze;
 				
-				if ( (effettoBiscotto + effettoBiscotto * AUMENTO_EFFETTO * numCarezze) < BISCOTTO_SAZIETA )
+				if ((effettoBiscotto + effettoBiscotto * AUMENTO_EFFETTO * numCarezze) < BISCOTTO_SAZIETA)
 					effettoBiscotto += effettoBiscotto * AUMENTO_EFFETTO * numCarezze;
 				else
 					effettoBiscotto = BISCOTTO_SAZIETA;
@@ -154,14 +104,12 @@ public class Tamagotchi
 				effettoBiscotto = BISCOTTO_SAZIETA;
 			}
 			
-			
-			
-			if ( ( affetto + numCarezze * effettoCarezza ) <= MAX_AFFETTO )
+			if ((affetto + numCarezze * effettoCarezza) <= MAX_AFFETTO)
 				affetto += numCarezze * effettoCarezza;
 			else
 				affetto = MAX_AFFETTO;
 			
-			if ( ( sazieta - numCarezze * CAREZZA_SAZIETA ) >= MIN_SAZIETA )
+			if ((sazieta - numCarezze * CAREZZA_SAZIETA) >= MIN_SAZIETA)
 				sazieta -= numCarezze * CAREZZA_SAZIETA;
 			else
 				sazieta = MIN_SAZIETA;
@@ -172,17 +120,17 @@ public class Tamagotchi
 	 * Modifica opportunamente il grado di sazietà e quello d'affetto in base al numero di biscotti dati
 	 * @param numBiscotti numero di biscotti da dare
 	 */
-	public void daiBiscotto ( int numBiscotti )
+	public void daiBiscotto (int numBiscotti)
 	{
 		if (controllaStato() != MORTO || nome.equals(IL_REDENTORE))
 		{
 			/* EVOLUZIONE:  l'effetto dei biscotti diminuisce con l'aumentare di biscotti dati, ma aumenta l'effetto delle carezze.
 			 * 				Se l'effetto dei biscotti è al minimo, l'effetto delle carezze è al massimo. */
-			if ( (effettoBiscotto - effettoBiscotto * DIMINUZIONE_EFFETTO * numBiscotti) >= MINIMO_EFFETTO )
+			if ((effettoBiscotto - effettoBiscotto * DIMINUZIONE_EFFETTO * numBiscotti) >= MINIMO_EFFETTO)
 			{
 				effettoBiscotto -= effettoBiscotto * DIMINUZIONE_EFFETTO * numBiscotti;
 				
-				if ( (effettoCarezza + effettoCarezza * AUMENTO_EFFETTO * numBiscotti) < CAREZZA_AFFETTO )
+				if ((effettoCarezza + effettoCarezza * AUMENTO_EFFETTO * numBiscotti) < CAREZZA_AFFETTO)
 					effettoCarezza += effettoCarezza * AUMENTO_EFFETTO * numBiscotti;
 				else
 					effettoCarezza = CAREZZA_AFFETTO;
@@ -192,15 +140,13 @@ public class Tamagotchi
 				effettoBiscotto = MINIMO_EFFETTO;
 				effettoCarezza = CAREZZA_AFFETTO;
 			}
-			
-			
-			
-			if ( ( sazieta + numBiscotti * effettoBiscotto ) <= MAX_SAZIETA )
+
+			if ((sazieta + numBiscotti * effettoBiscotto) <= MAX_SAZIETA)
 				sazieta += numBiscotti * effettoBiscotto;
 			else
 				sazieta = MAX_SAZIETA;
 			
-			if ( ( affetto - numBiscotti * BISCOTTO_AFFETTO ) >= MIN_AFFETTO )
+			if ((affetto - numBiscotti * BISCOTTO_AFFETTO) >= MIN_AFFETTO)
 				affetto -= numBiscotti * BISCOTTO_AFFETTO;
 			else
 				affetto = MIN_AFFETTO;
@@ -221,7 +167,7 @@ public class Tamagotchi
 				return MORTO;
 		}
 
-		if ( sazieta < SAZIETA_BASSA || sazieta > SAZIETA_ALTA || affetto < AFFETTO_BASSO )
+		if (sazieta < SAZIETA_BASSA || sazieta > SAZIETA_ALTA || affetto < AFFETTO_BASSO)
 			return INFELICE;
 
 		return FELICE;
