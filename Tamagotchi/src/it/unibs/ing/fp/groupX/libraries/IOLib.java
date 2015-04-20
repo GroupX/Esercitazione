@@ -1,12 +1,11 @@
-/**
- * 
- */
 package it.unibs.ing.fp.groupX.libraries;
 
 import java.util.Scanner;
 
 
 /**
+ * Classe generale di gestione Input / Output
+ * 
  * @author Gruppo X ( Manuel Mazzardi, Paolo Pasquali, Davide Tosatto )
  *
  */
