@@ -34,7 +34,7 @@ public class IOLib
 	{
 		Scanner scnr = new Scanner (System.in);
 		int num = scnr.nextInt ();
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -51,7 +51,7 @@ public class IOLib
 		printLine(msg);
 		Scanner scnr = new Scanner (System.in);
 		int num = scnr.nextInt ();
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -79,7 +79,7 @@ public class IOLib
 			}
 		}while (num < lowerBound);
 		
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -109,7 +109,7 @@ public class IOLib
 			}
 		}while (num < upperBound || num > upperBound);
 		
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -123,7 +123,7 @@ public class IOLib
 	{
 		Scanner scnr = new Scanner (System.in);
 		double num = scnr.nextDouble ();
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -140,7 +140,7 @@ public class IOLib
 		printLine(msg);
 		Scanner scnr = new Scanner (System.in);
 		double num = scnr.nextDouble ();
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -168,7 +168,7 @@ public class IOLib
 			}
 		}while (num < lowerBound);
 		
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 	
@@ -198,7 +198,7 @@ public class IOLib
 			}
 		}while (num < upperBound || num > upperBound);
 		
-		scnr.close();
+		//scnr.close();
 		return num;
 	}
 
@@ -211,7 +211,7 @@ public class IOLib
 	{
 		Scanner scnr = new Scanner (System.in);
 		String line = scnr.nextLine();
-		scnr.close();
+		//scnr.close();
 		return line;
 	}
 	
@@ -228,7 +228,7 @@ public class IOLib
 		printLine(msg);
 		Scanner scnr = new Scanner (System.in);
 		String line = scnr.nextLine();
-		scnr.close();
+		//scnr.close();
 		return line;
 	}
 	
