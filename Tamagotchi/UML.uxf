@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>5</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>220</x>
+      <y>140</y>
+      <w>330</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.esercitazioni::Tamagotchi
+--
+-nome: String
+-sazieta, affetto: double
+-effettoCarezza, effettoBiscotto: double
++MAX_SAZIETA = 100: double
++MAX_AFFETTO = 100: double
++MIN_SAZIETA = 0: double
++MIN_AFFETTO = 0: double
++AFFETTO_BASSO = 30: double
++SAZIETA_BASSA = 30: double
++SAZIETA_ALTA = 90: double
++FELICE = 2: int
++INFELICE = 1: int
++MORTO = 0: int
++MORTO_E_RISORTO = 3: int
++IL_REDENTORE = "Gesù": String
+-DEFAULT_NOME = "Tamagotchi": String
+-DEFAULT_SAZIETA = 50, DEFAULT_AFFETTO = 50: double
+-CAREZZA_SAZIETA = 0.5, BISCOTTO_AFFETTO = 0.25: double
+-CAREZZA_AFFETTO = 1, BISCOTTO_SAZIETA = 0.30: double
+-DIMINUZIONE_EFFETTO = 0.0001, AUMENTO_EFFETTO = 0.10, MINIMO_EFFETTO = 0.01: double
+--
++Tamagotchi(): ctor
++Tamagotchi(String nome): ctor
++Tamagotchi(String nome, double sazieta, double affetto): ctor
++daiCarezza(int numCarezze): void
++daiBiscotto(int numBiscotti): void
++controllaStato(): int
++getSazieta(): double
++getAffetto(): double
++getNome(): String
++getEffettoCarezza(): double
++getEffettoBiscotto(): double
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>270</x>
+      <y>0</y>
+      <w>230</w>
+      <h>115</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.esercitazioni::TamagotchiMain
+--
+-SALUTO = "CIAO! Sono il tuo nuovo Tamagotchi!": String
+-CREAZIONE_SAZIETA = "Inserisci il grado di sazietà iniziale: ": String
+-CREAZIONE_AFFETTO = "Inserisci il grado di affetto iniziale: ": String
+-CREAZIONE_NOME = "Inserisci il nome del Tamagotchi: ": String
+-SCELTA_CAREZZE = 1: int
+-SCELTA_BISCOTTI = 2: int
+-SCELTA_ESCI = 3: int
+--
++main(String[] args): void
+-saluta(): void
+-creaTamagotchi(): Tamagotchi
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>110</y>
+      <w>15</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>575</x>
+      <y>265</y>
+      <w>175</w>
+      <h>85</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.esercitazioni::TamagotchiTester
+--
+--
++testTamagotchiDeathCarezze(): void
++testTamagotchiDeathBiscotto(): void
++testTamagotchiDeathMaxSazieta(): void
++testTamagotchiNoRessurrection(): void
++testTamagotchiRedentoreRessurrection(): void
++testTamagotchiFelicità(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>545</x>
+      <y>300</y>
+      <w>40</w>
+      <h>15</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>605</x>
+      <y>140</y>
+      <w>120</w>
+      <h>75</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.libraries::IOLib
+--
+--
++printLine(String msg): void
++readInt(): int
++readDouble(): double
++readLine(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>495</x>
+      <y>60</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>220.0;220.0;140.0;220.0;140.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
