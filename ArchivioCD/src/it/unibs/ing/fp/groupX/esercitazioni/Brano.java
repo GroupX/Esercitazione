@@ -1,5 +1,9 @@
 package it.unibs.ing.fp.groupX.esercitazioni;
 
+/**
+ * Classe che descrive un brano
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ */
 public class Brano
 {
 	/** Titolo del brano */
@@ -22,10 +26,29 @@ public class Brano
 	 * Metodo che restituisce una stringa descrittiva (titolo del brano e sua durata)
 	 * @return Descrizione basilare del brano
 	 */
+	@Override
 	public String toString ()
 	{
 		String strn = " Titolo: " + title + "\n Durata: " + lenght + "\n";
 		
 		return strn;
+	}
+	
+	/**
+	 * Ritorna il titolo del brano
+	 * @return Titolo del brano
+	 */
+	public String getTitle()
+	{
+		return title;
+	}
+
+	/**
+	 * Ritorna la lunghezza del brano
+	 * @return Lunghezza del brano
+	 */
+	public String getLenght()
+	{
+		return lenght;
 	}
 }
