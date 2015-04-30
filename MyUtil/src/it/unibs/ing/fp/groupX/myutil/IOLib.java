@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 /**
@@ -10,8 +12,25 @@ import java.util.Scanner;
  */
 public class IOLib
 {
+	/** Separatore tra ore, minuti e secondi */
+	private static final String DURATION_SEPARATOR = ":";
+	
+	/** Messaggio stampato per richiedere i secondi */
+	private static final String MESSAGGIO_SECONDI = "Secondi: ";
+	/** Messaggio stampato per richiedere i minuti */
+	private static final String MESSAGGIO_MINUTI = "Minuti: ";
+	/** Messaggio stampato per richiedere le ore */
+	private static final String MESSAGGIO_ORE = "Ore: ";
+
 	/** Numero inserito in lettura non valido */
 	private static final String LETTURA_NUMERO_NON_VALIDO = "Numero inserito non valido. Riprovare:";
+	
+	/** Secondi in un'ora */
+	private static final int SECONDI_PER_ORA = 3600;
+	/** Secondi in un minuto */
+	private static final int SECONDI_PER_MINUTO = 60;
+	/** Minuti in un ora */
+	private static final int MINUTI_PER_ORA = 60;
 
 	/**
 	 * Stampa su console una riga di testo
@@ -107,7 +126,7 @@ public class IOLib
 			{
 				printLine(LETTURA_NUMERO_NON_VALIDO);
 			}
-		}while (num < upperBound || num > upperBound);
+		}while (num < lowerBound || num > upperBound);
 		
 		//scnr.close();
 		return num;
@@ -232,4 +251,33 @@ public class IOLib
 		return line;
 	}
 	
+	/**
+	 * Legge una durata
+	 * @param msg Messaggio da stampare prima di effettuare la lettura
+	 * @return Durata letta
+	 */
+	public static Duration readDuration (String msg)
+	{
+		int ore, minuti, secondi;
+		
+		printLine(msg);
+		
+		ore = readInt(MESSAGGIO_ORE, 0);
+		minuti = readInt(MESSAGGIO_MINUTI, 0, 59);
+		secondi = readInt(MESSAGGIO_SECONDI, 0, 59);
+		
+		return Duration.of(ore * SECONDI_PER_ORA + minuti * SECONDI_PER_MINUTO + secondi, ChronoUnit.SECONDS);
+	}
+	
+	/**
+	 * Stampa una durata
+	 * @param d Durata da stampare
+	 */
+	public static void printDuration (Duration d)
+	{
+		long hours = d.toHours();
+		long minutes = d.toMinutes() - hours * MINUTI_PER_ORA;
+		long seconds = d.getSeconds() - hours * SECONDI_PER_ORA - minutes * SECONDI_PER_MINUTO;
+		printLine (hours + DURATION_SEPARATOR + minutes + DURATION_SEPARATOR + seconds);
+	}
 }
