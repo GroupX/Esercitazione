@@ -1,5 +1,11 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+/**
+ * Classe per la rappresentazione delle durate
+ * 
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class Durata
 {
 	/** Formato delle unità temporali */

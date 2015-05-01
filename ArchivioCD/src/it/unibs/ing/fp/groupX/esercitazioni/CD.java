@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.esercitazioni;
 
+import it.unibs.ing.fp.groupX.myutil.Durata;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -47,7 +49,7 @@ public class CD
 	 * @param lenght
 	 * 			Durata del brano da aggiungere
 	 */
-	public void addBrano (String title, String lenght)
+	public void addBrano (String title, Durata lenght)
 	{
 		tracks.add(new Brano(title, lenght));
 	}

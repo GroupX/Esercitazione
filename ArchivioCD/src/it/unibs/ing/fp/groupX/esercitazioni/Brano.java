@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.esercitazioni;
 
+import it.unibs.ing.fp.groupX.myutil.Durata;
+
 /**
  * Classe che descrive un brano
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
@@ -9,14 +11,14 @@ public class Brano
 	/** Titolo del brano */
 	private String title;
 	/** Durata del brano*/
-	private String lenght;
+	private Durata lenght;
 	
 	/**
 	 * Costruttore che inizializza il titolo e la durata del brano
 	 * @param title Titolo del brano
 	 * @param lenght Durata del brano
 	 */
-	public Brano (String title, String lenght) 
+	public Brano (String title, Durata lenght) 
 	{
 		this.title = title;
 		this.lenght = lenght;
@@ -29,7 +31,7 @@ public class Brano
 	@Override
 	public String toString ()
 	{
-		String strn = " Titolo: " + title + "\n Durata: " + lenght + "\n";
+		String strn = " Titolo: " + title + "\n Durata: " + lenght.toString() + "\n";
 		
 		return strn;
 	}
@@ -47,7 +49,7 @@ public class Brano
 	 * Ritorna la lunghezza del brano
 	 * @return Lunghezza del brano
 	 */
-	public String getLenght()
+	public Durata getLenght()
 	{
 		return lenght;
 	}
