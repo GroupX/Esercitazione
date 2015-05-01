@@ -13,11 +13,11 @@ public class ArchivioMain
 	public static void main (String[] args)
 	{
 		// TODO Auto-generated method stub
-		MyMenu mn = new MyMenu("Titolo", "Voce1", "Voce2", "Voce3");
+		//MyMenu mn = new MyMenu("Titolo", "Voce1", "Voce2", "Voce3");
 		
-		mn.getChoice ();
+		//mn.getChoice ();
 		
-		Duration d = IOLib.readDuration("Porco dio:");
+		Durata d = IOLib.readDuration("Porco dio:");
 		IOLib.printDuration(d);
 		
 	}

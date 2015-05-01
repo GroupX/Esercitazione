@@ -38,6 +38,14 @@ public class DurataTest
 		Durata d = new Durata(1, 2, 3);
 		
 		assertEquals ("01_02_03", d.toString("ore_min_sec"));
-		assertEquals ("01:02:03", d.toString());
+		assertEquals ("01h 02m 03s", d.toString());
+		
+		d = new Durata(2, 3);
+		
+		assertEquals ("02m 03s", d.toString());
+		
+		d = new Durata(3);
+		
+		assertEquals ("03s", d.toString());
 	}
 }

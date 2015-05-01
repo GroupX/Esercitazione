@@ -13,7 +13,12 @@ public class Durata
 	public static final String ORE_PLACEHOLDER = "ore";
 	
 	/** Formato predefinito per il metodo toString */
-	private static final String DEFAULT_FORMAT = "ore:min:sec";
+	private static final String DEFAULT_FORMAT = "oreh minm secs";
+	/** Formato predefinito per il metodo toString, solo minuti e secondi */
+	private static final String DEFAULT_FORMAT_MIN_SEC = "minm secs";
+	/** Formato predefinito per il metodo toString, solo secondi */
+	private static final String DEFAULT_FORMAT_SEC = "secs";
+	
 	
 	/** Secondi in un'ora */
 	private static final int SECONDI_PER_ORA = 3600;
@@ -173,6 +178,11 @@ public class Durata
 	 */
 	public String toString ()
 	{
-		return toString(DEFAULT_FORMAT);
+		if (ore > 0)
+			return toString(DEFAULT_FORMAT);
+		else if (ore <= 0 && minuti > 0)
+			return toString(DEFAULT_FORMAT_MIN_SEC);
+		else
+			return toString(DEFAULT_FORMAT_SEC);
 	}
 }
