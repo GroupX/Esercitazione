@@ -1,7 +1,5 @@
 package it.unibs.ing.fp.groupX.myutil;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 /**
