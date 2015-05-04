@@ -72,7 +72,7 @@ public class CD
 	 */
 	public Brano getBrano (int index)
 	{
-		if (index < tracks.size ())
+		if (index >= 0 && index < tracks.size ())
 			return tracks.get (index);
 		
 		return null;
@@ -131,7 +131,7 @@ public class CD
 	{
 		String str;
 		
-		str= "Titolo: "+title;
+		str= "Titolo CD: "+title;
 		str+="\nAutore: "+author+"\n";
 		
 		for(int i = 0; i < tracks.size ();i++)
@@ -151,7 +151,7 @@ public class CD
 	{
 		String str;
 		
-		str= "Titolo: "+title;
+		str= "Titolo CD: "+title;
 		str+="\nAutore: "+author;
 		str+="\nNumero brani: "+tracks.size ();
 		
