@@ -43,13 +43,13 @@ public class ArchivioCD
 	 */
 	public boolean addCD (CD disk)
 	{
-		for (int i = 0; i < collection.size (); i++)
+		if ( !collection.contains (disk) )
 		{
-			if (collection.get (i).isTitle (disk.getTitle ()))
-				return false;
+			collection.add(disk);
+			return true;
 		}
-		collection.add(disk);
-		return true;
+		else
+			return false;
 	}
 	
 	/**

@@ -157,4 +157,20 @@ public class CD
 		
 		return str;
 	}
+	
+	
+	 @Override
+	 /**
+	  * Controlla che il titolo del CD passato sia uguale o diverso da quello dell'oggetto
+	  * 
+	  * @param disk
+	  * 		Oggetto da confrontare (true: uguali, false: diversi)
+	  */
+	 public boolean equals (Object disk)
+	 {
+		 CD d = (CD)disk;
+		 if (isTitle(d.getTitle()))
+			 return true;
+		 return false;
+	 }
 }
