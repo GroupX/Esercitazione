@@ -122,6 +122,7 @@ public class CD
 		return false;
 	}
 	
+	@Override
 	/**
 	 * Ritorna una stringa descrittiva del CD
 	 * @return Descrizione del CD (titolo, autore, descrizione dei vari brani)
