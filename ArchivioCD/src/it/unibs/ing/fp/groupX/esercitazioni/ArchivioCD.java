@@ -70,11 +70,32 @@ public class ArchivioCD
 	 * Rimuove il CD di indice <i>index</i>, se corretto
 	 * @param index
 	 * 			Indice del CD da rimuovere
+	 * @return true: rimozione andata a buon fine; false: indice non corretto
 	 */
-	public void removeCD (int index)
+	public boolean removeCD (int index)
 	{
-		if ( index >= 0 && index < collection.size () )
-			collection.remove (index);
+		if ( index < 0 && index >= collection.size () )
+			return false;
+		
+		collection.remove (index);
+		return true;
+	}
+	
+	/**
+	 * Rimuove un CD dall'archivio in base al titolo
+	 * @param title
+	 * 			Titolo del CD da rimuovere
+	 * @return true: rimozione andata a buon fine; false: titolo non trovato
+	 */
+	public boolean removeCD (String title)
+	{
+		int index = searchTitleCD(title);
+		
+		if ( index == SEARCH_NO_RESULT )
+			return false;
+		
+		collection.remove (index);
+		return true;
 	}
 	
 	/**
@@ -99,6 +120,24 @@ public class ArchivioCD
 		Random rnd = new Random();
 		
 		return collection.get(rnd.nextInt (collection.size()));
+	}
+	
+	/**
+	 * Seleziona a caso un numero <i>num</i> di brani dall'archivio
+	 * @param num
+	 * 			Numero di brani da selezionare
+	 * @return Array di brani selezionati a caso
+	 */
+	public Brano[] getSomeBrano (int num)
+	{
+		Brano[] tracks = new Brano[num];
+		
+		for (int i = 0; i < num; i++)
+		{
+			tracks[i] = getCDRandomly().getBranoRandomly ();
+		}
+		
+		return tracks;
 	}
 	
 	/**
@@ -137,6 +176,25 @@ public class ArchivioCD
 	}
 	
 	/**
+	 * Ricerca il titolo di brano/i nell'archivio
+	 * @param title
+	 * 			Titolo del brano/i da cercare
+	 * @return Vettore degli indici dei CD contenenti il brano cercato
+	 */
+	public Vector<Integer> searchBranoCD (String title)
+	{
+		Vector<Integer> ris = new Vector<Integer>();
+		
+		for(int i = 0; i < collection.size (); i++)
+		{
+			if (!collection.get (i).searchBrano (title).isEmpty ())
+				ris.add(i);
+		}
+		
+		return ris;
+	}
+	
+	/**
 	 * Crea una stringa descrittiva dell'oggetto
 	 * @return Stringa descrittiva
 	 */
@@ -164,15 +222,34 @@ public class ArchivioCD
 	}
 	
 	/**
-	 * Stampa a console il CD indicato con <i>index</i>
+	 * Stampa a console il CD indicato con <i>index</i>, se corretto
 	 * @param index
 	 * 			indice del CD da stampare
+	 * @return true: stampa andata a buon fine; false: indice non corretto
 	 */
-	public void print (int index)
+	public boolean print (int index)
 	{
-		if ( index >= 0 && index < collection.size())
-		{
-			IOLib.printLine (collection.get (index).toString ());
-		}
+		if ( index < 0 && index >= collection.size())
+			return false;
+		
+		IOLib.printLine (collection.get (index).toString ());
+		return true;
+	}
+	
+	/**
+	 * Stampa un CD dall'archivio in base al titolo
+	 * @param title
+	 * 			Titolo del CD da stampare
+	 * @return true: stampa andata a buon fine; false: titolo non trovato
+	 */
+	public boolean print (String title)
+	{
+		int index = searchTitleCD(title);
+		
+		if ( index == SEARCH_NO_RESULT )
+			return false;
+		
+		IOLib.printLine (collection.get (index).toString ());
+		return true;
 	}
 }

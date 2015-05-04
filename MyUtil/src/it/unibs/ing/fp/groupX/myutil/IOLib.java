@@ -1,5 +1,6 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.nio.CharBuffer;
 import java.util.Scanner;
 
 /**
@@ -19,6 +20,15 @@ public class IOLib
 
 	/** Numero inserito in lettura non valido */
 	private static final String LETTURA_NUMERO_NON_VALIDO = "Numero inserito non valido. Riprovare:";
+	
+	/** Risposta positiva nelle domande a due vie */
+	public final static String TWO_WAY_QUESTION_YES = "Si";
+	/** Risposta negativa nelle domande a due vie */
+	public final static String TWO_WAY_QUESTION_NO = "No";
+	/** Formato per risposta da accodare alle domande a due vie */
+	private final static String TWO_WAY_QUESTION_RESPONSE_FORMAT = "["+TWO_WAY_QUESTION_YES+" ; "+TWO_WAY_QUESTION_NO+"]";
+	/** Messaggio di errore per risposta non valida nelle domande a due vie */
+	private final static String TWO_WAY_QUESTION_RESPONSE_ERROR = "Risposta data non e' valida";
 
 	/**
 	 * Stampa su console una riga di testo
@@ -217,9 +227,7 @@ public class IOLib
 	public static String readLine ()
 	{
 		Scanner scnr = new Scanner (System.in);
-		String line = scnr.nextLine();
-		//scnr.close();
-		return line;
+		return scnr.nextLine();
 	}
 	
 	/**
@@ -233,10 +241,100 @@ public class IOLib
 	public static String readLine (String msg)
 	{
 		printLine(msg);
-		Scanner scnr = new Scanner (System.in);
-		String line = scnr.nextLine();
-		//scnr.close();
+		return readLine();
+	}
+	
+	/**
+	 * Legge da tastiera una stringa di massima dimensione <i>length</i>
+	 * @param length
+	 * 			Massima dimensione della stringa letta
+	 * @return Stringa letta
+	 */
+	public static String readLine (int length)
+	{
+		String line = readLine();
+		if (line.length () < length)
+			return line;
+		return line.substring (0, length);
+	}
+	
+	/**
+	 * Legge da tastiera una stringa di massima dimensione <i>length</i> stampando a video un messaggio
+	 * @param msg
+	 * 			Messaggio da stampare a video prima della lettura
+	 * @param length
+	 * 			Massima dimensione della stringa letta
+	 * @return Stringa letta
+	 */
+	public static String readLine (String msg, int length)
+	{
+		printLine(msg);
+		return readLine(length);
+	}
+	
+	/**
+	 * Legge da tastiera una stringa e la ritorna solo se non contiene i caratteri indicati
+	 * @param notPermitted
+	 * 			Caratteri non permessi
+	 * @return Stringa letta se non contiene i caratteri indicati, <b>null</b> altrimenti
+	 */
+	public static String readLine (char ... notPermitted)
+	{
+		String line = readLine();
+		CharSequence s = new String(notPermitted);;
+		
+		if ( line.contains (s) )
+			return null;
 		return line;
+	}
+	
+	/**
+	 * Legge da tastiera una stringa e la ritorna solo se non contiene i caratteri indicati, stampando a video un messaggio prima della lettura
+	 * @param msg
+	 * 			Messaggio da stampare a video prima della lettura
+	 * @param notPermitted
+	 * 			Caratteri non permessi
+	 * @return Stringa letta se corretta, <b>null</b> altrimenti
+	 */
+	public static String readLine (String msg, char ... notPermitted)
+	{
+		printLine (msg);
+		return readLine(notPermitted);
+	}
+	
+	/**
+	 * Legge da tastiera una stringa lunga al massimo <i>length</i> e la ritorna solo se non contiene i caratteri indicati
+	 * @param length
+	 * 			Dimensione massima della stringa letta
+	 * @param notPermitted
+	 * 			Caratteri non ammessi
+	 * @return Stringa letta se corretta, <b>null</b> altrimenti
+	 */
+	public static String readLine (int length, char ... notPermitted)
+	{
+		String line = readLine(length);
+		CharSequence s = new String(notPermitted);;
+		
+		if ( line.contains (s) )
+			return null;
+		return line;
+	}
+	
+	/**
+	 * Legge da tastiera una stringa lunga al massimo <i>length</i> e la ritorna solo se non contiene i caratteri indicati,
+	 * stampando a video un messaggio prima della lettura
+	 * @param msg
+	 * 			Messaggio da stampare a video prima della lettura
+	 * @param length
+	 * 			Dimensione massima della stringa letta
+	 * @param notPermitted
+	 * 			Caratteri non permessi
+	 * @return Stringa letta se corretta, <b>null</b> altrimenti
+	 */
+	public static String readLine (String msg, int length, char ... notPermitted)
+	{
+		printLine(msg);
+		return readLine(length, notPermitted);
 	}
 	
 	/**
@@ -264,5 +362,29 @@ public class IOLib
 	public static void printDuration (Durata d)
 	{
 		printLine (d.toString());
+	}
+	
+	/**
+	 * Pone una domanda a due vie all'utente
+	 * @param question
+	 * 				Domanda da fare (verrà aggiunto il formato delle risposte)
+	 * @return true: risposta positiva; false: risposta negativa
+	 */
+	public static boolean twoWayQuestion (String question)
+	{
+		String response;
+		do
+		{
+			response = IOLib.readLine (question+" "+TWO_WAY_QUESTION_RESPONSE_FORMAT);
+			
+			if (!response.equals (TWO_WAY_QUESTION_YES) || !response.equals(TWO_WAY_QUESTION_NO))
+			{
+				IOLib.printLine (TWO_WAY_QUESTION_RESPONSE_ERROR);
+			}
+		}while (!response.equals (TWO_WAY_QUESTION_YES) || !response.equals(TWO_WAY_QUESTION_NO));
+		
+		if (response.equals (TWO_WAY_QUESTION_YES))
+			return true;
+		return false;
 	}
 }

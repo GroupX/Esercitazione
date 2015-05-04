@@ -53,4 +53,17 @@ public class Brano
 	{
 		return lenght;
 	}
+	
+	/**
+	 * Controlla se la stringa passata è uguale (no case-sensitive) al titolo del brano
+	 * @param title 
+	 * 			Stringa da confrontare con il titolo
+	 * @return <b>true</b> se uguale (no case-sensitive), <b>false</b> altrimenti
+	 */
+	public boolean isTitle (String title)
+	{
+		if (this.title.equalsIgnoreCase (title))
+			return true;
+		return false;
+	}
 }

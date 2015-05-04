@@ -173,4 +173,21 @@ public class CD
 			 return true;
 		 return false;
 	 }
+	 
+	 /**
+	  * Cerca una serie di brani nel CD in base al titolo
+	  * @param title
+	  * 		Titolo del brano/i da cercare
+	  * @return Vettore di indici dei brani trovati, vuoto se non presente
+	  */
+	 public Vector<Integer> searchBrano (String title)
+	 {
+		 Vector<Integer> indexs = new Vector<Integer>();
+		 for (int i = 0; i < tracks.size (); i++)
+		 {
+			 if (tracks.get (i).isTitle (title))
+				 indexs.add (i);
+		 }
+		 return indexs;
+	 }
 }
