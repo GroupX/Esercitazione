@@ -94,7 +94,7 @@ public class ArchivioCD
 		if ( index == SEARCH_NO_RESULT )
 			return false;
 		
-		collection.remove (index);
+		removeCD (index);
 		return true;
 	}
 	
@@ -248,8 +248,8 @@ public class ArchivioCD
 		
 		if ( index == SEARCH_NO_RESULT )
 			return false;
-		
-		IOLib.printLine (collection.get (index).toString ());
+
+		print(index);
 		return true;
 	}
 }
