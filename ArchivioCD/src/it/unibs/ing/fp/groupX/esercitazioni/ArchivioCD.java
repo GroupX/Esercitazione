@@ -63,7 +63,7 @@ public class ArchivioCD
 	 */
 	public void removeLastCD ()
 	{
-		collection.remove (collection.size ()-1);
+		removeCD(collection.size ()-1);
 	}
 	
 	/**

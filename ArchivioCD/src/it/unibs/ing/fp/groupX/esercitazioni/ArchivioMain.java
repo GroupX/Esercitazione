@@ -5,6 +5,7 @@ import it.unibs.ing.fp.groupX.myutil.*;
 
 public class ArchivioMain
 {
+	private static final String CD_GIA_ESISTENTE = "CD già esistente";
 	private final static String TITOLO = "Benvenuto nell'archivio CD!\n\nSeleziona cosa vuoi fare: ";
 	private final static String [] VOCI = {"Inserisci un nuovo CD", "Visualizza un CD", "Rimuovi un CD", "Visualizza la tua collezione di CD", "Seleziona un brano casuale"};
 	
@@ -53,21 +54,30 @@ public class ArchivioMain
 				
 				CD disk = new CD(CDtitle, CDauthor);
 				
-				int n;
-				n = IOLib.readInt(NUMERO_BRANI_CD);
+				boolean ris = archivio.addCD(disk);
 				
-				for (int i = 0; i < n; i++)
+				if(ris)
 				{
-					String titoloBrano;
-					titoloBrano = IOLib.readLine(TITOLO_BRANO);
+					int n;
+					n = IOLib.readInt(NUMERO_BRANI_CD);
 					
-					Durata d;
-					d = IOLib.readDuration(DURATA_BRANO);
-					
-					disk.addBrano(titoloBrano, d);
+					for (int i = 0; i < n; i++)
+					{
+						String titoloBrano;
+						titoloBrano = IOLib.readLine(TITOLO_BRANO);
+						
+						Durata d;
+						d = IOLib.readDuration(DURATA_BRANO);
+						
+						disk.addBrano(titoloBrano, d);
+					}
+				}
+				else
+				{
+					IOLib.printLine(CD_GIA_ESISTENTE);
 				}
 				
-				archivio.addCD(disk);
+				
 				
 				break;
 				
