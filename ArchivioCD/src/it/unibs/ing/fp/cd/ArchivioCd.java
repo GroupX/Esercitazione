@@ -1,29 +1,39 @@
-package it.unibs.ing.fp.groupX.esercitazioni;
+package it.unibs.ing.fp.cd;
 
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 
 import java.util.Random;
 import java.util.Vector;
 
-public class ArchivioCD
+public class ArchivioCd
 {
 	/** Titolo dell'archivio dei CD */
 	private String title;
 	/** Collezione dei CD in archivio */
-	private Vector<CD> collection;
+	private Vector<Cd> collection;
 	
 	/** Valore di ritorno se non è stato trovato nessun risultato nella ricerca */
 	public static final int SEARCH_NO_RESULT = -1;
+	
+	public static final String DEFAULT_TITLE = "";
+	
+	/**
+	 * Costruttore senza parametri
+	 */
+	public ArchivioCd ()
+	{
+		this(DEFAULT_TITLE);
+	}
 	
 	/**
 	 * Costruttore con titolo come parametro
 	 * @param title
 	 * 			Titolo dell'archivio
 	 */
-	public ArchivioCD (String title)
+	public ArchivioCd (String title)
 	{
 		this.title = title;
-		collection = new Vector<CD>();
+		collection = new Vector<Cd>();
 	}
 	
 	/**
@@ -33,10 +43,10 @@ public class ArchivioCD
 	 * @param disk
 	 * 			Sequenza di CD da mettere nella collezione
 	 */
-	public ArchivioCD (String title, CD ... disk)
+	public ArchivioCd (String title, Cd ... disk)
 	{
 		this(title);
-		for (CD d : disk)
+		for (Cd d : disk)
 		{
 			collection.add (d);
 		}
@@ -47,7 +57,7 @@ public class ArchivioCD
 	 * @param disk
 	 * 			Disco da inserire
 	 */
-	public boolean addCD (CD disk)
+	public boolean aggiungiCd (Cd disk)
 	{
 		if ( !collection.contains (disk) )
 		{
@@ -63,7 +73,7 @@ public class ArchivioCD
 	 */
 	public void removeLastCD ()
 	{
-		removeCD(collection.size ()-1);
+		eliminaCd(collection.size ()-1);
 	}
 	
 	/**
@@ -72,7 +82,7 @@ public class ArchivioCD
 	 * 			Indice del CD da rimuovere
 	 * @return true: rimozione andata a buon fine; false: indice non corretto
 	 */
-	public boolean removeCD (int index)
+	public boolean eliminaCd (int index)
 	{
 		if ( index < 0 && index >= collection.size () )
 			return false;
@@ -87,14 +97,14 @@ public class ArchivioCD
 	 * 			Titolo del CD da rimuovere
 	 * @return true: rimozione andata a buon fine; false: titolo non trovato
 	 */
-	public boolean removeCD (String title)
+	public boolean eliminaCd (String title)
 	{
 		int index = searchTitleCD(title);
 		
 		if ( index == SEARCH_NO_RESULT )
 			return false;
 		
-		removeCD (index);
+		eliminaCd (index);
 		return true;
 	}
 	
@@ -104,7 +114,7 @@ public class ArchivioCD
 	 * 			Indice del CD da ritornare
 	 * @return CD di indice <i>index</i>, <b>null</b> altrimenti
 	 */
-	public CD getCD (int index)
+	public Cd getCD (int index)
 	{
 		if ( index >= 0 && index < collection.size () )
 			return collection.get (index);
@@ -115,7 +125,7 @@ public class ArchivioCD
 	 * Ritorna un CD estratto a caso
 	 * @return CD estratto a caso
 	 */
-	public CD getCDRandomly ()
+	public Cd getCDRandomly ()
 	{
 		Random rnd = new Random();
 		
@@ -134,7 +144,7 @@ public class ArchivioCD
 		
 		for (int i = 0; i < num; i++)
 		{
-			tracks[i] = getCDRandomly().getBranoRandomly ();
+			tracks[i] = getCDRandomly().branoCasuale ();
 		}
 		
 		return tracks;
@@ -150,10 +160,26 @@ public class ArchivioCD
 	{
 		for(int i = 0; i < collection.size (); i++)
 		{
-			if ( collection.get (i).isTitle (title))
+			if ( collection.get (i).haTitolo (title))
 				return i;
 		}
 		return SEARCH_NO_RESULT;
+	}
+	
+	/**
+	 * Controlla se esiuste un CD
+	 * 
+	 * @param title Titolo del CD da cercare
+	 * @return true se il cd c'è, false altrimenti
+	 */
+	public boolean contiene (String title)
+	{
+		int ris = searchTitleCD(title);
+		
+		if (ris == SEARCH_NO_RESULT)
+			return false;
+		else
+			return true;
 	}
 	
 	/**
@@ -251,5 +277,14 @@ public class ArchivioCD
 
 		print(index);
 		return true;
+	}
+	
+	/**
+	 * Ritorna il numero di Cd nella collezione
+	 * @return Numero di Cd contenuti
+	 */
+	public int getNumeroCd ()
+	{
+		return collection.size();
 	}
 }

@@ -1,5 +1,5 @@
 
-package it.unibs.ing.fp.groupX.esercitazioni;
+package it.unibs.ing.fp.cd;
 
 import it.unibs.ing.fp.groupX.myutil.*;
 
@@ -34,7 +34,7 @@ public class ArchivioMain
 	public static void main (String[] args)
 	{
 		MyMenu menu = new MyMenu (TITOLO, VOCI);
-		ArchivioCD archivio = new ArchivioCD (ARCHIVIO_CD_TITOLO);
+		ArchivioCd archivio = new ArchivioCd (ARCHIVIO_CD_TITOLO);
 		
 		int scelta;
 		
@@ -52,9 +52,9 @@ public class ArchivioMain
 				String CDauthor;
 				CDauthor = IOLib.readLine(AUTORE_CD);
 				
-				CD disk = new CD(CDtitle, CDauthor);
+				Cd disk = new Cd(CDtitle, CDauthor);
 				
-				boolean ris = archivio.addCD(disk);
+				boolean ris = archivio.aggiungiCd(disk);
 				
 				if(ris)
 				{
@@ -69,7 +69,7 @@ public class ArchivioMain
 						Durata d;
 						d = IOLib.readDuration(DURATA_BRANO);
 						
-						disk.addBrano(titoloBrano, d);
+						disk.aggiungiBrano(titoloBrano, d);
 					}
 				}
 				else
@@ -102,7 +102,7 @@ public class ArchivioMain
 				cdRimosso = IOLib.readLine(CD_DA_RIMUOVERE);
 				
 				boolean risultato;
-				risultato = archivio.removeCD(cdRimosso);
+				risultato = archivio.eliminaCd(cdRimosso);
 				
 				if (risultato == true)
 				{

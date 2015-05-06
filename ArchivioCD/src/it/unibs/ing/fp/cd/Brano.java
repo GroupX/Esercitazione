@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.esercitazioni;
+package it.unibs.ing.fp.cd;
 
 import it.unibs.ing.fp.groupX.myutil.Durata;
 
@@ -12,6 +12,19 @@ public class Brano
 	private String title;
 	/** Durata del brano*/
 	private Durata lenght;
+	
+	private static final String FORMATO_DURATA = "[min:sec]";
+	
+	/**
+	 * Costruttore con titolo, minuti e secondi
+	 * @param title Titolo del brano
+	 * @param min Minuti di durata
+	 * @param sec Secondi di durata
+	 */
+	public Brano (String title, int min, int sec)
+	{
+		this (title, new Durata(min, sec));
+	}
 	
 	/**
 	 * Costruttore che inizializza il titolo e la durata del brano
@@ -31,7 +44,7 @@ public class Brano
 	@Override
 	public String toString ()
 	{
-		String strn = " Titolo: " + title + "\n Durata: " + lenght.toString() + "\n";
+		String strn = title + " " + lenght.toString(FORMATO_DURATA);
 		
 		return strn;
 	}
@@ -40,7 +53,7 @@ public class Brano
 	 * Ritorna il titolo del brano
 	 * @return Titolo del brano
 	 */
-	public String getTitle()
+	public String getTitolo()
 	{
 		return title;
 	}

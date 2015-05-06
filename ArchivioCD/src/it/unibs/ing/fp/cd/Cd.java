@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.esercitazioni;
+package it.unibs.ing.fp.cd;
 
 import it.unibs.ing.fp.groupX.myutil.Durata;
 
@@ -11,7 +11,7 @@ import java.util.Vector;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class CD
+public class Cd
 {
 	/** Titolo del CD */
 	private String title;
@@ -27,7 +27,7 @@ public class CD
 	 * @param author
 	 * 			Autore del CD
 	 */
-	public CD (String title, String author)
+	public Cd (String title, String author)
 	{
 		this.title = title;
 		this.author = author;
@@ -38,7 +38,7 @@ public class CD
 	 * @param track
 	 * 			Brano da aggiungere
 	 */
-	public void addBrano (Brano track)
+	public void aggiungiBrano (Brano track)
 	{
 		tracks.add (track);
 	}
@@ -49,7 +49,7 @@ public class CD
 	 * @param lenght
 	 * 			Durata del brano da aggiungere
 	 */
-	public void addBrano (String title, Durata lenght)
+	public void aggiungiBrano (String title, Durata lenght)
 	{
 		tracks.add(new Brano(title, lenght));
 	}
@@ -58,7 +58,7 @@ public class CD
 	 * Ritorna un brano estratto a caso dall'elenco
 	 * @return Brano estratto a caso
 	 */
-	public Brano getBranoRandomly ()
+	public Brano branoCasuale ()
 	{
 		Random rnd = new Random();
 		return tracks.get (rnd.nextInt (tracks.size ()));
@@ -102,7 +102,7 @@ public class CD
 	 * 			Stringa da confrontare con il titolo
 	 * @return <b>true</b> se uguale (no case-sensitive), <b>false</b> altrimenti
 	 */
-	public boolean isTitle (String title)
+	public boolean haTitolo (String title)
 	{
 		if (this.title.equalsIgnoreCase (title))
 			return true;
@@ -131,13 +131,12 @@ public class CD
 	{
 		String str;
 		
-		str= "Titolo CD: "+title;
-		str+="\nAutore: "+author+"\n";
+		str= title;
+		str+=" - "+author;
 		
 		for(int i = 0; i < tracks.size ();i++)
 		{
-			str+=tracks.get (i).toString ();
-			str+="\n";
+			str+="\n"+tracks.get (i).toString ();
 		}
 		
 		return str;
@@ -168,8 +167,8 @@ public class CD
 	  */
 	 public boolean equals (Object disk)
 	 {
-		 CD d = (CD)disk;
-		 if (isTitle(d.getTitle()))
+		 Cd d = (Cd)disk;
+		 if (haTitolo(d.getTitle()))
 			 return true;
 		 return false;
 	 }
