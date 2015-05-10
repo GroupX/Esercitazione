@@ -233,7 +233,7 @@ public class ArchivioCd
 		
 		for(int i = 0; i < collection.size (); i++)
 		{
-			str += collection.get (i).toString ();
+			str += collection.get (i).toString ()+"\n";
 		}
 		
 		return str;
