@@ -5,6 +5,11 @@ import it.unibs.ing.fp.groupX.myutil.IOLib;
 import java.util.Random;
 import java.util.Vector;
 
+/**
+ * Classe che si occupa di gestire un archivio CD
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class ArchivioCd
 {
 	/** Titolo dell'archivio dei CD */
