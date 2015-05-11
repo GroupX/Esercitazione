@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>244</y>
+      <w>132</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::ArchivioCd
+--
+-title: String
+-collection: Vector&lt;Cd&gt;
++SEARCH_NO_RESULT = -1: int
++DEFAULT_TITLE = "": String
+--
++ArchivioCd(): ctor
++ArchivioCd(String title): ctor
++ArchivioCd(String title, Cd... disk): ctor
++aggiungiCd(Cd disk): boolean
++removeLastCD(): void
++eliminaCd(int index): boolean
++eliminaCd(String title): boolean
++getCD(int index): Cd
++getCDRandomly(): Cd
++getSomeBrano(int num): Brano[]
++searchTitleCD(String title): int
++contiene(String title): boolean
++searchAuthorCD(String author): Vector&lt;Integer&gt;
++searchBranoCD(String title): Vector&lt;Integer&gt;
++toString(): String
++print(): void
++print(int index): boolean
++print(String title): boolean
++getNumeroCd(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>440</y>
+      <w>100</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::ArchivioCdTest
+--
+--
++testAggiuntaCd(): void
++testRicercaTitoloPresente(): void
++testRicercaTitoloNonPresente(): void
++testEliminazioneCdPerTitolo(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>24</y>
+      <w>728</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::ArchivioMain
+--
+-TITOLO = "Benvenuto nell'archivio CD!\n\nSeleziona cosa vuoi fare: ": String
+-VOCI = { "Inserisci un nuovo CD", "Visualizza un CD casuale", "Rimuovi un CD", "Visualizza la tua collezione di CD", "Seleziona un brano casuale", "Seleziona un numero di brani casuali", "Cerca un CD per titolo", "Cerca un CD per autore", "Cerca un CD per titolo di un brano" }: String[]
+-ARCHIVIO_CD_TITOLO = "Archivio CD": String
+-INSERISCI_CD_VALUE = 1: int
+-VISUALIZZA_CD_CASUALE_VALUE = 2: int
+-RIMUOVI_CD_VALUE = 3: int
+-VISUALIZZA_COLLEZIONE_VALUE = 4: int
+-SELEZIONA_BRANO_CASUALE_VALUE = 5: int
+-SELEZIONA_ALCUNI_BRANI_CASUALI_VALUE = 6: int
+-CERCA_CD_TITOLO_VALUE = 7: int
+-CERCA_CD_AUTORE_VALUE = 8: int
+-CERCA_CD_TITOLO_BRANO_VALUE = 9: int
+-TITOLO_CD = "Inserisci il titolo del CD che vuoi inserire": String
+-AUTORE_CD = "Inserisci l'autore del CD che vuoi inserire": String
+-NUMERO_BRANI_CD = "Inserisci il numero di brani del CD": String
+-TITOLO_BRANO = "Inserisci il titolo del brano": String
+-DURATA_BRANO = "Inserisci la durata del brano": String
+-CERCA_CD_AUTORE = "Inserisci l'autore da cercare nella collezione": String
+-CERCA_CD_TITOLO_BRANO = "Inserisci il titolo del brano da cercare nei CDs": String
+-CD_DA_VISUALIZZARE = "Quale CD vuoi visualizzare?": String
+-CD_DA_RIMUOVERE = "Quale CD vuoi rimuovere?": String
+-CONGRATULAZIONI = "Perfetto! CD rimosso senza errori": String
+-BRANI_A_CASO = "Quanti brani vuoi scegliere casualmente?": String
+-CD_GIA_ESISTENTE = "CD già esistente": String
+-ERRORE_1 = "Non c'è nessun CD da visualizzare!": String
+-ERRORE_2 = "Non c'è nessun CD da rimuovere!": String
+-ERRORE_3 = "Nessun CD trovato di questo autore!": String
+-ERRORE_4 = "Nessun CD trovato cercando il brano indicato!": String
+--
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>244</y>
+      <w>128</w>
+      <h>76</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::Brano
+--
+-title: String
+-lenght: Durata
+-FORMATO_DURATA = "[min:sec]": String
+--
++Brano(String title, int min, int sec): ctor
++Brano(String title, Durata lenght): ctor
++toString(): String
++getTitolo(): String
++getLenght(): Durata
++isTitle(String title): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>340</y>
+      <w>92</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::BranoTest
+--
+-TITOLO = "Il pescatore": String
+-MM = 4: int
+-SS = 46: int
+--
++testToString(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>276</x>
+      <y>244</y>
+      <w>140</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::Cd
+--
+-title: String
+-author: String
+-tracks = new Vector&lt;Brano&gt;(): Vector&lt;Brano&gt;
+--
++Cd(String title, String author): ctor
++aggiungiBrano(Brano track): void
++aggiungiBrano(String title, Durata lenght): void
++branoCasuale(): Brano
++getBrano(int index): Brano
++getTitle(): String
++getAuthor(): String
++haTitolo(String title): boolean
++isAuthor(String author): boolean
++toString(): String
++descrizioneVeloce(): String
++equals(Object disk): boolean
++searchBrano(String title): Vector&lt;Integer&gt;
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>276</x>
+      <y>380</y>
+      <w>120</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.cd::CdTest
+--
+-TITOLO = "Anime salve": String
+-AUTORE = "Fabrizio De André": String
+--
++testToStringSenzaBrani(): void
++testToStringConBrani(): void
++testHaTitoloTrue(): void
++testHaTitoloFalse(): void
++testEstrazioneCasualeBrano(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>244</y>
+      <w>148</w>
+      <h>196</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.myutil::Durata
+--
+-TIME_FORMAT = "%02d": String
++SEC_PLACEHOLDER = "sec": String
++MIN_PLACEHOLDER = "min": String
++ORE_PLACEHOLDER = "ore": String
+-DEFAULT_FORMAT = "oreh minm secs": String
+-DEFAULT_FORMAT_MIN_SEC = "minm secs": String
+-DEFAULT_FORMAT_SEC = "secs": String
+-SECONDI_PER_ORA = 3600: int
+-SECONDI_PER_MINUTO = 60: int
+-MINUTI_PER_ORA = 60: int
+-secondi: long
+-minuti: long
+-ore: long
++NULL_TIME = 0: long
+--
++Durata(): ctor
++Durata(long secondi): ctor
++Durata(long minuti, long secondi): ctor
++Durata(long ore, long minuti, long secondi): ctor
+-normalize(): void
++getSecondi(): long
++getMinuti(): long
++getOre(): long
++toSecondi(): long
++toMinuti(): long
++toOre(): long
++toString(String format): String
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>620</x>
+      <y>460</y>
+      <w>112</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.myutil::DurataTest
+--
+--
++normalizationTest(): void
++conversionTest(): void
++toStringTest(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>748</x>
+      <y>24</y>
+      <w>352</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.myutil::IOLib
+--
+-MESSAGGIO_SECONDI = "Secondi: ": String
+-MESSAGGIO_MINUTI = "Minuti: ": String
+-MESSAGGIO_ORE = "Ore: ": String
+-LETTURA_NUMERO_NON_VALIDO = "Numero inserito non valido. Riprovare:": String
++TWO_WAY_QUESTION_YES = "Si": String
++TWO_WAY_QUESTION_NO = "No": String
+-TWO_WAY_QUESTION_RESPONSE_FORMAT = "[" + TWO_WAY_QUESTION_YES + " ; " + TWO_WAY_QUESTION_NO + "]": String
+-TWO_WAY_QUESTION_RESPONSE_ERROR = "Risposta data non e' valida": String
+--
++printLine(String msg): void
++readInt(): int
++readInt(String msg): int
++readInt(String msg, int lowerBound): int
++readInt(String msg, int lowerBound, int upperBound): int
++readDouble(): double
++readDouble(String msg): double
++readDouble(String msg, double lowerBound): double
++readDouble(String msg, double lowerBound, double upperBound): double
++readLine(): String
++readLine(String msg): String
++readLine(int length): String
++readLine(String msg, int length): String
++readLine(char... notPermitted): String
++readLine(String msg, char... notPermitted): String
++readLine(int length, char... notPermitted): String
++readLine(String msg, int length, char... notPermitted): String
++readDuration(String msg): Durata
++printDuration(Durata d): void
++twoWayQuestion(String question): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>424</x>
+      <y>244</y>
+      <w>188</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.groupX.myutil::MyMenu
+--
+-titolo: String
+-voices: ArrayList&lt;String&gt;
+-EXIT_VOICE = "0 - Esci": String
++EXIT_VALUE = 0: int
+-CHOICE_MESSAGE = "Scegli una voce del menu':": String
+-ERROR_SELECTION_VOICE = "Voce selezionata inesistente.": String
+--
++MyMenu(String titolo): ctor
++MyMenu(String titolo, ArrayList&lt;String&gt; voices): ctor
++MyMenu(String titolo, String... voice): ctor
++addVoice(String voice): void
+-print(): void
++getChoice(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>32</x>
+      <y>220</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>32</x>
+      <y>416</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>196</x>
+      <y>220</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>220</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>196</x>
+      <y>316</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>328</x>
+      <y>356</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>220</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>220</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>672</x>
+      <y>436</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>720</x>
+      <y>92</y>
+      <w>36</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
