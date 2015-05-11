@@ -29,7 +29,15 @@ public class IOLib
 	private final static String TWO_WAY_QUESTION_RESPONSE_FORMAT = "["+TWO_WAY_QUESTION_YES+" ; "+TWO_WAY_QUESTION_NO+"]";
 	/** Messaggio di errore per risposta non valida nelle domande a due vie */
 	private final static String TWO_WAY_QUESTION_RESPONSE_ERROR = "Risposta data non e' valida";
-
+	
+	/**
+	 * Costruttore privato
+	 */
+	private IOLib ()
+	{
+		
+	}
+	
 	/**
 	 * Stampa su console una riga di testo
 	 * 
