@@ -1,7 +1,6 @@
 package it.unibs.ing.fp.groupX.medagliereTest;
 
 import static org.junit.Assert.*;
-import it.unibs.ing.fp.groupX.medagliere.Gara;
 import it.unibs.ing.fp.groupX.medagliere.Medagliere;
 
 import org.junit.Test;

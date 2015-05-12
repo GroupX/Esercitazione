@@ -1,6 +1,5 @@
 package it.unibs.ing.fp.groupX.myutil;
 
-import java.nio.CharBuffer;
 import java.util.Scanner;
 
 /**
