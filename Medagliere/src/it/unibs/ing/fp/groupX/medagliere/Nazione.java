@@ -21,4 +21,19 @@ public class Nazione
 	{
 		return nome;
 	}
+	
+	/**
+	 * Verifica l'uguaglianza tra due nazioni (case insensitive)
+	 * @param n Altra nazione
+	 * @return true: stessa nazione false: nazione diversa
+	 */
+	@Override
+	public boolean equals (Object o)
+	{
+		Nazione n = (Nazione)o;
+		if (n.getNome().equalsIgnoreCase(this.getNome()))
+			return true;
+		else
+			return false;
+	}
 }
