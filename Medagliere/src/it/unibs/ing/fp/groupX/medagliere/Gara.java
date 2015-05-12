@@ -7,6 +7,9 @@ package it.unibs.ing.fp.groupX.medagliere;
  */
 public class Gara
 {
+	/** Formato della stringa generata dal metodo <i>toString()</i> */
+	private final static String TO_STRING_FORMAT = "%s: %s";
+	
 	/** Nome della gara */
 	private String nome;
 	
@@ -30,9 +33,7 @@ public class Gara
 	 */
 	public String toString()
 	{
-		String strng = nome + " " + ris;
-		
-		return strng;
+		return String.format (TO_STRING_FORMAT, nome, ris);
 	}
 	
 	/**
