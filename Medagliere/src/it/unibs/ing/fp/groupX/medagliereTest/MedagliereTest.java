@@ -56,6 +56,12 @@ public class MedagliereTest
 					+ "Erebor:  Oro: 0; Argento: 0; Bronzo: 3\n"
 					+ "Azz:  Oro: 1; Argento: 0; Bronzo: 0\n"
 					+ "Gondor:  Oro: 0; Argento: 0; Bronzo: 0\n", m.toString());
+		
+		assertEquals ("Italia:  Oro: 2; Argento: 0; Bronzo: 0\n"
+				+ "Azz:  Oro: 1; Argento: 0; Bronzo: 0\n"
+				+ "Jamaica:  Oro: 0; Argento: 3; Bronzo: 0\n"
+				+ "Erebor:  Oro: 0; Argento: 0; Bronzo: 3\n"
+				+ "Gondor:  Oro: 0; Argento: 0; Bronzo: 0\n", m.toStringOrdinato());
 	}
 	
 	@Test

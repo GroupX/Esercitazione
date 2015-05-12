@@ -226,7 +226,7 @@ private static final int UGUALE = 0;
 	 * Ritrona la classifica delle nazioni per numero medaglie
 	 * @return Classifica  (posizione 0: più medaglie)
 	 */
-	public Nazione[] getClassifica ()
+	public ArrayList<Nazione> getClassifica ()
 	{
 		ArrayList<Nazione> classifica = new ArrayList<>();
 		ArrayList<Nazione> toProcess = new ArrayList<>(nazioni);
@@ -245,7 +245,7 @@ private static final int UGUALE = 0;
 			toProcess.remove(max);
 		}
 		
-		return (Nazione[])classifica.toArray();
+		return classifica;
 		
 	}
 	
@@ -274,9 +274,13 @@ private static final int UGUALE = 0;
 		return ris.toString();
 	}
 	
+	/**
+	 * Ritorna una stringa con le nazioni in oprdine di medaglie vinte
+	 * @return Stringa descrittiva
+	 */
 	public String toStringOrdinato ()
 	{
-		Nazione[] classifica = getClassifica();
+		ArrayList<Nazione> classifica = getClassifica();
 		
 		StringBuffer ris = new StringBuffer();
 		for (Nazione n : classifica)
