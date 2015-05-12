@@ -9,6 +9,7 @@ package it.unibs.ing.fp.groupX.medagliere;
 public class Risultato
 {
 	private final static int NUM_WINNERS = 3;
+	private final static String TO_STRING_FORMAT = "Oro: %s; Argento: %s; Bronzo: %s";
 	
 	private Nazione[] winners = new Nazione[NUM_WINNERS];
 	
@@ -73,5 +74,15 @@ public class Risultato
 			return WinDegree.BRONZE;
 		
 		return WinDegree.NONE;
+	}
+	
+	/**
+	 * Ritorna una stringa descrittiva del risultato
+	 * @return stringa descrittiva del risultato
+	 */
+	@Override
+	public String toString ()
+	{
+		return String.format (TO_STRING_FORMAT, winners[WinDegree.GOLD.getIndex()].getNome (), winners[WinDegree.SILVER.getIndex()].getNome (), winners[WinDegree.BRONZE.getIndex()].getNome ());
 	}
 }
