@@ -12,6 +12,9 @@ public class Medagliere
 private ArrayList <Nazione> nazioni = new ArrayList<Nazione>();
 private ArrayList<Gara> gare = new ArrayList<Gara>();
 private static final String FORMATO_NUMERO_MEDAGLIE = "Oro: %d; Argento: %d; Bronzo: %d";
+private static final int MAGGIORE = 1;
+private static final int MINORE = -1;
+private static final int UGUALE = 0;
 
 	/**
 	 * Costruttore senza parametri
@@ -197,6 +200,66 @@ private static final String FORMATO_NUMERO_MEDAGLIE = "Oro: %d; Argento: %d; Bro
 	}
 	
 	/**
+	 * Compara due nazioni per numero medaglie
+	 * @param n1 Nazione 1
+	 * @param n2 Nazione 2
+	 * @return 	MAGGIORE se n1>n2
+	 * 			MINORE se ni<n2
+	 * 			UGUALE se n1==n2
+	 */
+	private int compareNazioni (Nazione n1, Nazione n2)
+	{
+		
+		if (getMedaglieOro(n1.getNome()) > getMedaglieOro(n2.getNome()))
+			return MAGGIORE;
+		else if (getMedaglieOro(n1.getNome()) == getMedaglieOro(n2.getNome()) && getMedaglieArgento(n1.getNome()) > getMedaglieArgento(n2.getNome()))
+			return MAGGIORE;
+		else if (getMedaglieOro(n1.getNome()) == getMedaglieOro(n2.getNome()) && getMedaglieArgento(n1.getNome()) == getMedaglieArgento(n2.getNome()) && getMedaglieBronzo(n1.getNome()) > getMedaglieBronzo(n2.getNome()))
+			return MAGGIORE;
+		else if (getMedaglieOro(n1.getNome()) == getMedaglieOro(n2.getNome()) && getMedaglieArgento(n1.getNome()) == getMedaglieArgento(n2.getNome()) && getMedaglieBronzo(n1.getNome()) == getMedaglieBronzo(n2.getNome()))
+			return UGUALE;
+		
+		return MINORE;
+	}
+	
+	/**
+	 * Ritrona la classifica delle nazioni per numero medaglie
+	 * @return Classifica  (posizione 0: più medaglie)
+	 */
+	public Nazione[] getClassifica ()
+	{
+		ArrayList<Nazione> classifica = new ArrayList<>();
+		ArrayList<Nazione> toProcess = new ArrayList<>(nazioni);
+		
+		while (toProcess.size() > 0)
+		{
+			Nazione max = toProcess.get(0);
+			
+			for (Nazione n: toProcess)
+			{
+				if (compareNazioni(n, max)==MAGGIORE)
+					max = n;
+			}
+			
+			classifica.add(max);
+			toProcess.remove(max);
+		}
+		
+		return (Nazione[])classifica.toArray();
+		
+	}
+	
+	/**
+	 * Ritorna la descrizione di una nazione con le medaglie vinte
+	 * @param n Nazione
+	 * @return Stringa descrittiva
+	 */
+	private String getNazioneString (Nazione n)
+	{
+		return n.toString() + ":  " + String.format(FORMATO_NUMERO_MEDAGLIE, getMedaglieOro(n.getNome()), getMedaglieArgento(n.getNome()), getMedaglieBronzo(n.getNome())) + "\n";
+	}
+	
+	/**
 	 * Ritorna la rappresentazione della classe in stringa
 	 * @return Stringa rappresentante l'oggetto
 	 */
@@ -206,7 +269,19 @@ private static final String FORMATO_NUMERO_MEDAGLIE = "Oro: %d; Argento: %d; Bro
 		StringBuffer ris = new StringBuffer();
 		for (Nazione n : nazioni)
 		{
-			ris.append(n.toString() + ":  " + String.format(FORMATO_NUMERO_MEDAGLIE, getMedaglieOro(n.getNome()), getMedaglieArgento(n.getNome()), getMedaglieBronzo(n.getNome())) + "\n");
+			ris.append(getNazioneString(n));
+		}
+		return ris.toString();
+	}
+	
+	public String toStringOrdinato ()
+	{
+		Nazione[] classifica = getClassifica();
+		
+		StringBuffer ris = new StringBuffer();
+		for (Nazione n : classifica)
+		{
+			ris.append(getNazioneString(n));
 		}
 		return ris.toString();
 	}
