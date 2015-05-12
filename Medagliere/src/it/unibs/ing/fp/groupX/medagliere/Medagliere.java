@@ -11,6 +11,7 @@ public class Medagliere
 {
 private ArrayList <Nazione> nazioni = new ArrayList<Nazione>();
 private ArrayList<Gara> gare = new ArrayList<Gara>();
+private static final String FORMATO_NUMERO_MEDAGLIE = "Oro: %d; Argento: %d; Bronzo: %d";
 
 	/**
 	 * Costruttore senza parametri
@@ -104,7 +105,7 @@ private ArrayList<Gara> gare = new ArrayList<Gara>();
 	 * @return true: risultato aggiunto false: risultato non aggiunto
 	 */
 	public boolean addRisultato (String nomeGara, String nomeNazioneOro, String nomeNazioneArgento, String nomeNazioneBronzo)
-	{
+	{	
 		if (!hasGara(nomeGara))
 			return false;
 		
@@ -117,7 +118,97 @@ private ArrayList<Gara> gare = new ArrayList<Gara>();
 		if (!hasNazione(nomeNazioneBronzo))
 			return false;
 		
-		return getGara(nomeGara).setRisultato(new Risultato(new Nazione(nomeNazioneOro), new Nazione(nomeNazioneOro), new Nazione(nomeNazioneOro)));
+		return getGara(nomeGara).setRisultato(new Risultato(new Nazione(nomeNazioneOro), new Nazione(nomeNazioneArgento), new Nazione(nomeNazioneBronzo)));
+	}
+	
+	/**
+	 * Medaglie d'oro vinte dalla nazione
+	 * @param nomeNazione nome della nazione
+	 * @return numero medaglie vinte
+	 */
+	public int getMedaglieOro (String nomeNazione)
+	{
+		Nazione n = new Nazione(nomeNazione);
+		
+		if (!hasNazione(nomeNazione))
+			return 0;
+		
+		int ris = 0;
+		
+		for(Gara g: gare)
+		{
+			if (g.getRis()!=null && g.getRis().getGold().equals(n))
+			{
+				ris++;
+			}
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Medaglie d'argento vinte dalla nazione
+	 * @param nomeNazione nome della nazione
+	 * @return numero medaglie vinte
+	 */
+	public int getMedaglieArgento (String nomeNazione)
+	{
+		Nazione n = new Nazione(nomeNazione);
+		
+		if (!hasNazione(nomeNazione))
+			return 0;
+		
+		int ris = 0;
+		
+		for(Gara g: gare)
+		{
+			if (g.getRis()!=null && g.getRis().getSilver().equals(n))
+			{
+				ris++;
+			}
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Medaglie di bronzo vinte dalla nazione
+	 * @param nomeNazione nome della nazione
+	 * @return numero medaglie vinte
+	 */
+	public int getMedaglieBronzo (String nomeNazione)
+	{
+		Nazione n = new Nazione(nomeNazione);
+		
+		if (!hasNazione(nomeNazione))
+			return 0;
+		
+		int ris = 0;
+		
+		for(Gara g: gare)
+		{
+			if (g.getRis()!=null && g.getRis().getBronze().equals(n))
+			{
+				ris++;
+			}
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna la rappresentazione della classe in stringa
+	 * @return Stringa rappresentante l'oggetto
+	 */
+	@Override
+	public String toString ()
+	{
+		StringBuffer ris = new StringBuffer();
+		for (Nazione n : nazioni)
+		{
+			ris.append(n.toString() + ":  " + String.format(FORMATO_NUMERO_MEDAGLIE, getMedaglieOro(n.getNome()), getMedaglieArgento(n.getNome()), getMedaglieBronzo(n.getNome())) + "\n");
+		}
+		return ris.toString();
 	}
 	
 }
