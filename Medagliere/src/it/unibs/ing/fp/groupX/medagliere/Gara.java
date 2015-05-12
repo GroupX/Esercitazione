@@ -10,22 +10,27 @@ public class Gara
 	/** Nome della gara */
 	private String nome;
 	
+	/** Risultato della gara */
+	private Risultato ris;
 	/**
 	 * Costruttore che inizializza il nome della gara
 	 * @param nome Nome della gara
+	 * @param ris Risultato della gara
 	 */
 	public Gara (String nome)
 	{
 		this.nome = nome;
+		this.ris = null;
 	}
 	
 	/**
-	 * Metodo che restituisce una stringa descrittiva (nome della gara)
-	 * @return Nome della gara inserita
+	 * Metodo che restituisce una stringa descrittiva (nome della gara e risultato, se non presente il risultato è nullo)
+	 * @return Descrizione basilare della gara
+	 * 
 	 */
 	public String toString()
 	{
-		String strng = nome;
+		String strng = nome + " " + ris;
 		
 		return strng;
 	}
@@ -40,14 +45,39 @@ public class Gara
 	}
 	
 	/**
-	 * Controlla se la stringa inserita è uguale (no case-sensitive) al nome della gara
-	 * @param nome Stringa da confrontare con il nome della gara
-	 * @return <b>true</b> se uguale (no case-sensitive), <b>false</b> altrimenti
+	 * Ritorna il risultato della gara
+	 * @return Risultato della gara
 	 */
-	public boolean isNome (String nome)
+	public Risultato getRis()
 	{
-		if (this.nome.equalsIgnoreCase(nome))
+		return ris;
+	}
+	
+	/**
+	 * Verifica l'uguaglianza tra due gare (case insensitive)
+	 * @param n Altra gara
+	 * @return true: stessa gara false: gara diversa
+	 */
+	@Override
+	public boolean equals (Object o)
+	{
+		Gara g = (Gara)o;
+		if(g.getNome().equalsIgnoreCase(this.getNome()))
 			return true;
-		return false;
+		else
+			return false;
+	}
+	
+	public boolean setRisultato (Risultato result)
+	{
+		if(ris == null)
+		{
+			this.ris = result;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
