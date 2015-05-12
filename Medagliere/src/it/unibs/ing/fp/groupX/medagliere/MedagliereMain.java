@@ -9,7 +9,6 @@ public class MedagliereMain
 	private static final String RISULTATO_BRONZO = "Inserisci il nome della nazione che ha ottenuto il bronzo: ";
 	private static final String RISULTATO_ARGENTO = "Inserisci il nome della nazione che ha ottenuto l'argento: ";
 	private static final String RISULTATO_ORO = "Inserisci il nome della nazione che ha ottenuto l'oro: ";
-	private static final String RISULTATO_NOME_GARA = "Inserisci il nome della gara di cui vuoi inserire il risultato: ";
 	private static final String NOME_RISULTATO = "Inserisci risultato per una gara: ";
 	private static final String ERRORE_GARA = "Gara già presente!";
 	private static final String NOME_GARA = "Inserisci il nome della gara: ";
