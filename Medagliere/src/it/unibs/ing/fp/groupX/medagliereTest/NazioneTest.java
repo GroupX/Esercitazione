@@ -6,13 +6,14 @@ import junit.framework.Test;
 
 public class NazioneTest
 {
-	private final static String NATION_1_NAME = "Italia";
-	private final static String NATION_2_NAME = "Svizzera";
+	private final static String NATION_1_NAME = "San Marino";
+	private final static String NATION_2_NAME = "Italia";
+	private final static String NATION_1_WRONG_NAME = "san marino";
 	
 	@org.junit.Test
 	public void	creationTest () throws Exception
 	{
-		Nazione n = new Nazione (NATION_1_NAME);
+		Nazione n = new Nazione (NATION_1_WRONG_NAME);
 		
 		assertEquals(NATION_1_NAME, n.getNome ());
 	}
