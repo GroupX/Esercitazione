@@ -1,5 +1,10 @@
 package it.unibs.ing.fp.groupX.medagliere;
 
+/**
+ * Rappresenta una nazione
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class Nazione
 {
 	String nome;
