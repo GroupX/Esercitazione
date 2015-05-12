@@ -7,7 +7,7 @@ package it.unibs.ing.fp.groupX.medagliere;
  */
 public class Nazione
 {
-	String nome;
+	private String nome;
 	
 	/**
 	 * Costruttore con il nome
@@ -40,5 +40,16 @@ public class Nazione
 			return true;
 		else
 			return false;
+	}
+	
+	/**
+	 * Ritorna la rappresentazione testuale della classe
+	 * 
+	 * @return testo rappresentante la classe
+	 */
+	@Override
+	public String toString ()
+	{
+		return getNome();
 	}
 }

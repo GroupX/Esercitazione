@@ -27,7 +27,7 @@ private ArrayList<Gara> gare = new ArrayList<Gara>();
 	 */
 	public boolean addNazione (Nazione n)
 	{
-		if (!nazioni.contains(n))
+		if (!hasNazione(n))
 		{
 			nazioni.add(n);
 			return true;
@@ -37,4 +37,16 @@ private ArrayList<Gara> gare = new ArrayList<Gara>();
 			return false;
 		}
 	}
+	
+	/**
+	 * Verifica che una nazione sia presente
+	 * @param n Nazione da ricercare
+	 * @return true: nazione presente false: nazione non presente
+	 */
+	public boolean hasNazione (Nazione n)
+	{
+		return nazioni.contains(n);
+	}
+	
+	
 }
