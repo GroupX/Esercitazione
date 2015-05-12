@@ -7,6 +7,9 @@ package it.unibs.ing.fp.groupX.medagliere;
  */
 public class Nazione
 {
+	private final static String SEPARATOR_NAME = " ";
+	private final static int FIRST_LETTER_NAME = 0;
+	
 	private String nome;
 	
 	/**
@@ -15,7 +18,17 @@ public class Nazione
 	 */
 	public Nazione (String nome)
 	{
-		this.nome = nome;
+		String[] disjointedName = nome.split (SEPARATOR_NAME);
+		StringBuffer finalName = new StringBuffer();
+		
+		for (String piece : disjointedName)
+		{
+			finalName.append (Character.toUpperCase (piece.charAt (FIRST_LETTER_NAME)) + piece.substring (FIRST_LETTER_NAME+1) + SEPARATOR_NAME);
+		}
+		
+		finalName.deleteCharAt (finalName.length ()-1);
+		
+		this.nome = finalName.toString ();
 	}
 	
 	/**
