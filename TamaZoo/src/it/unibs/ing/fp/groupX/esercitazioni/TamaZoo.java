@@ -1,4 +1,4 @@
-package it.unibs.fp.tamazoo;
+package it.unibs.ing.fp.groupX.esercitazioni;
 
 import java.util.*;
 

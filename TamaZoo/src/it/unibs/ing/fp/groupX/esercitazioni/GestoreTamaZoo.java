@@ -1,7 +1,8 @@
-package it.unibs.fp.tamazoo;
+package it.unibs.ing.fp.groupX.esercitazioni;
 
-import it.unibs.fp.mylib.*;
-
+import it.unibs.ing.fp.groupX.myutil.EstrattoreCasuale;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
 
 
 public class GestoreTamaZoo 
@@ -59,7 +60,7 @@ public class GestoreTamaZoo
 	public static void main(String[] args) 
 	{
 		benvenuto();
-		int numeroTamagotchi = InputDati.leggiInteroPositivo(RICHIESTA_NUMERO);
+		int numeroTamagotchi = IOLib.readInt(RICHIESTA_NUMERO, 0);
 		
 		for (int i =1; i<=numeroTamagotchi; i++)
 		{
@@ -74,17 +75,17 @@ public class GestoreTamaZoo
 		
 		do 
 		{
-		 int voceSelezionata = principale.scegli();
+		 int voceSelezionata = principale.getChoice();
 			
 	     switch ( voceSelezionata ) 
 	      {
 			   case 1:
-				   int numBiscotti = NumeriCasuali.estraiIntero(MIN_BISCOTTI, MAX_BISCOTTI);
+				   int numBiscotti = EstrattoreCasuale.estraiInt(MIN_BISCOTTI, MAX_BISCOTTI);
 				   System.out.printf(MSG_BISCOTTI,numBiscotti);
 				   mioZoo.daiBiscotti(numBiscotti);
 				 break;
 			   case 2:
-				   int numCarezze = NumeriCasuali.estraiIntero(MIN_CAREZZE, MAX_CAREZZE);
+				   int numCarezze = EstrattoreCasuale.estraiInt(MIN_CAREZZE, MAX_CAREZZE);
 				   System.out.printf(MSG_CAREZZE,numCarezze);
 				   mioZoo.daiCarezze(numCarezze);
 				 break;
@@ -112,24 +113,24 @@ public class GestoreTamaZoo
 
 	public static Tamagotchi creaTamagotchi()
 	{
-		String nome = InputDati.leggiStringaNonVuota(RICHIESTA_NOME);
-		int specie = NumeriCasuali.estraiIntero(1, NUMERO_SPECIE);
+		String nome = IOLib.readLine(RICHIESTA_NOME);
+		int specie = EstrattoreCasuale.estraiInt(1, NUMERO_SPECIE);
 		Tamagotchi nuovo=null;
 		int affetto,sazieta;
 		
 		switch (specie)
 		{
 		 case MODELLO_BASE:
-			 affetto = NumeriCasuali.estraiIntero(0,Tamagotchi.MAX_AFFETTO);
-			 sazieta = NumeriCasuali.estraiIntero(0,Tamagotchi.MAX_SAZIETA);
+			 affetto = EstrattoreCasuale.estraiInt(0,Tamagotchi.MAX_AFFETTO);
+			 sazieta = EstrattoreCasuale.estraiInt(0,Tamagotchi.MAX_SAZIETA);
 			 nuovo = new Tamagotchi(nome,affetto,sazieta,NOME_BASE);
 		 break;
 		 case TAMATRISTE:
-			 sazieta = NumeriCasuali.estraiIntero(0,Tamagotchi.MAX_SAZIETA);
+			 sazieta = EstrattoreCasuale.estraiInt(0,Tamagotchi.MAX_SAZIETA);
 			 nuovo = new TamaTriste(nome,sazieta,NOME_TRISTE);
 		break;
 		 case TAMAGORDO:
-	    	 sazieta = NumeriCasuali.estraiIntero(0,Tamagotchi.MAX_SAZIETA);
+	    	 sazieta = EstrattoreCasuale.estraiInt(0,Tamagotchi.MAX_SAZIETA);
 	    	 nuovo = new TamaGordo(nome,sazieta,NOME_GORDO);
 	    	 break;	 
 		}
