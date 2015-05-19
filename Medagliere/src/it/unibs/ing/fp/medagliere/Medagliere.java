@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class Medagliere
 {
-private ArrayList <Nazione> nazioni = new ArrayList<Nazione>();
-private ArrayList<Gara> gare = new ArrayList<Gara>();
+private ElencoNazioni nazioni = new ElencoNazioni();
+private ElencoGare gare = new ElencoGare();
 private static final String FORMATO_NUMERO_MEDAGLIE = "Oro: %d; Argento: %d; Bronzo: %d";
 private static final int MAGGIORE = 1;
 private static final int MINORE = -1;
@@ -32,15 +32,7 @@ private static final int UGUALE = 0;
 	public boolean addNazione (String nome)
 	{
 		
-		if (!hasNazione(nome))
-		{
-			nazioni.add(new Nazione (nome));
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return nazioni.aggiungiNazione(nome);
 	}
 	
 	/**
@@ -50,8 +42,7 @@ private static final int UGUALE = 0;
 	 */
 	public boolean hasNazione (String nome)
 	{
-		Nazione n = new Nazione(nome);
-		return nazioni.contains(n);
+		return nazioni.presente(nome);
 	}
 	
 	/**
@@ -61,8 +52,7 @@ private static final int UGUALE = 0;
 	 */
 	public boolean hasGara (String nome)
 	{
-		Gara g = new Gara(nome);
-		return gare.contains(g);
+		return gare.presente(nome);
 	}
 	
 	/**
@@ -72,15 +62,7 @@ private static final int UGUALE = 0;
 	 */
 	public boolean addGara (String nome)
 	{
-		if (!hasGara(nome))
-		{
-			gare.add(new Gara(nome));
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return gare.aggiungiGara(nome);
 	}
 	
 	/**
@@ -90,13 +72,7 @@ private static final int UGUALE = 0;
 	 */
 	public Gara getGara (String nome)
 	{
-		Gara gi = new Gara(nome);
-		for (Gara g: gare)
-		{
-			if (g.equals(gi))
-				return g;
-		}
-		return null;
+		return gare.getGara(nome);
 	}
 
 	/**
