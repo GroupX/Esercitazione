@@ -1,5 +1,6 @@
 package it.unibs.ing.fp.medagliere;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 /**
@@ -97,7 +98,12 @@ private static final int UGUALE = 0;
 		if (!hasNazione(nomeNazioneBronzo))
 			return false;
 		
+		nazioni.getNazione(nomeNazioneOro).aggiungiMedaglia(WinDegree.GOLD.getIndex());
+		nazioni.getNazione(nomeNazioneArgento).aggiungiMedaglia(WinDegree.SILVER.getIndex());
+		nazioni.getNazione(nomeNazioneBronzo).aggiungiMedaglia(WinDegree.BRONZE.getIndex());
+		
 		return getGara(nomeGara).setRisultato(new Risultato(new Nazione(nomeNazioneOro), new Nazione(nomeNazioneArgento), new Nazione(nomeNazioneBronzo)));
+	
 	}
 	
 	/**
@@ -107,22 +113,7 @@ private static final int UGUALE = 0;
 	 */
 	public int getMedaglieOro (String nomeNazione)
 	{
-		Nazione n = new Nazione(nomeNazione);
-		
-		if (!hasNazione(nomeNazione))
-			return 0;
-		
-		int ris = 0;
-		
-		for(Gara g: gare)
-		{
-			if (g.getRis()!=null && g.getRis().getGold().equals(n))
-			{
-				ris++;
-			}
-		}
-		
-		return ris;
+		return nazioni.getNazione(nomeNazione).getMedaglie(WinDegree.GOLD.getIndex());
 	}
 	
 	/**
@@ -132,22 +123,7 @@ private static final int UGUALE = 0;
 	 */
 	public int getMedaglieArgento (String nomeNazione)
 	{
-		Nazione n = new Nazione(nomeNazione);
-		
-		if (!hasNazione(nomeNazione))
-			return 0;
-		
-		int ris = 0;
-		
-		for(Gara g: gare)
-		{
-			if (g.getRis()!=null && g.getRis().getSilver().equals(n))
-			{
-				ris++;
-			}
-		}
-		
-		return ris;
+		return nazioni.getNazione(nomeNazione).getMedaglie(WinDegree.SILVER.getIndex());
 	}
 	
 	/**
@@ -157,82 +133,7 @@ private static final int UGUALE = 0;
 	 */
 	public int getMedaglieBronzo (String nomeNazione)
 	{
-		Nazione n = new Nazione(nomeNazione);
-		
-		if (!hasNazione(nomeNazione))
-			return 0;
-		
-		int ris = 0;
-		
-		for(Gara g: gare)
-		{
-			if (g.getRis()!=null && g.getRis().getBronze().equals(n))
-			{
-				ris++;
-			}
-		}
-		
-		return ris;
-	}
-	
-	/**
-	 * Compara due nazioni per numero medaglie
-	 * @param n1 Nazione 1
-	 * @param n2 Nazione 2
-	 * @return 	MAGGIORE se n1>n2
-	 * 			MINORE se ni<n2
-	 * 			UGUALE se n1==n2
-	 */
-	private int compareNazioni (Nazione n1, Nazione n2)
-	{
-		
-		if (getMedaglieOro(n1.getNome()) > getMedaglieOro(n2.getNome()))
-			return MAGGIORE;
-		else if (getMedaglieOro(n1.getNome()) == getMedaglieOro(n2.getNome()) && getMedaglieArgento(n1.getNome()) > getMedaglieArgento(n2.getNome()))
-			return MAGGIORE;
-		else if (getMedaglieOro(n1.getNome()) == getMedaglieOro(n2.getNome()) && getMedaglieArgento(n1.getNome()) == getMedaglieArgento(n2.getNome()) && getMedaglieBronzo(n1.getNome()) > getMedaglieBronzo(n2.getNome()))
-			return MAGGIORE;
-		else if (getMedaglieOro(n1.getNome()) == getMedaglieOro(n2.getNome()) && getMedaglieArgento(n1.getNome()) == getMedaglieArgento(n2.getNome()) && getMedaglieBronzo(n1.getNome()) == getMedaglieBronzo(n2.getNome()))
-			return UGUALE;
-		
-		return MINORE;
-	}
-	
-	/**
-	 * Ritrona la classifica delle nazioni per numero medaglie
-	 * @return Classifica  (posizione 0: più medaglie)
-	 */
-	public ArrayList<Nazione> getClassifica ()
-	{
-		ArrayList<Nazione> classifica = new ArrayList<>();
-		ArrayList<Nazione> toProcess = new ArrayList<>(nazioni);
-		
-		while (toProcess.size() > 0)
-		{
-			Nazione max = toProcess.get(0);
-			
-			for (Nazione n: toProcess)
-			{
-				if (compareNazioni(n, max)==MAGGIORE)
-					max = n;
-			}
-			
-			classifica.add(max);
-			toProcess.remove(max);
-		}
-		
-		return classifica;
-		
-	}
-	
-	/**
-	 * Ritorna la descrizione di una nazione con le medaglie vinte
-	 * @param n Nazione
-	 * @return Stringa descrittiva
-	 */
-	private String getNazioneString (Nazione n)
-	{
-		return n.toString() + ":  " + String.format(FORMATO_NUMERO_MEDAGLIE, getMedaglieOro(n.getNome()), getMedaglieArgento(n.getNome()), getMedaglieBronzo(n.getNome())) + "\n";
+		return nazioni.getNazione(nomeNazione).getMedaglie(WinDegree.BRONZE.getIndex());
 	}
 	
 	/**
@@ -242,10 +143,11 @@ private static final int UGUALE = 0;
 	@Override
 	public String toString ()
 	{
+		ArrayList<Nazione> naz = nazioni.getArrayList();
 		StringBuffer ris = new StringBuffer();
-		for (Nazione n : nazioni)
+		for (Nazione n : naz)
 		{
-			ris.append(getNazioneString(n));
+			ris.append(n.toString());
 		}
 		return ris.toString();
 	}
@@ -256,12 +158,12 @@ private static final int UGUALE = 0;
 	 */
 	public String toStringOrdinato ()
 	{
-		ArrayList<Nazione> classifica = getClassifica();
+		ArrayList<Nazione> classifica = nazioni.getClassifica();
 		
 		StringBuffer ris = new StringBuffer();
 		for (Nazione n : classifica)
 		{
-			ris.append(getNazioneString(n));
+			ris.append(n.toString());
 		}
 		return ris.toString();
 	}

@@ -71,8 +71,48 @@ public class ElencoNazioni
 		return null;
 	}
 	
+	/**
+	 * Ritorna il numero di nazioni
+	 * @return
+	 */
 	public int getNumeroNazioni ()
 	{
 		return nazioni.size();
+	}
+	
+	/**
+	 * Ritorna l'array delle nazioni
+	 * @return array
+	 */
+	public ArrayList<Nazione> getArrayList ()
+	{
+		return nazioni;
+	}
+	
+	/**
+	 * Ritrona la classifica delle nazioni per numero medaglie
+	 * @return Classifica  (posizione 0: più medaglie)
+	 */
+	public ArrayList<Nazione> getClassifica ()
+	{
+		ArrayList<Nazione> classifica = new ArrayList<>();
+		ArrayList<Nazione> toProcess = new ArrayList<>(nazioni);
+		
+		while (toProcess.size() > 0)
+		{
+			Nazione max = toProcess.get(0);
+			
+			for (Nazione n: toProcess)
+			{
+				if (n.meglioDi(max))
+					max = n;
+			}
+			
+			classifica.add(max);
+			toProcess.remove(max);
+		}
+		
+		return classifica;
+		
 	}
 }
