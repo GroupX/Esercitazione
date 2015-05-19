@@ -17,6 +17,8 @@ public class Nazione
 	private static final int MINORE = -1;
 	private static final int UGUALE = 0;
 	
+	private static final String FORMATO_TO_STRING = "%s: Oro: %d; Argento: %d; Bronzo: %d";
+	
 	private String nome;
 	private int[] contatoreMedaglie = new int[NUM_MEDAGLIE];
 	
@@ -131,6 +133,6 @@ public class Nazione
 	@Override
 	public String toString ()
 	{
-		return getNome();
+		return String.format(FORMATO_TO_STRING, getNome(), getMedaglie(WinDegree.GOLD.getIndex()), getMedaglie(WinDegree.SILVER.getIndex()), getMedaglie(WinDegree.BRONZE.getIndex()));
 	}
 }
