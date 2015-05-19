@@ -2,6 +2,11 @@ package it.unibs.ing.fp.medagliere;
 
 import java.util.ArrayList;
 
+/**
+ * Classe per la gestione di un elenco di nazioni
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class ElencoNazioni
 {
 	private ArrayList <Nazione> nazioni = new ArrayList<Nazione>();

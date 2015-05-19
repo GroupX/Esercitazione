@@ -2,6 +2,11 @@ package it.unibs.ing.fp.medagliere;
 
 import java.util.ArrayList;
 
+/**
+ * Classe per la gestione di un elenco di gare
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class ElencoGare
 {
 	private ArrayList<Gara> gare = new ArrayList<Gara>();
