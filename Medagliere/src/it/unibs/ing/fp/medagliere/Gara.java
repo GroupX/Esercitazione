@@ -135,6 +135,7 @@ public class Gara
 		if(ris == null)
 		{
 			this.ris = result;
+			setEseguita();
 			return true;
 		}
 		else
