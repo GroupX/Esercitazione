@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <help_text>// Uncomment the following line to change the fontsize and font:
+fontsize=13
+fontfamily=Serif //possible: SansSerif,Serif,Monospaced
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Welcome to UMLet!
+//
+// Double-click on elements to add them to the diagram, or to copy them
+// Edit elements by modifying the text in this panel
+// Hold Ctrl to select multiple elements
+// Use Ctrl+mouse to select via lasso
+//
+// Use +/- or Ctrl+mouse wheel to zoom
+// Drag a whole relation at its central square icon
+//
+// Press Ctrl+C to copy the whole diagram to the system clipboard (then just paste it to, eg, Word)
+// Edit the files in the "palettes" directory to create your own element palettes
+//
+// Select "Custom Elements &gt; New..." to create new element types
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// This text will be stored with each diagram;  use it for notes.</help_text>
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>552</x>
+      <y>312</y>
+      <w>176</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::Risultato
+--
+-NUM_WINNERS = 3: int
+-TO_STRING_FORMAT = "Oro: %s; Argento: %s; Bronzo: %s": String
+-winners = new Nazione[NUM_WINNERS]: Nazione[]
+--
++Risultato(Nazione gold, Nazione silver, Nazione bronze): ctor
++Risultato(): ctor
++getGold(): Nazione
++getSilver(): Nazione
++getBronze(): Nazione
++setResult(Nazione n, int medal): void
++hasWon(Nazione n): WinDegree
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>784</x>
+      <y>312</y>
+      <w>196</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::Nazione
+--
+-SEPARATOR_NAME = " ": String
+-NUM_MEDAGLIE = 3: int
+-MAGGIORE = 1: int
+-MINORE = -1: int
+-UGUALE = 0: int
+-FORMATO_TO_STRING = "%s: Oro: %d; Argento: %d; Bronzo: %d": String
+-nome: String
+-contatoreMedaglie = new int[NUM_MEDAGLIE]: int[]
+--
++Nazione(String nome): ctor
++getNome(): String
++getContatoreMedaglie(): int[]
++getMedaglie(int type): int
++aggiungiMedaglia(int type): void
++meglioDi(Nazione n): boolean
++compare(Nazione n): int
++equals(Object o): boolean
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>208</x>
+      <y>312</y>
+      <w>120</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::Gara
+--
+-NUM_WINNERS = 3: int
+-TO_STRING_FORMAT = "%s: %s": String
+-nome: String
+-ris: Risultato
+-eseguita: boolean
+--
++Gara(String nome): ctor
++toString(): String
++getNome(): String
++getRis(): Risultato
++giaPremiata(): boolean
++setEseguita(): void
++equals(Object o): boolean
++getPremiate(): Nazione[]
++aggiungiPremiata(Nazione n, int medal): void
++setRisultato(Risultato result): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>192</x>
+      <y>180</y>
+      <w>124</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::ElencoGare
+--
+-gare = new ArrayList&lt;Gara&gt;(): ArrayList&lt;Gara&gt;
+--
++aggiungiGara(String nome): boolean
++aggiungiGara(Gara g): boolean
++getGara(String nome): Gara
++presente(String nome): boolean
++getNumeroGare(): int
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>16</x>
+      <y>4</y>
+      <w>236</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::MedagliereMain
+--
+-ERRORE_RISULTATO = "Risultato già presente!": String
+-RISULTATO_BRONZO = "Inserisci il nome della nazione che ha ottenuto il bronzo: ": String
+-RISULTATO_ARGENTO = "Inserisci il nome della nazione che ha ottenuto l'argento: ": String
+-RISULTATO_ORO = "Inserisci il nome della nazione che ha ottenuto l'oro: ": String
+-NOME_RISULTATO = "Inserisci risultato per una gara: ": String
+-ERRORE_GARA = "Gara già presente!": String
+-NOME_GARA = "Inserisci il nome della gara: ": String
+-NOME_NAZIONE = "Inserisci il nome della nazione: ": String
+-ERRORE_NAZIONE = "Nazione già presente!": String
+-VISUALIZZA_TUTTO_INDEX = 4: int
+-INSERISCI_RISULTATO_INDEX = 3: int
+-INSERISCI_GARA_INDEX = 2: int
+-INSERISCI_NAZIONE_INDEX = 1: int
+-VISUALIZZA_TUTTO = "Visualizza tutto": String
+-INSERISCI_RISULTATO = "Inserisci risultato": String
+-INSERISCI_GARA = "Inserisci gara": String
+-INSERISCI_NAZIONE = "Inserisci nazione": String
+-MENU_TITOLO = "Menu": String
+--
++main(String[] args): void
+--
+
+layer=0</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>396</x>
+      <y>8</y>
+      <w>320</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::Medagliere
+--
+-nazioni = new ElencoNazioni(): ElencoNazioni
+-gare = new ElencoGare(): ElencoGare
+--
++Medagliere(): ctor
++addNazione(String nome): boolean
++hasNazione(String nome): boolean
++hasGara(String nome): boolean
++addGara(String nome): boolean
++getGara(String nome): Gara
++addRisultato(String nomeGara, String nomeNazioneOro, String nomeNazioneArgento, String nomeNazioneBronzo): boolean
++getMedaglieOro(String nomeNazione): int
++getMedaglieArgento(String nomeNazione): int
++getMedaglieBronzo(String nomeNazione): int
++toString(): String
++toStringOrdinato(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>312</y>
+      <w>112</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::WinDegree
+--
+-GOLD = WinDegree
+-SILVER = WinDegree
+-BRONZE = WinDegree
+-NONE = WinDegree
+-index: int
+--
++WinDegree(int): ctor
++getIndex(): int
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>796</x>
+      <y>180</y>
+      <w>128</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>it.unibs.ing.fp.medagliere::ElencoNazioni
+--
+-nazioni: ArrayList&lt;Nazione&gt;
+--
++ElencoNazioni(): ctor
++aggiungiNazione(String): boolean
++aggiungiNazione(Nazione): boolean
++presente(String): boolean
++getNazione(String): Nazione
++getNumeroNazioni(): int
++getArrayList(): ArrayList&lt;Nazione&gt;
++getClassifica(): ArrayList&lt;Nazione&gt;
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>652</x>
+      <y>108</y>
+      <w>216</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>520.0;180.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>612</x>
+      <y>108</y>
+      <w>228</w>
+      <h>212</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>550.0;510.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>572</x>
+      <y>108</y>
+      <w>76</w>
+      <h>212</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>170.0;510.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>276</x>
+      <y>108</y>
+      <w>228</w>
+      <h>212</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;510.0;550.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>248</x>
+      <y>108</y>
+      <w>216</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;180.0;520.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>248</x>
+      <y>56</y>
+      <w>156</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>370.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>112</x>
+      <y>208</y>
+      <w>104</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>240.0;400.0;10.0;400.0;10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>920</x>
+      <y>208</y>
+      <w>120</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>150.0;400.0;280.0;400.0;280.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>424</x>
+      <y>368</y>
+      <w>456</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;280.0;1120.0;280.0;1120.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>464</x>
+      <y>108</y>
+      <w>76</w>
+      <h>212</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;510.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>452</x>
+      <y>368</y>
+      <w>144</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;210.0;340.0;210.0;340.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>656</x>
+      <y>392</y>
+      <w>180</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>430.0;100.0;430.0;150.0;10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>296</x>
+      <y>368</y>
+      <w>112</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>260.0;10.0;260.0;210.0;10.0;210.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>260</x>
+      <y>392</y>
+      <w>372</w>
+      <h>124</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>910.0;10.0;910.0;290.0;10.0;290.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>224</x>
+      <y>416</y>
+      <w>700</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>1730.0;40.0;1730.0;310.0;10.0;310.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
