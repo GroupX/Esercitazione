@@ -14,7 +14,7 @@ public class ElencoNazioni
 	public boolean aggiungiNazione (String nome)
 	{
 		
-		if (!hasNazione(nome))
+		if (!presente(nome))
 		{
 			nazioni.add(new Nazione (nome));
 			return true;
@@ -33,7 +33,7 @@ public class ElencoNazioni
 	public boolean aggiungiNazione (Nazione n)
 	{
 		
-		if (!hasNazione(n.getNome()))
+		if (!presente(n.getNome()))
 		{
 			nazioni.add(n);
 			return true;
