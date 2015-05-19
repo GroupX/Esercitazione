@@ -2,7 +2,7 @@ package it.unibs.ing.fp.medagliere;
 
 import java.util.ArrayList;
 
-public class ElencoNazioni
+public class ElencoNazioniDIO PORCO
 {
 	private ArrayList <Nazione> nazioni = new ArrayList<Nazione>();
 	
