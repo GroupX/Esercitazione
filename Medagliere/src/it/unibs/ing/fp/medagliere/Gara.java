@@ -7,6 +7,9 @@ package it.unibs.ing.fp.medagliere;
  */
 public class Gara
 {
+	/** Numero di nazioni vincenti */
+	private static final int NUM_WINNERS = 3;
+
 	/** Formato della stringa generata dal metodo <i>toString()</i> */
 	private final static String TO_STRING_FORMAT = "%s: %s";
 	
@@ -15,6 +18,10 @@ public class Gara
 	
 	/** Risultato della gara */
 	private Risultato ris;
+	
+	/** Se eseguita o meno */
+	private boolean eseguita;
+	
 	/**
 	 * Costruttore che inizializza il nome della gara
 	 * @param nome Nome della gara
@@ -24,6 +31,7 @@ public class Gara
 	{
 		this.nome = nome;
 		this.ris = null;
+		this.eseguita = false;
 	}
 	
 	/**
@@ -55,6 +63,23 @@ public class Gara
 	}
 	
 	/**
+	 * Ritorna <i>eseguita</i>
+	 * @return valore di <i>eseguita</i>
+	 */
+	public boolean giaPremiata()
+	{
+		return eseguita;
+	}
+	
+	/**
+	 * setta a <b>true</b> l'attributo <i>eseguita</i>
+	 */
+	public void setEseguita ()
+	{
+		eseguita = true;
+	}
+	
+	/**
 	 * Verifica l'uguaglianza tra due gare (case insensitive)
 	 * @param n Altra gara
 	 * @return true: stessa gara false: gara diversa
@@ -69,6 +94,42 @@ public class Gara
 			return false;
 	}
 	
+	/**
+	 * Ritorna le nazioni vincenti della gara
+	 * @return Array contenenti le nazioni vincenti della gara
+	 */
+	public Nazione[] getPremiate ()
+	{
+		Nazione[] n = new Nazione[NUM_WINNERS];
+		
+		n[WinDegree.GOLD.getIndex()] = ris.getGold();
+		n[WinDegree.SILVER.getIndex()] = ris.getSilver();
+		n[WinDegree.BRONZE.getIndex()] = ris.getBronze();
+		
+		return n;
+	}
+	
+	/**
+	 * Aggiunge un risultato alla gara
+	 * @param n
+	 * 			Nazione vincente
+	 * @param medal
+	 * 			Medaglia vinta
+	 */
+	public void aggiungiPremiata (Nazione n, int medal)
+	{
+		if (ris == null)
+			ris = new Risultato();
+		
+		ris.setResult(n, medal);
+	}
+	
+	/**
+	 * Aggiunge un risultato alla gara
+	 * @param result 
+	 * 			Risultato della gara
+	 * @return true: risultato aggiunto; false: risultato già presente
+	 */
 	public boolean setRisultato (Risultato result)
 	{
 		if(ris == null)

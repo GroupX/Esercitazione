@@ -30,6 +30,14 @@ public class Risultato
 	}
 	
 	/**
+	 * Costruttore default
+	 */
+	public Risultato ()
+	{
+		
+	}
+	
+	/**
 	 * Ritorna la nazione che ha vinto l'oro (primo posto)
 	 * @return Nazione con oro
 	 */
@@ -54,6 +62,19 @@ public class Risultato
 	public Nazione getBronze ()
 	{
 		return winners[WinDegree.BRONZE.getIndex()];
+	}
+	
+	/**
+	 * Aggiunge un risultato
+	 * @param n
+	 * 			Nazione vincente
+	 * @param medal
+	 * 			Medaglia vinta
+	 */
+	public void setResult (Nazione n, int medal)
+	{
+		if(medal >= 0 && medal < NUM_WINNERS)
+			winners[medal] = n;
 	}
 	
 	/**
