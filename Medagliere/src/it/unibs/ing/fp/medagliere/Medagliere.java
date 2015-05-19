@@ -147,7 +147,7 @@ private static final int UGUALE = 0;
 		StringBuffer ris = new StringBuffer();
 		for (Nazione n : naz)
 		{
-			ris.append(n.toString());
+			ris.append(n.toString() + "\n");
 		}
 		return ris.toString();
 	}
@@ -163,7 +163,7 @@ private static final int UGUALE = 0;
 		StringBuffer ris = new StringBuffer();
 		for (Nazione n : classifica)
 		{
-			ris.append(n.toString());
+			ris.append(n.toString() + "\n");
 		}
 		return ris.toString();
 	}
