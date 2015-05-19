@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medagliere;
+package it.unibs.ing.fp.medagliere;
 
 /**
  * Classe che implementa i risultati delle gare

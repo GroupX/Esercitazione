@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import it.unibs.ing.fp.groupX.medagliere.Gara;
-import it.unibs.ing.fp.groupX.medagliere.Nazione;
-import it.unibs.ing.fp.groupX.medagliere.Risultato;
+import it.unibs.ing.fp.medagliere.Gara;
+import it.unibs.ing.fp.medagliere.Nazione;
+import it.unibs.ing.fp.medagliere.Risultato;
 
 public class GaraTest
 {
