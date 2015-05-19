@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ElencoNazioniTest {
+	
 	@Test
 	public void testAggiuntaNazione() throws Exception {
 		final ElencoNazioni nazioni = new ElencoNazioni();
