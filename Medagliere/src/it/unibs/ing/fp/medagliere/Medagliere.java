@@ -1,6 +1,5 @@
 package it.unibs.ing.fp.medagliere;
 
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 
 /**
@@ -12,10 +11,6 @@ public class Medagliere
 {
 private ElencoNazioni nazioni = new ElencoNazioni();
 private ElencoGare gare = new ElencoGare();
-private static final String FORMATO_NUMERO_MEDAGLIE = "Oro: %d; Argento: %d; Bronzo: %d";
-private static final int MAGGIORE = 1;
-private static final int MINORE = -1;
-private static final int UGUALE = 0;
 
 	/**
 	 * Costruttore senza parametri

@@ -10,7 +10,6 @@ import it.unibs.ing.fp.groupX.myutil.StringManager;
 public class Nazione
 {
 	private final static String SEPARATOR_NAME = " ";
-	private final static int FIRST_LETTER_NAME = 0;
 	private final static int NUM_MEDAGLIE = 3;
 	
 	private static final int MAGGIORE = 1;
