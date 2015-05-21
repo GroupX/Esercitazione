@@ -57,7 +57,7 @@ public class Risultato
 	
 	/**
 	 * Ritorna la nazione che ha vinto il bronzo (terzo posto)
-	 * @return Nazione con bonzo
+	 * @return Nazione con bronzo
 	 */
 	public Nazione getBronze ()
 	{
@@ -81,7 +81,7 @@ public class Risultato
 	 * Controlla se la nazione passata ha vinto qualcosa
 	 * @param n
 	 * 			Nazione da testare
-	 * @return WinDegree.GOLD se prima, WinDegree.SILVER se seconda, WinDegree.BRONZE se terza, WinDegree.GOLD se non ha vinto nulla
+	 * @return WinDegree.GOLD se prima, WinDegree.SILVER se seconda, WinDegree.BRONZE se terza, WinDegree.NONE se non ha vinto nulla
 	 */
 	public WinDegree hasWon (Nazione n)
 	{

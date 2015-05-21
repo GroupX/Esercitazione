@@ -16,7 +16,7 @@ public class GaraTest
 	private static final String NAZIONE_2 = "Francia";
 	private static final String NAZIONE_3 = "Germania";
 	
-	@org.junit.Test
+	@Test
 	public void creationTest() throws Exception
 	{
 		Gara g = new Gara (GARA_1_NOME);

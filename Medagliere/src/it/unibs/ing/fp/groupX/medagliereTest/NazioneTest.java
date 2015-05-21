@@ -1,6 +1,9 @@
 package it.unibs.ing.fp.groupX.medagliereTest;
 
 import static org.junit.Assert.*;
+
+import org.junit.Test;
+
 import it.unibs.ing.fp.medagliere.Nazione;
 
 public class NazioneTest
@@ -9,7 +12,7 @@ public class NazioneTest
 	private final static String NATION_2_NAME = "Italia";
 	private final static String NATION_1_WRONG_NAME = "san marino";
 	
-	@org.junit.Test
+	@Test
 	public void	creationTest () throws Exception
 	{
 		Nazione n = new Nazione (NATION_1_WRONG_NAME);
@@ -17,7 +20,7 @@ public class NazioneTest
 		assertEquals(NATION_1_NAME, n.getNome ());
 	}
 	
-	@org.junit.Test
+	@Test
 	public void equalsTest () throws Exception
 	{
 		Nazione n1 = new Nazione(NATION_1_NAME);
@@ -28,7 +31,7 @@ public class NazioneTest
 		assertEquals(false, n1.equals (n3));
 	}
 	
-	@org.junit.Test
+	@Test
 	public void toStringTest () throws Exception
 	{
 		Nazione n = new Nazione (NATION_1_NAME);

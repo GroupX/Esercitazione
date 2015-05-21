@@ -82,7 +82,7 @@ public class Gara
 	/**
 	 * Verifica l'uguaglianza tra due gare (case insensitive)
 	 * @param n Altra gara
-	 * @return true: stessa gara false: gara diversa
+	 * @return true: stessa gara, false: gara diversa
 	 */
 	@Override
 	public boolean equals (Object o)
@@ -128,7 +128,7 @@ public class Gara
 	 * Aggiunge un risultato alla gara
 	 * @param result 
 	 * 			Risultato della gara
-	 * @return true: risultato aggiunto; false: risultato già presente
+	 * @return true: risultato aggiunto, false: risultato già presente
 	 */
 	public boolean setRisultato (Risultato result)
 	{

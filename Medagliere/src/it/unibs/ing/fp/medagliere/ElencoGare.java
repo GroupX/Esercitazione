@@ -14,7 +14,7 @@ public class ElencoGare
 	/**
 	 * Inserisce una gara se non già presente
 	 * @param nome Gara da inserire
-	 * @return true: gara inserita false: gara già presente
+	 * @return true: gara inserita, false: gara già presente
 	 */
 	public boolean aggiungiGara (String nome)
 	{
@@ -32,7 +32,7 @@ public class ElencoGare
 	/**
 	 * Inserisce una gara se non già presente
 	 * @param nome Gara da inserire
-	 * @return true: gara inserita false: gara già presente
+	 * @return true: gara inserita, false: gara già presente
 	 */
 	public boolean aggiungiGara (Gara g)
 	{
@@ -66,7 +66,7 @@ public class ElencoGare
 	/**
 	 * Verifica che una gara sia presente
 	 * @param nome Gara da ricercare 
-	 * @return true: la gara è presente false: la gara non è presente
+	 * @return true: la gara è presente, false: la gara non è presente
 	 */
 	public boolean presente (String nome)
 	{

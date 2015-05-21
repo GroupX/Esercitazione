@@ -73,7 +73,7 @@ public class Nazione
 	 * Confronta le nazioni in base alle medaglie
 	 * @param n
 	 * 			Nazione da confrontare
-	 * @return true: se la nazione è meglio di quella passata, false altrimenti
+	 * @return true: se la nazione è meglio di quella passata, false: altrimenti
 	 */
 	public boolean meglioDi (Nazione n)
 	{
@@ -112,7 +112,7 @@ public class Nazione
 	/**
 	 * Verifica l'uguaglianza tra due nazioni (case insensitive)
 	 * @param n Altra nazione
-	 * @return true: stessa nazione false: nazione diversa
+	 * @return true: stessa nazione, false: nazione diversa
 	 */
 	@Override
 	public boolean equals (Object o)

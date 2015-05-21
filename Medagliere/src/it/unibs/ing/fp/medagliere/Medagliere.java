@@ -23,7 +23,7 @@ private ElencoGare gare = new ElencoGare();
 	/**
 	 * Aggiunge una nazione (aggiunge solo se non è già presente)
 	 * @param nome Nazione da inserire
-	 * @return true: nazione inserita false: nazione già presente
+	 * @return true: nazione inserita, false: nazione già presente
 	 */
 	public boolean addNazione (String nome)
 	{
@@ -34,7 +34,7 @@ private ElencoGare gare = new ElencoGare();
 	/**
 	 * Verifica che una nazione sia presente
 	 * @param nome Nazione da ricercare
-	 * @return true: nazione presente false: nazione non presente
+	 * @return true: nazione presente, false: nazione non presente
 	 */
 	public boolean hasNazione (String nome)
 	{
@@ -44,7 +44,7 @@ private ElencoGare gare = new ElencoGare();
 	/**
 	 * Verifica che una gara sia presente
 	 * @param nome Gara da ricercare 
-	 * @return true: la gara è presente false: la gara non è presente
+	 * @return true: la gara è presente, false: la gara non è presente
 	 */
 	public boolean hasGara (String nome)
 	{
@@ -54,7 +54,7 @@ private ElencoGare gare = new ElencoGare();
 	/**
 	 * Inserisce una gara se non già presente
 	 * @param nome Gara da inserire
-	 * @return true: gara inserita false: gara già presente
+	 * @return true: gara inserita, false: gara già presente
 	 */
 	public boolean addGara (String nome)
 	{
@@ -77,7 +77,7 @@ private ElencoGare gare = new ElencoGare();
 	 * @param nomeNazioneOro Nazione che ha preso l'oro
 	 * @param nomeNazioneArgento Nazione che ha preso l'argento
 	 * @param nomeNazioneBronzo Nazione che ha preso il bronzo
-	 * @return true: risultato aggiunto false: risultato non aggiunto
+	 * @return true: risultato aggiunto, false: risultato non aggiunto
 	 */
 	public boolean addRisultato (String nomeGara, String nomeNazioneOro, String nomeNazioneArgento, String nomeNazioneBronzo)
 	{	
@@ -148,7 +148,7 @@ private ElencoGare gare = new ElencoGare();
 	}
 	
 	/**
-	 * Ritorna una stringa con le nazioni in oprdine di medaglie vinte
+	 * Ritorna una stringa con le nazioni in ordine di medaglie vinte
 	 * @return Stringa descrittiva
 	 */
 	public String toStringOrdinato ()

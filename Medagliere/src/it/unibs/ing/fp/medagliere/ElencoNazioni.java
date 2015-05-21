@@ -14,7 +14,7 @@ public class ElencoNazioni
 	/**
 	 * Aggiunge una nazione (aggiunge solo se non è già presente)
 	 * @param nome Nazione da inserire
-	 * @return true: nazione inserita false: nazione già presente
+	 * @return true: nazione inserita, false: nazione già presente
 	 */
 	public boolean aggiungiNazione (String nome)
 	{
@@ -33,7 +33,7 @@ public class ElencoNazioni
 	/**
 	 * Aggiunge una nazione (aggiunge solo se non è già presente)
 	 * @param n Nazione da inserire
-	 * @return true: nazione inserita false: nazione già presente
+	 * @return true: nazione inserita, false: nazione già presente
 	 */
 	public boolean aggiungiNazione (Nazione n)
 	{
@@ -52,7 +52,7 @@ public class ElencoNazioni
 	/**
 	 * Verifica che una nazione sia presente
 	 * @param nome Nazione da ricercare
-	 * @return true: nazione presente false: nazione non presente
+	 * @return true: nazione presente, false: nazione non presente
 	 */
 	public boolean presente (String nome)
 	{
@@ -63,7 +63,7 @@ public class ElencoNazioni
 	/**
 	 * Ritorna una nazione dato il nome 
 	 * @param nome Nome della nazione
-	 * @return Nazione crecata, se presenrte, altrimenti null
+	 * @return Nazione cercata, se presenrte, altrimenti null
 	 */
 	public Nazione getNazione (String nome)
 	{
@@ -78,7 +78,7 @@ public class ElencoNazioni
 	
 	/**
 	 * Ritorna il numero di nazioni
-	 * @return
+	 * @return Numero di nazioni
 	 */
 	public int getNumeroNazioni ()
 	{
@@ -95,7 +95,7 @@ public class ElencoNazioni
 	}
 	
 	/**
-	 * Ritrona la classifica delle nazioni per numero medaglie
+	 * Ritorna la classifica delle nazioni per numero di medaglie
 	 * @return Classifica  (posizione 0: più medaglie)
 	 */
 	public ArrayList<Nazione> getClassifica ()
