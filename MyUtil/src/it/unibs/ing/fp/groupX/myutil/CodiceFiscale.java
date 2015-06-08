@@ -44,13 +44,32 @@ public class CodiceFiscale {
 	}
 	
 	/**
+	 * Ritorna il codice
+	 * @return codice
+	 */
+	public String getCod()
+	{
+		return cod;
+	}
+	
+	/**
 	 * Override di toString
 	 * @return Codice fiscale
 	 */
 	@Override
 	public String toString() 
 	{
-		return cod;
+		return getCod();
+	}
+	
+	/**
+	 * Override di equals
+	 * @return true: si equivalgono; false: altrimenti
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		CodiceFiscale c = (CodiceFiscale)obj;
+		return cod.equalsIgnoreCase(c.getCod());
 	}
 	
 	/**
