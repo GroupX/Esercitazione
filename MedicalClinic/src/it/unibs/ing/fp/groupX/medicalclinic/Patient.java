@@ -37,7 +37,7 @@ public class Patient extends Person
 	{
 		super(name, surname, birth, birthPlace, gen, num, cod);
 		
-		this.fol = fol;
+		this.fol = new ClinicFolder(fol);
 	}
 	
 	/**

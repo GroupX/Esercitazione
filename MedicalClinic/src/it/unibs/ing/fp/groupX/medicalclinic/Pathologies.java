@@ -16,6 +16,7 @@ public class Pathologies {
 	/** Messaggio errore: patologia già presente nella lista */
 	public static final String PATHOLOGY_ALREADY_INSERT = "Patologia già presente";
 	
+	
 	/** Elenco patologie */
 	private static ArrayList<Pathology> list = new ArrayList<Pathology>();
 	
@@ -158,6 +159,26 @@ public class Pathologies {
 	}
 	
 	/**
+	 * RItorna l'indice della patologia cercata
+	 * @param pathologyName
+	 * 				Nome della patologia
+	 * @return indice della patologia
+	 * @throws IllegalArgumentException
+	 * 				Patologia non presente
+	 */
+	private static int getIndex (String pathologyName) throws IllegalArgumentException
+	{
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (pathologyName.equalsIgnoreCase(list.get(i).getName()))
+				return i;
+		}
+		
+		IllegalArgumentException e = new IllegalArgumentException(PATHOLOGY_NOT_FOUND);
+		throw e;
+	}
+	
+	/**
 	 * ritorna un array contenente tutte le patologie nella lista
 	 * @return array di patologie
 	 */
@@ -165,6 +186,33 @@ public class Pathologies {
 	{
 		Pathology[] p = new Pathology[list.size()];
 		return list.toArray(p);
+	}
+	
+	/**
+	 * Modifica una patologia della lista
+	 * @param oldPathologyName
+	 * 				Nome attuale della patologia
+	 * @param newPathologyName
+	 * 				Nome nuovo della patologia
+	 * @throws IllegalArgumentException
+	 * 				Patologia non presente
+	 */
+	public static void change (String oldPathologyName, String newPathologyName) throws IllegalArgumentException
+	{
+		if (contains(newPathologyName))
+		{
+			IllegalArgumentException e = new IllegalArgumentException(PATHOLOGY_ALREADY_INSERT);
+			throw e;
+		}
+		else if (!contains(oldPathologyName))
+		{
+			IllegalArgumentException e = new IllegalArgumentException(PATHOLOGY_NOT_FOUND);
+			throw e;
+		}
+		else
+		{
+			list.set(getIndex(oldPathologyName), new Pathology(newPathologyName));
+		}
 	}
 	
 	/**
