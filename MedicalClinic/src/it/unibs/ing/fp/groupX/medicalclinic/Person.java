@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Person
 {
-	/** FOrmato stampa */
+	/** Formato stampa */
 	private static final String PRINT_FORMAT = "%s %s\nNato il %s a %s\nCodice Fiscale: %s\nNumero di telefono: %s";
 	/** Formato stampa data */
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
