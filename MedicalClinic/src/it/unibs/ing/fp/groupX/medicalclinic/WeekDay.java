@@ -5,7 +5,7 @@ package it.unibs.ing.fp.groupX.medicalclinic;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public enum Week {
+public enum WeekDay {
 	LUNEDI(0),
 	MARTEDI(1),
 	MERCOLEDI(2),
@@ -13,6 +13,9 @@ public enum Week {
 	VENERDI(4),
 	SABATO(5),
 	DOMENICA(6);
+	
+	/** Numero di giorni della settimana */
+	public static final int NUM_DAYS = 7;
 	
 	/** Valore del giorno */
 	private int value;
@@ -22,7 +25,7 @@ public enum Week {
 	 * @param value
 	 * 			valore del giorno
 	 */
-	private Week (int value)
+	private WeekDay (int value)
 	{
 		this.value = value;
 	}
