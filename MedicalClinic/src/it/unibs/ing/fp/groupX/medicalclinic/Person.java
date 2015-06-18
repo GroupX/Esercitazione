@@ -14,6 +14,8 @@ public class Person
 {
 	/** Formato stampa */
 	private static final String PRINT_FORMAT = "%s %s\nNato il %s a %s\nCodice Fiscale: %s\nNumero di telefono: %s";
+	/** Formato stampa breve */
+	private static final String PRINT_FORMAT_SHORT = "%s  %s  CF: %s";
 	/** Formato stampa data */
 	private static final String DATE_FORMAT = "dd/MM/yyyy";
 	
@@ -109,6 +111,15 @@ public class Person
 		return cod;
 	}
 
+	/**
+	 * Stampa una persona in formato breve (nome cognome e codice fiscale)
+	 * @return Stringa che rappresena la persona in formato breve
+	 */
+	public String toStringShort ()
+	{
+		return String.format(PRINT_FORMAT, name, surname, cod.toString());
+	}
+	
 	/**
 	 * Override di toString
 	 * @return stringa descrittiva dell'oggetto
