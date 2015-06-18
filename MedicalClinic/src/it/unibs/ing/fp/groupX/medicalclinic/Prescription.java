@@ -61,6 +61,7 @@ public class Prescription {
 			strBuff.append(pe.toString() + "\n");
 		}
 		
+		strBuff.delete(strBuff.length() - 1, strBuff.length());
 		return strBuff.toString();
 	}
 	
