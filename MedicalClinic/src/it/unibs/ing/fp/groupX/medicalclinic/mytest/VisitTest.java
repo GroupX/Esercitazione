@@ -2,9 +2,11 @@ package it.unibs.ing.fp.groupX.medicalclinic.mytest;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import it.unibs.ing.fp.groupX.medicalclinic.ClinicFolder;
+import it.unibs.ing.fp.groupX.medicalclinic.Doctor;
 import it.unibs.ing.fp.groupX.medicalclinic.Patient;
 import it.unibs.ing.fp.groupX.medicalclinic.Person;
 import it.unibs.ing.fp.groupX.medicalclinic.Visit;
@@ -15,10 +17,10 @@ import org.junit.Test;
 
 public class VisitTest {
 	
-	private Visit getTestVisit ()
+	private Visit getTestVisit () throws ParseException
 	{
-		Date birth = Utilities.stringToDate("30/10/1995");
 		Patient p = new Patient(PersonTest.getTestPerson1(), new ClinicFolder());
+		Doctor d = new Doctor(PersonTest.getTestPerson2(), new boolean[1][1]);
 	}
 	
 	@Test

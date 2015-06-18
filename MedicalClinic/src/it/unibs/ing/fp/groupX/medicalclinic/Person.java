@@ -63,6 +63,14 @@ public class Person
 	}
 	
 	/**
+	 * Costruttore copia
+	 * @param p Persona da copiare
+	 */
+	public Person(Person p) {
+		this(p.name, p.surname, p.birth, p.birthPlace, p.gen, p.num, p.cod);
+	}
+
+	/**
 	 * @return the name
 	 */
 	public String getName() {

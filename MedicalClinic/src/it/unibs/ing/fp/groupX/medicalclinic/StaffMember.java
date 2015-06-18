@@ -34,4 +34,13 @@ public class StaffMember extends Person
 	{
 		super(name, surname, birth, birthPlace, gen, num, cod);
 	}
+	
+	/**
+	 * Costruttore da persona
+	 * @param person Persona da cui inizializzare
+	 */
+	public StaffMember (Person person)
+	{
+		super(person);
+	}
 }

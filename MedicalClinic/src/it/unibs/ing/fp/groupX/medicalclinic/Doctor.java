@@ -44,6 +44,18 @@ public class Doctor extends StaffMember {
 	}
 	
 	/**
+	 * Costruttore che si basa su un oggetto person
+	 * @param person Persona
+	 * @param hours Orari disponibili del dottore
+	 */
+	public Doctor (Person person, boolean[][] hours)
+	{
+		super(person);
+		this.hours = hours.clone();
+		this.albo = generateAlbo();
+	}
+	
+	/**
 	 * Ritorna il numero di Albo
 	 * @return numero di Albo
 	 */
