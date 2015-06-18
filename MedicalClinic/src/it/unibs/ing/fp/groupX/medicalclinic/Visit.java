@@ -122,7 +122,18 @@ public class Visit
 	 */
 	public void setReport (Diagnosis diagnosis, Prescription prescription)
 	{
-		this.setReport(new Report(diagnosis, prescription));
+		this.setReport(new Report(diagnosis, prescription, date));
+	}
+	
+	/**
+	 * Imposta il referto e pone la visita in stato di refertata
+	 * @param diagnosis Diagnosi
+	 * @param prescription Prescrizione
+	 * @param date Data del referto
+	 */
+	public void setReport (Diagnosis diagnosis, Prescription prescription, Date date)
+	{
+		this.setReport(new Report(diagnosis, prescription, date));
 	}
 	
 	/**

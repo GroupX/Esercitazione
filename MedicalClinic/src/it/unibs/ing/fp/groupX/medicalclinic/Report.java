@@ -1,5 +1,9 @@
 package it.unibs.ing.fp.groupX.medicalclinic;
 
+import it.unibs.ing.fp.groupX.myutil.Utilities;
+
+import java.util.Date;
+
 /**
  * Classe che definisce un referto
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
@@ -7,17 +11,26 @@ package it.unibs.ing.fp.groupX.medicalclinic;
  */
 public class Report {
 
-	private static String TO_STRING_FORMAT = "Diagnosi:\n%s\n\nPrescrizione:\n%s";
+	private static String TO_STRING_FORMAT = "Data:%s\n\nDiagnosi:\n%s\n\nPrescrizione:\n%s";
 	
 	/** Diagnosi */
 	private Diagnosis diagnosis;
 	/** Prescrizione */
 	private Prescription prescription;
+	/** Data del referto */
+	private Date date;
 	
-	public Report (Diagnosis diagnosis, Prescription prescription)
+	/**
+	 * Costruttore
+	 * @param diagnosis Diagnosi
+	 * @param prescription Prescrizione
+	 * @param date Data in cui è stato realizzato il referto
+	 */
+	public Report (Diagnosis diagnosis, Prescription prescription, Date date)
 	{
 		this.diagnosis = diagnosis;
 		this.prescription = prescription;
+		this.date = date;
 	}
 	
 	/**
@@ -34,9 +47,16 @@ public class Report {
 		return prescription;
 	}
 	
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
 	@Override
 	public String toString ()
 	{
-		return String.format(TO_STRING_FORMAT, diagnosis.toString(), prescription.toString());
+		return String.format(TO_STRING_FORMAT, Utilities.dateToString(date), diagnosis.toString(), prescription.toString());
 	}
 }
