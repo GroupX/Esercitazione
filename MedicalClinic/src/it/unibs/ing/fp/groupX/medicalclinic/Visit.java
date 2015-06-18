@@ -1,9 +1,20 @@
 package it.unibs.ing.fp.groupX.medicalclinic;
 
+import it.unibs.ing.fp.groupX.myutil.Utilities;
+
 import java.util.Date;
 
+/**
+ * Classe che rappresenta una visita generica
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class Visit
 {
+	/**Messaggio dell'eccezione*/
+	private static final String DIAGOSIS_NOT_SET_MESSAGE = "Impossibile richiedere una diagnosi se non è ancora stata effettuata";
+	/** Formato per toString*/
+	private static final String TO_STRING_FORMAT = "Paziente: %s \nMotivo: %s\nData: %s\nStato: %s\nDottore: %s";
 	/** Paziente da visitare **/
 	private Patient patient;
 	/** Motivo della visita **/
@@ -119,14 +130,17 @@ public class Visit
 	public Diagnosis getDiagnosis () throws IllegalStateException
 	{
 		if (diagnosis == null)
-			throw new IllegalStateException("Impossibile richiedere una diagnosi se non è ancora stata effettuata");
+			throw new IllegalStateException(DIAGOSIS_NOT_SET_MESSAGE);
 		else
 			return diagnosis;
 	}
 	
+	/**
+	 * Override di toString
+	 */
 	@Override
 	public String toString ()
-	{
-		
+	{	
+		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), doctor.toStringShort());		   
 	}
 }
