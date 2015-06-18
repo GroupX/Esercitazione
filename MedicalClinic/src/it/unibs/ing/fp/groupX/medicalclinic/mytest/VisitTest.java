@@ -26,6 +26,6 @@ public class VisitTest {
 	public void visitCreationTest() throws Exception {
 		Visit v = getTestVisit();
 		
-		assertEquals("Paziente: Paolo  Pasquali  CF: PSQPLA95H01E897I\nMotivo: Febbre\nData: 22/07/2015\nStato: prenotata\nDottore: Davide  Tosatto  CF: TSTDVD95R30F205T", v.toString());
+		assertEquals("Paziente: Paolo  Pasquali  CF: PSQPLA95H01E897I\nMotivo: Febbre\nData: 22/07/2015\nStato: prenotata\nDottore: Davide  Tosatto  CF: TSTDVD95R30F205T\nReferto:\nNon ancora impostato", v.toString());
 	}
 }

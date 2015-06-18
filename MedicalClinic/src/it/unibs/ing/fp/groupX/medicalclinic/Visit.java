@@ -11,10 +11,14 @@ import java.util.Date;
  */
 public class Visit
 {
+	/** Stringa per segnalare la mancanza di referto */
+	private static final String STRINGA_REFERTO_NON_ANCORA_INSERITO = "Non ancora impostato";
+	/** Stringa per segnalare la non selezion del dottore */
+	private static final String STRINGA_DOTTORE_NON_SELEZIONATO = "Non Selezionato";
 	/**Messaggio dell'eccezione*/
 	private static final String DIAGOSIS_NOT_SET_MESSAGE = "Impossibile richiedere una diagnosi se non è ancora stata effettuata";
-	/** Formato per toString*/
-	private static final String TO_STRING_FORMAT = "Paziente: %s\nMotivo: %s\nData: %s\nStato: %s\nDottore: %s";
+	/** Formato per toString **/
+	private static final String TO_STRING_FORMAT = "Paziente: %s\nMotivo: %s\nData: %s\nStato: %s\nDottore: %s\nReferto:\n%s";
 	/** Paziente da visitare **/
 	private Patient patient;
 	/** Motivo della visita **/
@@ -25,11 +29,8 @@ public class Visit
 	private VisitState state;
 	/** Dottore che effettua la visita **/
 	private Doctor doctor;
-	/** Diagnosi finale **/
-	private Diagnosis diagnosis = null;
-	/** Prescrizione */
-	private Prescription prescription = null;
-	
+	/** Referto **/
+	private Report report;
 	/**
 	 * Costruttore
 	 * 
@@ -121,22 +122,30 @@ public class Visit
 	 */
 	public void setReport (Diagnosis diagnosis, Prescription prescription)
 	{
-		this.diagnosis = diagnosis;
-		this.prescription = prescription;
+		this.setReport(new Report(diagnosis, prescription));
+	}
+	
+	/**
+	 * Imposta il referto e pone la visita in stato di refertata
+	 * @param report Referto
+	 */
+	public void setReport (Report report)
+	{
+		this.report = report;
 		state = VisitState.REFERTATA;
 	}
 	
 	/**
 	 * Ritorna la diagnosi
-	 * @return Diagnosi
+	 * @return Il referto
 	 * @throws IllegalStateException Lanciata quando non è ancora stata inserita una diagnosi
 	 */
-	public Diagnosis getDiagnosis () throws IllegalStateException
+	public Report getReport() throws IllegalStateException
 	{
-		if (diagnosis == null)
+		if (report == null)
 			throw new IllegalStateException(DIAGOSIS_NOT_SET_MESSAGE);
 		else
-			return diagnosis;
+			return report;
 	}
 	
 	/**
@@ -146,12 +155,18 @@ public class Visit
 	public String toString ()
 	{	
 		String strDoctor;
+		String strReport;
 		
 		if (doctor != null)
 			strDoctor = doctor.toStringShort();
 		else
-			strDoctor = "Non Selezionato";
+			strDoctor = STRINGA_DOTTORE_NON_SELEZIONATO;
 		
-		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), strDoctor);		   
+		if (report != null)
+			strReport = report.toString();
+		else
+			strReport = STRINGA_REFERTO_NON_ANCORA_INSERITO;
+		
+		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), strDoctor, strReport);		   
 	}
 }
