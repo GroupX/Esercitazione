@@ -125,7 +125,7 @@ public class Person
 	 */
 	public String toStringShort ()
 	{
-		return String.format(PRINT_FORMAT, name, surname, cod.toString());
+		return String.format(PRINT_FORMAT_SHORT, name, surname, cod.toString());
 	}
 	
 	/**

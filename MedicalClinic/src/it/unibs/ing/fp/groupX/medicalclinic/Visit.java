@@ -14,7 +14,7 @@ public class Visit
 	/**Messaggio dell'eccezione*/
 	private static final String DIAGOSIS_NOT_SET_MESSAGE = "Impossibile richiedere una diagnosi se non è ancora stata effettuata";
 	/** Formato per toString*/
-	private static final String TO_STRING_FORMAT = "Paziente: %s \nMotivo: %s\nData: %s\nStato: %s\nDottore: %s";
+	private static final String TO_STRING_FORMAT = "Paziente: %s\nMotivo: %s\nData: %s\nStato: %s\nDottore: %s";
 	/** Paziente da visitare **/
 	private Patient patient;
 	/** Motivo della visita **/
@@ -141,6 +141,13 @@ public class Visit
 	@Override
 	public String toString ()
 	{	
-		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), doctor.toStringShort());		   
+		String strDoctor;
+		
+		if (doctor != null)
+			strDoctor = doctor.toStringShort();
+		else
+			strDoctor = "Non Selezionato";
+		
+		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), strDoctor);		   
 	}
 }
