@@ -27,6 +27,8 @@ public class Visit
 	private Doctor doctor;
 	/** Diagnosi finale **/
 	private Diagnosis diagnosis = null;
+	/** Prescrizione */
+	private Prescription prescription = null;
 	
 	/**
 	 * Costruttore
@@ -114,11 +116,13 @@ public class Visit
 	
 	/**
 	 * Imposta il referto e pone la visita in stato di refertata
-	 * @param diagnosis Referto
+	 * @param diagnosis Diagnosi
+	 * @param prescription Prescrizione
 	 */
-	public void setDiagnosis (Diagnosis diagnosis)
+	public void setReport (Diagnosis diagnosis, Prescription prescription)
 	{
 		this.diagnosis = diagnosis;
+		this.prescription = prescription;
 		state = VisitState.REFERTATA;
 	}
 	
