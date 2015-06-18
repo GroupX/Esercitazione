@@ -1,49 +1,87 @@
 package it.unibs.ing.fp.groupX.medicalclinic;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Classe che implementa una diagnosi
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Diagnosis {
-	/** Formato di stampa */
-	private static final String PRINT_FORMAT = "%s in data %s";
-	/** Formato di stampa della data */
-	private static final String DATE_FORMAT = "dd/MM/yyyy";
+public class Diagnosis implements Iterable<Pathology> {
 	
 	/** Patologia sofferta */
-	private Pathology p;
-	/** Data diagnosi */
-	private Date d;
+	private List<Pathology> pList = new ArrayList<Pathology>();
 	
 	/**
-	 * Costruttore con nome patologia e data
-	 * @param pathologyName
-	 * 			Nome patologia
-	 * @param d
-	 * 			Data
+	 * Costruttore senza parametri
 	 */
-	public Diagnosis (String pathologyName, Date d) throws IllegalArgumentException
+	public Diagnosis ()
 	{
-		this.p = Pathologies.get(pathologyName);
-		this.d = d;
+		
 	}
 	
 	/**
-	 * @return the pathology
+	 * Costruttore con insieme di patologie
+	 * @param pathologies Elenco patologie
+	 * @throws IllegalArgumentException Una patologia è inesistente
 	 */
-	public Pathology getPathology() {
-		return p;
+	public Diagnosis (String ... pathologies) throws IllegalArgumentException
+	{
+		for (String pName :pathologies)
+		{
+			this.addPathology(pName);
+		}
+	}
+	
+	/**
+	 * Costruttore con insieme di patologie
+	 * @param pathologies Elenco di patologie
+	 */
+	public Diagnosis (Pathology ... pathologies)
+	{
+		for (Pathology p :pathologies)
+		{
+			this.addPathology(p);
+		}
+	}
+	
+	/**
+	 * Aggiunge una patologia
+	 * @param p Patologia da aggiungere
+	 */
+	public void addPathology (Pathology p)
+	{
+		this.pList.add(p);
+	}
+	
+	/**
+	 * Aggiunge una patologia
+	 * @param pathologyName Nome della patologia
+	 * @throws IllegalArgumentException Patologia inesistente
+	 */
+	public void addPathology (String pathologyName) throws IllegalArgumentException
+	{
+		this.pList.add(Pathologies.get(pathologyName));
+	}
+	
+	/**
+	 * Ritorna la patologia richiesta
+	 * @param index Indice
+	 * @return Patologia richiesta
+	 */
+	public Pathology getPathology(int index) {
+		return pList.get(index);
 	}
 
 	/**
-	 * @return the date
+	 * Ritorna il numero di patologie inserite
+	 * @return Numero di patologie
 	 */
-	public Date getDate() {
-		return d;
+	public int size()
+	{
+		return pList.size();
 	}
 	
 	/**
@@ -54,44 +92,29 @@ public class Diagnosis {
 	 */
 	public boolean hasPathology (Pathology p)
 	{
-		return this.p.equals(p);
+		return this.pList.contains(p);
 	}
-	
-	/**
-	 * Controlla se la diagnosi è stata effettuata nella data passata
-	 * @param d
-	 * 			Data da controllare
-	 * @return true: la data coincide; false: altrimenti
-	 */
-	public boolean inDate (Date d)
-	{
-		if (this.d.equals(d))
-			return true;
-		else
-			return false;
-	}
-	
+
 	/**
 	 * Override di toString
 	 * @return stringa descrittiva dell'oggetto
 	 */
 	@Override
 	public String toString() {
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-		return String.format(PRINT_FORMAT, p.getName(), sdf.format(d));
-	}
-	
-	/**
-	 * Override di equals
-	 * @return true: le diagnosi coincidono; false: altrimenti
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		Diagnosis dia = (Diagnosis)obj;
+		StringBuffer buf = new StringBuffer();
 		
-		if (dia.inDate(d) && dia.hasPathology(p))
-			return true;
-		else
-			return false;
+		for (Pathology p : this)
+		{
+			buf.append(p.toString() + "\n");
+		}
+		
+		buf.delete(buf.length() - 1, buf.length());
+		
+		return buf.toString();
+	}
+
+	@Override
+	public Iterator<Pathology> iterator() {
+		return new DiagnosisIterator(this);
 	}
 }

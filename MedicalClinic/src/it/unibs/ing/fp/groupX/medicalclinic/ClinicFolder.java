@@ -11,17 +11,17 @@ import java.util.Date;
 public class ClinicFolder
 {
 	/** Intestazione di stampa */
-	private static final String PRINT_HEADER = "Elenco diagnosi:";
+	private static final String PRINT_HEADER = "Elenco referti:";
 	
 	/** Elenco diagnosi */
-	private ArrayList<Diagnosis> diag;
+	private ArrayList<Report> reports;
 	
 	/**
 	 * Costruttore default
 	 */
 	public ClinicFolder ()
 	{
-		diag = new ArrayList<Diagnosis>();
+		reports = new ArrayList<Report>();
 	}
 	
 	/**
@@ -32,23 +32,23 @@ public class ClinicFolder
 	public ClinicFolder (ClinicFolder fol)
 	{
 		this();
-		for (Diagnosis d : fol.toArray())
+		for (Report r : fol.toArray())
 		{
-			diag.add(d);
+			reports.add(r);
 		}
 	}
 	
 	/**
-	 * Aggiunge una patologia all'elenco
+	 * Aggiunge un referto all'elenco
 	 * @param pathologyName
 	 * 				Nome patologia da aggiungere
 	 * @return true: patologia aggiunta; false: altrimenti
 	 */
-	public boolean add (String pathologyName, Date d)
+	public boolean add (Report r)
 	{
 		try
 		{
-			diag.add(new Diagnosis(pathologyName, d));
+			reports.add(r);
 			return true;
 		}
 		catch (IllegalArgumentException e)
@@ -58,64 +58,64 @@ public class ClinicFolder
 	}
 	
 	/**
-	 * Ritorna la diagnosi indicata dall'indice
+	 * Ritorna il referto
 	 * @param index
-	 * 				indice della diagnosi
-	 * @return diagnosi indicata
+	 * 				indice del referto
+	 * @return report indicato
 	 * @throws IndexOutOfBoundsException
 	 * 				indice non valido
 	 */
-	public Diagnosis get (int index) throws IndexOutOfBoundsException
+	public Report get (int index) throws IndexOutOfBoundsException
 	{
-		return diag.get(index);
+		return reports.get(index);
 	}
 	
 	/**
-	 * Ritorna tutte le diagnosi con la patologia passata
+	 * Ritorna tutti i referti con la patologia passata
 	 * @param p
 	 * 			patologia da cercare
-	 * @return ArrayList di Diagnosis contenenti la patologia
+	 * @return ArrayList di Report contenenti la patologia
 	 */
-	public ArrayList<Diagnosis> get (Pathology p)
+	public ArrayList<Report> get (Pathology p)
 	{
-		ArrayList<Diagnosis> ris = new ArrayList<Diagnosis>();
+		ArrayList<Report> ris = new ArrayList<Report>();
 		
-		for (Diagnosis d: diag)
+		for (Report r: reports)
 		{
-			if (d.hasPathology(p))
-				ris.add(d);
+			if (r.getDiagnosis().hasPathology(p))
+				ris.add(r);
 		}
 		
 		return ris;
 	}
 	
 	/**
-	 * Ritorna tutte le diagnosi effettuate in data passata
+	 * Ritorna tutti i referti effettuati in data passata
 	 * @param d
 	 * 			data da cercare
-	 * @return ArrayList di Diagnosis in data d
+	 * @return ArrayList di Report in data d
 	 */
-	public ArrayList<Diagnosis> get (Date d)
+	public ArrayList<Report> get (Date d)
 	{
-		ArrayList<Diagnosis> ris = new ArrayList<Diagnosis>();
+		ArrayList<Report> ris = new ArrayList<Report>();
 		
-		for (Diagnosis dia: diag)
+		for (Report r: reports)
 		{
-			if (dia.inDate(d))
-				ris.add(dia);
+			if (r.inDate(d))
+				ris.add(r);
 		}
 		
 		return ris;
 	}
 	
 	/**
-	 * Ritorna un array di tutte le diagnosi nella cartella clinica
-	 * @return array di diagnosi
+	 * Ritorna un array di tutti i referti nella cartella clinica
+	 * @return array di referti
 	 */
-	public Diagnosis[] toArray ()
+	public Report[] toArray ()
 	{
-		Diagnosis[] d = new Diagnosis[diag.size()];
-		return diag.toArray(d);
+		Report[] r = new Report[reports.size()];
+		return reports.toArray(r);
 	}
 	
 	/**
@@ -127,9 +127,9 @@ public class ClinicFolder
 		StringBuffer str = new StringBuffer();
 		
 		str.append(PRINT_HEADER);
-		for (Diagnosis d : diag)
+		for (Report r : reports)
 		{
-			str.append("\n"+d.toString());
+			str.append("\n"+r.toString());
 		}
 		
 		return str.toString();

@@ -1,6 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Prescription {
+public class Prescription implements Iterable<PrescriptionEntry>{
 	
 	/**Lista dei rimedi proposti*/
 	private List<PrescriptionEntry> entries = new ArrayList<>();
@@ -43,12 +44,25 @@ public class Prescription {
 	}
 	
 	/**
-	 * Ritorna la lista dei rimedi
-	 * @return Lista
+	 * Ritrona il numero di rimedi presenti
+	 * @return numero di rimedi presenti
 	 */
-	public List<PrescriptionEntry> getList ()
+	public int size()
 	{
-		return entries;
+		return entries.size();
+	}
+	
+	/**
+	 * Ritorna un elemento della prescrizione
+	 * @param index Indice dell'elemento
+	 * @return elemento richiesto
+	 */
+	public PrescriptionEntry get (int index)
+	{
+		if (index < 0 || index >= entries.size())
+			throw new IndexOutOfBoundsException("Indice fuori dai limiti");
+		
+		return entries.get(index);
 	}
 	
 	@Override
@@ -56,7 +70,7 @@ public class Prescription {
 	{
 		StringBuffer strBuff = new StringBuffer();
 		
-		for (PrescriptionEntry pe: entries)
+		for (PrescriptionEntry pe: this)
 		{
 			strBuff.append(pe.toString() + "\n");
 		}
@@ -64,5 +78,12 @@ public class Prescription {
 		strBuff.delete(strBuff.length() - 1, strBuff.length());
 		return strBuff.toString();
 	}
+
+	@Override
+	public Iterator<PrescriptionEntry> iterator() {
+		return new PrescriptionIterator(this);
+	}
+	
+	
 	
 }

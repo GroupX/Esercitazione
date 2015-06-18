@@ -54,6 +54,20 @@ public class Report {
 		return date;
 	}
 
+	/**
+	 * Controlla se il referto è stato creato nella data passata
+	 * @param d
+	 * 			Data da controllare
+	 * @return true: la data coincide; false: altrimenti
+	 */
+	public boolean inDate (Date d)
+	{
+		if (this.date.equals(d))
+			return true;
+		else
+			return false;
+	}
+	
 	@Override
 	public String toString ()
 	{

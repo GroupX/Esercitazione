@@ -6,7 +6,6 @@ import it.unibs.ing.fp.groupX.myutil.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.junit.Test;
 
@@ -27,7 +26,6 @@ public class PersonTest {
 	@Test
 	public void toStringTest() throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy");
 		Person p = getTestPerson1();
 		
 		assertEquals (TO_STRING_RESULT,p.toString());
