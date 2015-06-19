@@ -2,6 +2,8 @@ package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathologies;
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
+import it.unibs.ing.fp.groupX.myutil.BasicIterable;
+import it.unibs.ing.fp.groupX.myutil.BasicIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +14,7 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Diagnosis implements Iterable<Pathology> {
+public class Diagnosis implements BasicIterable<Pathology> {
 	
 	/** Patologia sofferta */
 	private List<Pathology> pList = new ArrayList<Pathology>();
@@ -74,7 +76,7 @@ public class Diagnosis implements Iterable<Pathology> {
 	 * @param index Indice
 	 * @return Patologia richiesta
 	 */
-	public Pathology getPathology(int index) {
+	public Pathology get(int index) {
 		return pList.get(index);
 	}
 
@@ -118,6 +120,6 @@ public class Diagnosis implements Iterable<Pathology> {
 
 	@Override
 	public Iterator<Pathology> iterator() {
-		return new DiagnosisIterator(this);
+		return new BasicIterator<>(this);
 	}
 }

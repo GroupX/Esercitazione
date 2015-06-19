@@ -1,5 +1,8 @@
 package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
+import it.unibs.ing.fp.groupX.myutil.BasicIterable;
+import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Prescription implements Iterable<PrescriptionEntry>{
+public class Prescription implements BasicIterable<PrescriptionEntry>{
 	
 	/**Lista dei rimedi proposti*/
 	private List<PrescriptionEntry> entries = new ArrayList<>();
@@ -81,7 +84,7 @@ public class Prescription implements Iterable<PrescriptionEntry>{
 
 	@Override
 	public Iterator<PrescriptionEntry> iterator() {
-		return new PrescriptionIterator(this);
+		return new BasicIterator<>(this);
 	}
 	
 	

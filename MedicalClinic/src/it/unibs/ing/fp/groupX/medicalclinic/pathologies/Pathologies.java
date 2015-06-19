@@ -1,13 +1,17 @@
 package it.unibs.ing.fp.groupX.medicalclinic.pathologies;
 
+import it.unibs.ing.fp.groupX.myutil.BasicIterable;
+import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe singleton per la gestione dell'elenco delle patologie
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Pathologies{
+public class Pathologies implements BasicIterable<Pathology>{
 
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco patologie:";
@@ -253,5 +257,10 @@ public class Pathologies{
 			str.append("\n"+p.toString());
 		
 		return str.toString();
+	}
+
+	@Override
+	public Iterator<Pathology> iterator() {
+		return new BasicIterator<>(this);
 	}
 }
