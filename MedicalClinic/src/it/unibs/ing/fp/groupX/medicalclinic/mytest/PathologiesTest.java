@@ -16,6 +16,7 @@ public class PathologiesTest {
 		try
 		{
 			pts.add(new Pathology("ulcera"));
+			assertEquals (true, false); //Errore se l'aggiunta ha successo
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -25,6 +26,20 @@ public class PathologiesTest {
 		pts.add(new Pathology("Dissenteria"));
 		
 		assertEquals ("Elenco patologie:\nUlcera\nTumore\nDissenteria", Pathologies.get().toString()); //Controllo anche che effettivamente ci sia una sola istanza
+	
+		pts.remove(0);
+		
+		assertEquals ("Elenco patologie:\nTumore\nDissenteria", Pathologies.get().toString());
+	
+		try
+		{
+			pts.remove(10);
+			assertEquals (true, false);
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			
+		}
 	}
 	
 }

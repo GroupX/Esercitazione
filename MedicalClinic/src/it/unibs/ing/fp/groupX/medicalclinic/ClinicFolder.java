@@ -2,16 +2,19 @@ package it.unibs.ing.fp.groupX.medicalclinic;
 
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Report;
+import it.unibs.ing.fp.groupX.myutil.BasicIterable;
+import it.unibs.ing.fp.groupX.myutil.BasicIterator;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 /**
  * Classe che implementa una cartella clinica
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class ClinicFolder
+public class ClinicFolder implements BasicIterable<Report>
 {
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco referti:";
@@ -136,5 +139,15 @@ public class ClinicFolder
 		}
 		
 		return str.toString();
+	}
+
+	@Override
+	public Iterator<Report> iterator() {
+		return new BasicIterator<>(this);
+	}
+
+	@Override
+	public int size() {
+		return reports.size();
 	}
 }

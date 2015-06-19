@@ -13,6 +13,10 @@ import java.util.Date;
  */
 public class Visit
 {
+	/** Messaggio di errore usato se si tenta di concludere una visita non nello stato di prenotata */
+	private static final String VISIT_NOT_BOOKED_CONCLUDED_MESSAGE = "Non si può concludere una visita che non sia nello stato di prenotata";
+	/** Messaggio di errore usato se si tenta di refertare una visita non conclusa */
+	private static final String NOT_CONCLUDED_REPORT_MESSAGE = "Non si può refrtare una visita non conclusa";
 	/** Stringa per segnalare la mancanza di referto */
 	private static final String STRINGA_REFERTO_NON_ANCORA_INSERITO = "Non ancora impostato";
 	/** Stringa per segnalare la non selezion del dottore */
@@ -114,6 +118,9 @@ public class Visit
 	 */
 	public void completeVisit ()
 	{
+		if (state != VisitState.PRENOTATA)
+			throw new IllegalStateException(VISIT_NOT_BOOKED_CONCLUDED_MESSAGE);
+		
 		state = VisitState.CONCLUSA;
 	}
 	
@@ -144,6 +151,9 @@ public class Visit
 	 */
 	public void setReport (Report report)
 	{
+		if (state != VisitState.CONCLUSA)
+			throw new IllegalStateException(NOT_CONCLUDED_REPORT_MESSAGE);
+	
 		this.report = report;
 		state = VisitState.REFERTATA;
 	}
