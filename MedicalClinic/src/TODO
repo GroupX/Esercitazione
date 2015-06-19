@@ -4,3 +4,4 @@ Classe referto FATTO, da testare
 Più di una malattia in diagnosi FATTO, da testare
 Clinica
 Riorganizzare in package
+Implementare serializable su tutte le classi

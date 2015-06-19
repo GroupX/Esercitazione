@@ -63,7 +63,7 @@ public class Diagnosis implements Iterable<Pathology> {
 	 */
 	public void addPathology (String pathologyName) throws IllegalArgumentException
 	{
-		this.pList.add(Pathologies.get(pathologyName));
+		this.pList.add(Pathologies.get().get(pathologyName));
 	}
 	
 	/**

@@ -3,11 +3,12 @@ package it.unibs.ing.fp.groupX.medicalclinic;
 import java.util.ArrayList;
 
 /**
- * Classe statica per la gestione dell'elenco delle patologie
+ * Classe singleton per la gestione dell'elenco delle patologie
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Pathologies {
+public class Pathologies{
+
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco patologie:";
 	
@@ -16,9 +17,11 @@ public class Pathologies {
 	/** Messaggio errore: patologia già presente nella lista */
 	public static final String PATHOLOGY_ALREADY_INSERT = "Patologia già presente";
 	
+	/** Unica istanza dell'oggetto */
+	private static Pathologies instance = null;
 	
 	/** Elenco patologie */
-	private static ArrayList<Pathology> list = new ArrayList<Pathology>();
+	private ArrayList<Pathology> list = new ArrayList<Pathology>();
 	
 	/**
 	 * Costruttore privato
@@ -28,13 +31,25 @@ public class Pathologies {
 	}
 	
 	/**
+	 * Ritorna l'unica istanza di Pathologies
+	 * @return Unica istanza di Pathologies
+	 */
+	public static Pathologies get()
+	{
+		if (instance == null)
+			instance = new Pathologies();
+		
+		return instance;
+	}
+	
+	/**
 	 * Aggiunge una patologia
 	 * @param p
 	 * 			patologia da aggiungere
 	 * @throws IllegalArgumentException
 	 * 			patologia già presente nell'elenco
 	 */
-	public static void add (Pathology p) throws IllegalArgumentException
+	public void add (Pathology p) throws IllegalArgumentException
 	{
 		if (list.contains(p))
 		{
@@ -54,7 +69,7 @@ public class Pathologies {
 	 * @throws IllegalArgumentException
 	 * 			patologia già presente nell'elenco
 	 */
-	public static void add (String pathologyName) throws IllegalArgumentException
+	public void add (String pathologyName) throws IllegalArgumentException
 	{
 		add (new Pathology(pathologyName));
 	}
@@ -66,7 +81,7 @@ public class Pathologies {
 	 * @throws IndexOutOfBoundsException
 	 * 			indice passato non valido
 	 */
-	public static void remove (int index) throws IndexOutOfBoundsException
+	public void remove (int index) throws IndexOutOfBoundsException
 	{
 		list.remove(index);
 	}
@@ -78,7 +93,7 @@ public class Pathologies {
 	 * @throws IllegalArgumentException
 	 * 			patologia non presente
 	 */
-	public static void remove (Pathology p) throws IllegalArgumentException
+	public void remove (Pathology p) throws IllegalArgumentException
 	{
 		if (!list.contains(p))
 		{
@@ -98,7 +113,7 @@ public class Pathologies {
 	 * @throws IllegalArgumentException
 	 * 			patologia non presente
 	 */
-	public static void remove (String pathologyName) throws IllegalArgumentException
+	public void remove (String pathologyName) throws IllegalArgumentException
 	{
 		remove (new Pathology(pathologyName));
 	}
@@ -109,7 +124,7 @@ public class Pathologies {
 	 * 			patologia da controllare
 	 * @return true: presente; false: altrimenti
 	 */
-	public static boolean contains (Pathology p)
+	public boolean contains (Pathology p)
 	{
 		return list.contains(p);
 	}
@@ -120,7 +135,7 @@ public class Pathologies {
 	 * 			nome della patologia da controllare
 	 * @return true: presente; false: altrimenti
 	 */
-	public static boolean contains (String pathologyName)
+	public boolean contains (String pathologyName)
 	{
 		return contains (new Pathology(pathologyName));
 	}
@@ -133,7 +148,7 @@ public class Pathologies {
 	 * @throws IndexOutOfBoundsException
 	 * 				indice non valido
 	 */
-	public static Pathology get (int index) throws IndexOutOfBoundsException
+	public Pathology get (int index) throws IndexOutOfBoundsException
 	{
 		return list.get(index);
 	}
@@ -146,7 +161,7 @@ public class Pathologies {
 	 * @throws IllegalArgumentException
 	 * 				Patologia non presente
 	 */
-	public static Pathology get (String pathologyName) throws IllegalArgumentException
+	public Pathology get (String pathologyName) throws IllegalArgumentException
 	{
 		for(Pathology p : list)
 		{
@@ -166,7 +181,7 @@ public class Pathologies {
 	 * @throws IllegalArgumentException
 	 * 				Patologia non presente
 	 */
-	private static int getIndex (String pathologyName) throws IllegalArgumentException
+	private int getIndex (String pathologyName) throws IllegalArgumentException
 	{
 		for (int i = 0; i < list.size(); i++)
 		{
@@ -182,7 +197,7 @@ public class Pathologies {
 	 * ritorna un array contenente tutte le patologie nella lista
 	 * @return array di patologie
 	 */
-	public static Pathology[] getAll ()
+	public Pathology[] getAll ()
 	{
 		Pathology[] p = new Pathology[list.size()];
 		return list.toArray(p);
@@ -197,7 +212,7 @@ public class Pathologies {
 	 * @throws IllegalArgumentException
 	 * 				Patologia non presente
 	 */
-	public static void change (String oldPathologyName, String newPathologyName) throws IllegalArgumentException
+	public void change (String oldPathologyName, String newPathologyName) throws IllegalArgumentException
 	{
 		if (contains(newPathologyName))
 		{
@@ -219,7 +234,7 @@ public class Pathologies {
 	 * Ritorna una stringa contenente la lista di tutte le patologie
 	 * @return stringa della lista
 	 */
-	public static String listToString ()
+	public String listToString ()
 	{
 		StringBuffer str = new StringBuffer();
 		
