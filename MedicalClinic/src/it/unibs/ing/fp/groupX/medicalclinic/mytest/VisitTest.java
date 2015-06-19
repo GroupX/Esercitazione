@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import java.text.ParseException;
 
 import it.unibs.ing.fp.groupX.medicalclinic.ClinicFolder;
-import it.unibs.ing.fp.groupX.medicalclinic.Doctor;
-import it.unibs.ing.fp.groupX.medicalclinic.Patient;
-import it.unibs.ing.fp.groupX.medicalclinic.Visit;
+import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
+import it.unibs.ing.fp.groupX.medicalclinic.people.Patient;
+import it.unibs.ing.fp.groupX.medicalclinic.visit.Visit;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
 import org.junit.Test;

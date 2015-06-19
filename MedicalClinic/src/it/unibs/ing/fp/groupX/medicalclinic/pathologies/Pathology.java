@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.pathologies;
 
 /**
  * Classe patologia
@@ -40,5 +40,11 @@ public class Pathology {
 			return true;
 		else
 			return false;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		return name;
 	}
 }

@@ -1,5 +1,8 @@
 package it.unibs.ing.fp.groupX.medicalclinic;
 
+import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
+import it.unibs.ing.fp.groupX.medicalclinic.visit.Report;
+
 import java.util.ArrayList;
 import java.util.Date;
 

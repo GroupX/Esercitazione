@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.pathologies;
 
 import java.util.ArrayList;
 
@@ -231,16 +231,26 @@ public class Pathologies{
 	}
 	
 	/**
+	 * Ritorna il numero di patologie registrate
+	 * @return Patologie registrate
+	 */
+	public int size()
+	{
+		return list.size();
+	}
+	
+	/**
 	 * Ritorna una stringa contenente la lista di tutte le patologie
 	 * @return stringa della lista
 	 */
-	public String listToString ()
+	@Override
+	public String toString ()
 	{
 		StringBuffer str = new StringBuffer();
 		
 		str.append(PRINT_HEADER);
 		for(Pathology p : list)
-			str.append("\n"+p.getName());
+			str.append("\n"+p.toString());
 		
 		return str.toString();
 	}

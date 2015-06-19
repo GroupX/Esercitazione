@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.people;
 
 import it.unibs.ing.fp.groupX.myutil.*;
 

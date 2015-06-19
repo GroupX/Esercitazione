@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -1,11 +1,10 @@
 package it.unibs.ing.fp.groupX.medicalclinic.mytest;
 
 import static org.junit.Assert.*;
-import it.unibs.ing.fp.groupX.medicalclinic.Person;
+import it.unibs.ing.fp.groupX.medicalclinic.people.Person;
 import it.unibs.ing.fp.groupX.myutil.*;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.mytest;
 
 import static org.junit.Assert.*;
-import it.unibs.ing.fp.groupX.medicalclinic.PrescriptionEntry;
+import it.unibs.ing.fp.groupX.medicalclinic.visit.PrescriptionEntry;
 
 import org.junit.Test;
 

@@ -1,4 +1,6 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.visit;
+
+import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
 
 import java.util.Iterator;
 

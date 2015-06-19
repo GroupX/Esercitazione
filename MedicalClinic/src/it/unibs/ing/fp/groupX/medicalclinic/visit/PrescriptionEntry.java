@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 /**
  * Descrive la prescrizione di un singolo rimedio.

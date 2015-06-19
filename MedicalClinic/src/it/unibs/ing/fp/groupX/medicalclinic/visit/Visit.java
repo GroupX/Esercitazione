@@ -1,5 +1,7 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
+import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
+import it.unibs.ing.fp.groupX.medicalclinic.people.Patient;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
 import java.util.Date;
