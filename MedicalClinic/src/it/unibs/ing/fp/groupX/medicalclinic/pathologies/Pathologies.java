@@ -2,6 +2,9 @@ package it.unibs.ing.fp.groupX.medicalclinic.pathologies;
 
 import it.unibs.ing.fp.groupX.myutil.BasicIterable;
 import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
+import it.unibs.ing.fp.groupX.myutil.Useable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,7 +14,7 @@ import java.util.Iterator;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Pathologies implements BasicIterable<Pathology>{
+public class Pathologies implements BasicIterable<Pathology>, Useable{
 
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco patologie:";
@@ -262,5 +265,47 @@ public class Pathologies implements BasicIterable<Pathology>{
 	@Override
 	public Iterator<Pathology> iterator() {
 		return new BasicIterator<>(this);
+	}
+
+	@Override
+	public void use() {
+		
+		final int INSERT_PATHOLOGY_CHOICE = 1;
+		final int REMOVE_PATHOLOGY_CHOICE = 2;
+		final int PRINT_PATHOLOGIES_CHOICE = 3;
+		
+		MyMenu menu = new MyMenu("Gestione patologie esistenti: ", "Inserisci patologia", "Rimuovi patologia", "Stampa patologie");
+		
+		int scelta;
+		
+		while ((scelta = menu.getChoice()) != MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+			case INSERT_PATHOLOGY_CHOICE:
+				try
+				{
+					this.add(Pathology.readFromConsole());
+				}
+				catch (IllegalArgumentException e)
+				{
+					IOLib.printLine(e.getMessage());
+				}
+				break;
+			case REMOVE_PATHOLOGY_CHOICE:
+				try
+				{
+					this.remove(Pathology.readFromConsole());
+				}
+				catch (IllegalArgumentException e)
+				{
+					IOLib.printLine(e.getMessage());
+				}
+				break;
+			case PRINT_PATHOLOGIES_CHOICE:
+				IOLib.printLine(this.toString());
+				break;
+			}
+		}
 	}
 }
