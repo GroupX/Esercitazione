@@ -225,7 +225,7 @@ public class Visit implements Useable
 				
 				case IMPOSTA_REFERTO_INDEX:
 					
-					
+					// TODO Completare
 					
 					break;
 			}

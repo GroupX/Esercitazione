@@ -1,6 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.people;
 
 import it.unibs.ing.fp.groupX.myutil.*;
+import it.unibs.ing.fp.groupX.myutil.Readable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,8 +11,12 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Person
+public class Person implements Readable
 {
+	private static final String INSERT_BIRTH_LOCATION_MSG = "Inserire luogo di nascita: ";
+	private static final String INSERT_DATE_MSG = "Inserire data di nascita [gg/mm/aaaa]: ";
+	private static final String INSERT_SURNAME_MSG = "Inserire cognome: ";
+	private static final String INSERT_NAME_MSG = "Inserire nome: ";
 	/** Formato stampa */
 	private static final String PRINT_FORMAT = "%s %s\nNato il %s a %s\nCodice Fiscale: %s\nNumero di telefono: %s";
 	/** Formato stampa breve */
@@ -33,6 +38,25 @@ public class Person
 	private NumeroTelefonico num;
 	/** Codice fiscale */
 	private CodiceFiscale cod;
+	
+	/**
+	 * Costruttore privato per read
+	 */
+	private Person ()
+	{
+		
+	}
+	
+	/**
+	 * Metodo factory che legge una persona da console
+	 * @return Persona letta
+	 */
+	public static Person readFromConsole ()
+	{
+		Person ris = new Person();
+		ris.read();
+		return ris;
+	}
 	
 	/**
 	 * Costruttore che inizializza gli attributi
@@ -146,5 +170,26 @@ public class Person
 	public boolean equals(Object obj) {
 		Person p = (Person)obj;
 		return cod.equals(p.getCod());
+	}
+
+	@Override
+	public void read() {
+		
+		name = IOLib.readLine(INSERT_NAME_MSG);
+		
+		surname = IOLib.readLine(INSERT_SURNAME_MSG);
+		
+		IOLib.printLine(INSERT_DATE_MSG);
+		birth = IOLib.readDate();
+		
+		birthPlace = IOLib.readLine(INSERT_BIRTH_LOCATION_MSG);
+		
+		gen = Gender.readFromConsole();
+		
+		num = NumeroTelefonico.readFromConsole();
+		
+		cod = CodiceFiscale.readFromConsole();
+		
+		
 	}
 }

@@ -5,7 +5,9 @@ package it.unibs.ing.fp.groupX.myutil;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class CodiceFiscale {
+public class CodiceFiscale implements Readable {
+	private static final String CODE_READ_MESSAGE = "Inserire codice fiscale: ";
+	private static final String NOT_VALID_MESSAGE = "Codice non valido. Reinserire";
 	/** Stringa di errore in inserimento */
 	private static final String ERRORE_INSERIMENTO = "Il codice passato non è valido!";
 	/** Espressione regolare per il controllo di validità - presa da Internet*/
@@ -14,6 +16,27 @@ public class CodiceFiscale {
 	/** Codice fiscale */
 	private String cod;
 	
+	/**
+	 * Legge un codice fiscale da console
+	 * Metodo factory
+	 * @return Un codice fiscale letto da console
+	 */
+	public static CodiceFiscale readFromConsole()
+	{
+		CodiceFiscale ris = new CodiceFiscale();
+		ris.read();
+		return ris;
+	}
+	
+	/**
+	 * Costruttore senza parametri
+	 * 
+	 * ATTENZIONE: Da usare con read!!!
+	 */
+	private CodiceFiscale ()
+	{
+		
+	}
 	
 	/**
 	 * Costruttore che inizializza da un codice fiscale formato String
@@ -81,5 +104,19 @@ public class CodiceFiscale {
 	public static boolean isValid (String cod)
 	{
 		return cod.matches(REGEX);
+	}
+
+	@Override
+	public void read() {
+		
+		String line;
+		
+		while(!CodiceFiscale.isValid(line = IOLib.readLine(CODE_READ_MESSAGE)))
+		{
+			System.out.println(NOT_VALID_MESSAGE);
+		}
+		
+		this.cod = line;
+		
 	}
 }

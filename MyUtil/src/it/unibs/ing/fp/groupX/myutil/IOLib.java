@@ -1,6 +1,10 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.Scanner;
+
+import javax.xml.crypto.Data;
 
 /**
  * Classe generale di gestione Input / Output
@@ -10,6 +14,7 @@ import java.util.Scanner;
  */
 public class IOLib
 {	
+	private static final String NOT_VALID_DATE_MESSAGE = "Data non valida. Reinserire";
 	/** Messaggio stampato per richiedere i secondi */
 	private static final String MESSAGGIO_SECONDI = "Secondi: ";
 	/** Messaggio stampato per richiedere i minuti */
@@ -369,6 +374,33 @@ public class IOLib
 	public static void printDuration (Durata d)
 	{
 		printLine (d.toString());
+	}
+	
+	/**
+	 * Legge una data
+	 * @return Data letta
+	 */
+	public static Date readDate ()
+	{
+		boolean ok = false;
+		Date ris = null;
+		
+		while (!ok)
+		{
+			String str = readLine();
+			
+			try
+			{
+				ris = Utilities.stringToDate(str);
+				ok = true;
+			}
+			catch (ParseException e)
+			{
+				System.out.println(NOT_VALID_DATE_MESSAGE);
+			}
+		}
+		
+		return ris;
 	}
 	
 	/**

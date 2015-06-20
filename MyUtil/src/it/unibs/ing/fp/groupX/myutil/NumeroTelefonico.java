@@ -8,7 +8,8 @@ import java.util.Collection;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class NumeroTelefonico {
+public class NumeroTelefonico implements Readable {
+	private static final String NUMBER_INSERT_MSG = "Inserire numero telefonico [es +39 0376907688]: ";
 	/** Simbolo che separa il prefisso dal numero **/
 	private static final String SEPARATORE_PREFISSO = " ";
 	/** Simbolo che precede il prefisso **/
@@ -17,6 +18,27 @@ public class NumeroTelefonico {
 	private ArrayList<Byte> cifre;
 	/** Lista contenente il prefisso **/
 	private ArrayList<Byte> prefisso;
+	
+	/**
+	 * Costruttore senza parametri per read
+	 */
+	private NumeroTelefonico ()
+	{
+
+	}
+	
+	/**
+	 * Metodo factory che legge un numero telefonico da console
+	 * @return Numero telefonico letto
+	 */
+	public static NumeroTelefonico readFromConsole ()
+	{
+		NumeroTelefonico ris = new NumeroTelefonico();
+		
+		ris.read();
+		
+		return ris;
+	}
 	
 	/**
 	 * Crea un numero dato prefisso e cifre del numero. Il prefisso può essere null, in tal caso sarà un numero senza prefisso
@@ -33,12 +55,10 @@ public class NumeroTelefonico {
 	}
 	
 	/**
-	 * Crea un numero telefonico partendo da una stringa.
-	 * Ignora i caratteri non numerici. Si considerano prefisso le cifre che precedono il primo spazio, numero tutte le cifre seguente.
-	 * (Gli spazi seguenti al primo sono ignorati)
-	 * @param num Stringa descrittiva del numero
+	 * Inizializza da una stringa
+	 * @param num Stringa
 	 */
-	public NumeroTelefonico(String num) 
+	private void initFromString (String num)
 	{
 		num = num.trim(); //Rimuove eventuali blanks in testa e in coda alla stringa
 		StringBuffer numBuf = new StringBuffer(num);
@@ -71,6 +91,17 @@ public class NumeroTelefonico {
 		
 		this.cifre = cifre;
 		this.prefisso = prefisso;
+	}
+	
+	/**
+	 * Crea un numero telefonico partendo da una stringa.
+	 * Ignora i caratteri non numerici. Si considerano prefisso le cifre che precedono il primo spazio, numero tutte le cifre seguente.
+	 * (Gli spazi seguenti al primo sono ignorati)
+	 * @param num Stringa descrittiva del numero
+	 */
+	public NumeroTelefonico(String num) 
+	{
+		initFromString(num);
 	}
 	
 	/**
@@ -126,5 +157,16 @@ public class NumeroTelefonico {
 		}
 		
 		return ris.toString();
+	}
+
+	@Override
+	public void read() {
+		
+		// TODO Gestione errori
+		
+		String str = IOLib.readLine(NUMBER_INSERT_MSG);
+		
+		initFromString(str);
+		
 	}
 }
