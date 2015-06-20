@@ -2,12 +2,11 @@ package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Patient;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Date;
 
 /**
@@ -17,6 +16,7 @@ import java.util.Date;
  */
 public class Visit implements Useable
 {
+	private static final String WRONG_DATA_MSG = "Impossibile inserire un referto con una data pregressa a quella della visita";
 	/** Messaggio di errore usato se si tenta di concludere una visita non nello stato di prenotata */
 	private static final String VISIT_NOT_BOOKED_CONCLUDED_MESSAGE = "Non si può concludere una visita che non sia nello stato di prenotata";
 	/** Messaggio di errore usato se si tenta di refertare una visita non conclusa */
@@ -158,6 +158,9 @@ public class Visit implements Useable
 		if (state != VisitState.CONCLUSA)
 			throw new IllegalStateException(NOT_CONCLUDED_REPORT_MESSAGE);
 	
+		if (report.getDate().compareTo(this.date)<0)
+			throw new IllegalArgumentException (WRONG_DATA_MSG);
+		
 		this.report = report;
 		state = VisitState.REFERTATA;
 	}
@@ -200,17 +203,20 @@ public class Visit implements Useable
 	@Override
 	public void use() {
 		
-		final int COMPLETA_VISITA_INDEX = 1;
-		final int IMPOSTA_REFERTO_INDEX = 2;
+		final int COMPLETE_VISIT_CHOICE = 1;
+		final int SET_REPORT_CHOICE = 2;
+		final int PRINT_VISIT_CHOICE = 3;
 		
-		MyMenu menu = new MyMenu("Gestione Visita", "Completa visita", "Imposta referto");
+		// TODO use constants
+		
+		MyMenu menu = new MyMenu("Gestione Visita", "Completa visita", "Imposta referto", "Stampa visita");
 		int scelta;
 		
 		while ((scelta = menu.getChoice())!=MyMenu.EXIT_VALUE)
 		{
 			switch (scelta)
 			{
-				case COMPLETA_VISITA_INDEX:
+				case COMPLETE_VISIT_CHOICE:
 					
 					try
 					{
@@ -218,14 +224,27 @@ public class Visit implements Useable
 					}
 					catch (IllegalStateException e)
 					{
-						System.out.println(e.getMessage());
+						IOLib.printLine(e.getMessage());
 					}
 					
-				break;
+					break;
 				
-				case IMPOSTA_REFERTO_INDEX:
+				case SET_REPORT_CHOICE:
 					
-					// TODO Completare
+					try
+					{
+						this.setReport(Report.readFromConsole());
+					}
+					catch (IllegalStateException | IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
+					
+					break;
+					
+				case PRINT_VISIT_CHOICE:
+					
+					IOLib.printLine(this.toString());
 					
 					break;
 			}

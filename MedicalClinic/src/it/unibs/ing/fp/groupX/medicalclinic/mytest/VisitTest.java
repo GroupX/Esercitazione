@@ -19,7 +19,7 @@ import org.junit.Test;
 
 public class VisitTest {
 	
-	public Visit getTestVisit () throws ParseException
+	public static Visit getTestVisit () throws ParseException
 	{
 		Patient p = new Patient(PersonTest.getTestPerson1(), new ClinicFolder());
 		Doctor d = new Doctor(PersonTest.getTestPerson2(), new boolean[1][1]);
@@ -27,7 +27,7 @@ public class VisitTest {
 		return new Visit(p, "Febbre", Utilities.stringToDate("22/07/2015"), d);
 	}
 	
-	public Visit getUnprenotableTestVisit () throws IllegalArgumentException, ParseException
+	public static Visit getUnprenotableTestVisit () throws IllegalArgumentException, ParseException
 	{
 		Patient p = new Patient(PersonTest.getTestPerson1(), new ClinicFolder());
 		Doctor d = new Doctor(PersonTest.getTestPerson2(), new boolean[1][1]);

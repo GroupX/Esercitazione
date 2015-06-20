@@ -1,6 +1,6 @@
 package it.unibs.ing.fp.groupX.medicalclinic.people;
 
-import it.unibs.ing.fp.groupX.medicalclinic.WeekDay;
+import it.unibs.ing.fp.groupX.medicalclinic.time.WeekDay;
 import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;
 import it.unibs.ing.fp.groupX.myutil.Gender;
 import it.unibs.ing.fp.groupX.myutil.NumeroTelefonico;
