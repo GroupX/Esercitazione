@@ -162,6 +162,7 @@ public class Visit implements Useable
 			throw new IllegalArgumentException (WRONG_DATA_MSG);
 		
 		this.report = report;
+		this.patient.getFol().add(report);
 		state = VisitState.REFERTATA;
 	}
 	

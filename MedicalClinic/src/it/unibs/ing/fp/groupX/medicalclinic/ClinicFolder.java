@@ -4,6 +4,10 @@ import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Report;
 import it.unibs.ing.fp.groupX.myutil.BasicIterable;
 import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
+import it.unibs.ing.fp.groupX.myutil.Readable;
+import it.unibs.ing.fp.groupX.myutil.Useable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,13 +18,28 @@ import java.util.Iterator;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class ClinicFolder implements BasicIterable<Report>
+public class ClinicFolder implements BasicIterable<Report>, Useable, Readable
 {
+	private static final String READ_MSG = "Usa il menù per popolare la cartella, poi seleziona esci: ";
+
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco referti:";
 	
 	/** Elenco diagnosi */
 	private ArrayList<Report> reports;
+	
+	/**
+	 * Metodo factory che crea una cartella clinica leggedola dalla console
+	 * @return La cartella letta
+	 */
+	public static ClinicFolder readFromConsole ()
+	{
+		ClinicFolder ris = new ClinicFolder();
+		
+		ris.read();
+		
+		return ris;
+	}
 	
 	/**
 	 * Costruttore default
@@ -149,5 +168,38 @@ public class ClinicFolder implements BasicIterable<Report>
 	@Override
 	public int size() {
 		return reports.size();
+	}
+
+	@Override
+	public void use() {
+		final int INSERT_REPORT_CHOICE = 1;
+		final int PRINT_FOLDER_CHOICE = 2;
+		
+		// TODO constants
+		MyMenu menu = new MyMenu("Gestione cartella clinica: ", "Inserisci referto", "Stampa cartella clinica");
+		
+		int scelta;
+		
+		while ((scelta = menu.getChoice()) != MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+			case INSERT_REPORT_CHOICE:
+				this.add(Report.readFromConsole());
+				break;
+			case PRINT_FOLDER_CHOICE:
+				IOLib.printLine(this.toString());
+				break;
+			}
+		}
+		
+	}
+
+	@Override
+	public void read() {
+
+		IOLib.printLine(READ_MSG);
+		this.use();
+		
 	}
 }

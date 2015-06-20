@@ -38,9 +38,13 @@ public class MainTest {
 //		
 //		IOLib.printLine(r.toString());
 		
-		Visit v = VisitTest.getTestVisit();
+//		Visit v = VisitTest.getTestVisit();
+//		
+//		v.use();
 		
-		v.use();
+		ClinicFolder cf = ClinicFolder.readFromConsole();
+		
+		IOLib.printLine(cf.toString());
 	}
 
 }
