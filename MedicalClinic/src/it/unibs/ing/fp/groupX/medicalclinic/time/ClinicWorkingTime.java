@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.time;
 
 import it.unibs.ing.fp.groupX.medicalclinic.people.StaffMember;
 import it.unibs.ing.fp.groupX.myutil.Durata;
@@ -16,6 +16,17 @@ public class ClinicWorkingTime
 {
 	/** Messaggio errore intervallo orario non valido */
 	public static final String INVALID_RANGE_TIME_ERROR = "Intervallo orario non valido";
+	/** Messaggio errore dipendente non trovato */
+	public static final String MEMBER_NOT_FOUND_ERROR = "Dipendente non trovato.";
+	
+	/** Formato stampa abbreviata */
+	private static final String PRINT_FORMAT_SHORT = "Aperto tutti i giorni dalle %s alle %s.";
+	/** Intestazione di stampa */
+	private static final String PRINT_HEADER = "Aperto tutti i giorni dalle %s alle %s con le seguenti disponibilità:";
+	/** Separatore di stampa tra un giorno e l'altro */
+	private static final String PRINT_DAY_SEPARATOR = "\n%s:";
+	/** Separatore di stampa tra uno slot e l'altro */
+	private static final String PRINT_SLOT_SEPARATOR = "\n";
 	
 	/** Ampiezza in minuti degli slot */
 	public static final int SLOT_MINUTES = 30;
@@ -75,6 +86,44 @@ public class ClinicWorkingTime
 	public int getNumSlot() {
 		return numSlot;
 	}
+	
+	/**
+	 * @return the availability table
+	 */
+	public AvailabilitySlot[][] getAvailabilityTable ()
+	{
+		return slots;
+	}
+	
+	/**
+	 * Restituisce un elenco di slot
+	 * @param s
+	 * @return
+	 * @throws IllegalArgumentException
+	 */
+	public ArrayList<AvailabilitySlot> getStaffMemberAvailability (StaffMember s) throws IllegalArgumentException
+	{
+		ArrayList<AvailabilitySlot> ris = new ArrayList<AvailabilitySlot>();
+		for (WeekDay d : WeekDay.values())
+		{
+			for (int i = 0; i < numSlot; i++)
+			{
+				if (slots[i][d.getValue()].cointains(s))
+				{
+					ris.add(slots[i][d.getValue()]);
+				}
+			}
+		}
+		
+		if (ris.isEmpty())
+		{
+			IllegalArgumentException e = new IllegalArgumentException(MEMBER_NOT_FOUND_ERROR);
+			throw e;
+		}
+		
+		return ris;
+	}
+	
 	
 	/**
 	 * Ritorna l'elenco di slot compresi nell'intervallo
@@ -303,7 +352,34 @@ public class ClinicWorkingTime
 	}
 	
 	
-	
-	
-	
+	/**
+	 * Ritorna una stringa descrittiva abbreviata
+	 * @return stringa descrittiva abbreviata
+	 */
+	public String toStringShort ()
+	{
+		return String.format(PRINT_FORMAT_SHORT, Utilities.timeToString(startWork), Utilities.timeToString(endWork));
+	}
+	/**
+	 * Override di toString
+	 * @return stringa descrittiva dell'oggetto
+	 */
+	@Override
+	public String toString() {
+		StringBuffer s = new StringBuffer();
+		
+		s.append(String.format(PRINT_HEADER, Utilities.timeToString(startWork), Utilities.timeToString(endWork)));
+		
+		for (WeekDay d : WeekDay.values())
+		{
+			s.append(String.format(PRINT_DAY_SEPARATOR, d.getName()));
+			
+			for (int i = 0; i < numSlot; i++)
+			{
+				s.append(PRINT_SLOT_SEPARATOR + slots[i][d.getValue()].toString());
+			}
+		}
+		
+		return s.toString();
+	}
 }
