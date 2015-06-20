@@ -96,23 +96,28 @@ public class ClinicWorkingTime
 	}
 	
 	/**
-	 * Restituisce un elenco di slot
+	 * Restituisce l'elenco delle disponibilità del membro del personale
 	 * @param s
-	 * @return
-	 * @throws IllegalArgumentException
+	 * 			membro del personale
+	 * @return elenco disponibilità
+	 * @throws IllegalArgumentException membro del personale non trovato
 	 */
-	public ArrayList<AvailabilitySlot> getStaffMemberAvailability (StaffMember s) throws IllegalArgumentException
+	public ArrayList<StaffMemberAvailability> getStaffMemberAvailability (StaffMember s) throws IllegalArgumentException
 	{
-		ArrayList<AvailabilitySlot> ris = new ArrayList<AvailabilitySlot>();
+		ArrayList<StaffMemberAvailability> ris = new ArrayList<StaffMemberAvailability>();
 		for (WeekDay d : WeekDay.values())
 		{
+			StaffMemberAvailability sma = new StaffMemberAvailability(d);
+			
 			for (int i = 0; i < numSlot; i++)
 			{
 				if (slots[i][d.getValue()].cointains(s))
 				{
-					ris.add(slots[i][d.getValue()]);
+					sma.addSlot(slots[i][d.getValue()]);
 				}
 			}
+			
+			ris.add(sma);
 		}
 		
 		if (ris.isEmpty())
@@ -124,6 +129,67 @@ public class ClinicWorkingTime
 		return ris;
 	}
 	
+	/**
+	 * Ritorna la lista del personale disponibile in un dato giorno e lasso di tempo
+	 * @param day
+	 * 			giorno
+	 * @param start
+	 * 			inizio intervallo
+	 * @param end
+	 * 			fine intervallo
+	 * @return elenco personale disponibile
+	 */
+	public ArrayList<StaffMember> getDataAvailability (WeekDay day, Time start, Time end)
+	{
+		ArrayList<StaffMember> ris = new ArrayList<StaffMember>();
+		
+		ArrayList<Integer> slotToUse = calculateSlot(start, end);
+		
+		for (Integer i : slotToUse)
+		{
+			ris = Utilities.arrayListMerge(ris, slots[i.intValue()][day.getValue()].getAll());
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna la lista del personale disponibile in un dato giorno
+	 * @param day
+	 * 			giorno
+	 * @return elenco personale disponibile
+	 */
+	public ArrayList<StaffMember> getDataAvailability (WeekDay day)
+	{
+		return getDataAvailability(day, startWork, endWork);
+	}
+	
+	/**
+	 * Ritorna la lista del personale disponibile in un lasso di giorni e un lasso di tempo
+	 * @param startDay
+	 * 			inizio intervallo giorno
+	 * @param endDay
+	 * 			fine intervallo giorno
+	 * @param start
+	 * 			inizio intervallo orario
+	 * @param end
+	 * 			fine intervallo orario
+	 * @return elenco personale disponibile
+	 */
+	public ArrayList<StaffMember> getDataAvailability (WeekDay startDay, WeekDay endDay, Time start, Time end)
+	{
+		ArrayList<StaffMember> ris = new ArrayList<StaffMember>();
+		
+		for (WeekDay d : WeekDay.values())
+		{
+			if ( (d.after(startDay) || d.equals(startDay)) && (d.before(endDay) || d.equals(endDay)) )
+			{
+				ris = Utilities.arrayListMerge(ris, getDataAvailability(d, start, end));
+			}
+		}
+		
+		return ris;
+	}
 	
 	/**
 	 * Ritorna l'elenco di slot compresi nell'intervallo

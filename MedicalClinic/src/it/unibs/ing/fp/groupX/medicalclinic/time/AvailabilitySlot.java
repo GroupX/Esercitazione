@@ -22,6 +22,8 @@ public class AvailabilitySlot {
 	/** Messaggio errore get con codice fiscale */
 	private static final String GET_BY_CF_ERROR = "Nessun membro del personale trovato con il codice fiscale indicato";
 	
+	/** Formato stampa ridotta */
+	private static final String PRINT_FORMAT_SHORT = "%s - %s";
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "%s - %s: ";
 	/** Separatore tra un membro e l'altro */
@@ -233,6 +235,15 @@ public class AvailabilitySlot {
 	public void removeStaffMember (int index) throws IndexOutOfBoundsException
 	{
 		staff.remove(index);
+	}
+	
+	/**
+	 * Ritorna una stringa descrittiva ridotta
+	 * @return stringa descrittiva ridotta
+	 */
+	public String toStringShort ()
+	{
+		return String.format(PRINT_FORMAT_SHORT, Utilities.timeToString(start), Utilities.timeToString(end));
 	}
 	
 	/**

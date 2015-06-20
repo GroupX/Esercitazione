@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -113,5 +114,31 @@ public class Utilities {
 	public static boolean timeInRange (Time start, Time end, Time t)
 	{
 		return ( t.before(end) && (t.after(start) || t.equals(start)) );
+	}
+	
+	/**
+	 * Fonde due ArrayList evitando ripetizioni
+	 * @param a1
+	 * 			primo ArrayList
+	 * @param a2
+	 * 			secondo ArrayList
+	 * @return fusione dei due ArrayList
+	 */
+	public static <E> ArrayList<E> arrayListMerge (ArrayList<E> a1, ArrayList<E> a2)
+	{
+		ArrayList<E> ris = new ArrayList<E>();
+		
+		for (E e : a1)
+		{
+			ris.add(e);
+		}
+		
+		for (E e : a2)
+		{
+			if (!ris.contains(e))
+				ris.add(e);
+		}
+		
+		return ris;
 	}
 }
