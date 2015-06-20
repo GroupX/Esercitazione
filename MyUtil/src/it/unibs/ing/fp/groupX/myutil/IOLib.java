@@ -388,9 +388,6 @@ public class IOLib
 		while (!ok)
 		{
 			String str = readLine();
-			
-			if (str.equals("")) //Ritorna la data attuale nel caso il campo sia omesso
-				return new Date();
 				
 			try
 			{

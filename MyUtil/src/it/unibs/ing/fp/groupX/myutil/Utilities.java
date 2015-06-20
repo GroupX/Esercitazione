@@ -41,6 +41,8 @@ public class Utilities {
 	 */
 	public static Date stringToDate (String s) throws ParseException
 	{
+		if (s.equals("")) //Ritorna la data attuale nel caso il campo sia omesso
+			return new Date();
 		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
 		return df.parse(s);
 	}
