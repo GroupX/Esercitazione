@@ -178,6 +178,7 @@ public class Diagnosis implements BasicIterable<Pathology>, Useable, Readable {
 		final int REMOVE_PATHOLOGY_CHOICE = 2;
 		final int PRINT_DIAGNOSIS_CHOICE = 3;
 		
+		// TODO constants
 		MyMenu menu = new MyMenu("Gestione diagnosi: ", "Inserisci patologia", "Rimuovi patologia", "Stampa diagnosi");
 		
 		int scelta;

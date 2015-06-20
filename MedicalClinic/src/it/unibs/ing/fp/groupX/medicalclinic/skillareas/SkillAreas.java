@@ -134,6 +134,7 @@ public class SkillAreas implements BasicIterable<SkillArea>, Useable
 		final int REMOVE_SKILL_AREA_CHOICE = 2;
 		final int PRINT_SKILL_AREA_CHOICE = 3;
 		
+		// TODO constants
 		MyMenu menu = new MyMenu("Gestione aree di competenza esistenti: ", "Inserisci area di competenza", "Rimuovi area di competenza", "Stampa aree di competenza");
 		
 		int scelta;

@@ -2,7 +2,13 @@ package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 import it.unibs.ing.fp.groupX.myutil.BasicIterable;
 import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
+import it.unibs.ing.fp.groupX.myutil.Readable;
+import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.IOException;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,10 +18,27 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Prescription implements BasicIterable<PrescriptionEntry>{
+public class Prescription implements BasicIterable<PrescriptionEntry>, Useable, Readable{
 	
+	private static final String READ_MSG = "Usa il menu per popolare la prescrizione, poi seleziona esci: ";
+	private static final String LIST_HEAD = "Prescrizione: ";
+	private static final String NOT_PRESENT_REMEDY_MSG = "Rimedio non presente";
+	private static final String ALREADY_PRESENT_REMEDY_MSG = "Rimedio già presente";
 	/**Lista dei rimedi proposti*/
 	private List<PrescriptionEntry> entries = new ArrayList<>();
+	
+	/**
+	 * Metodo factory che crea una prescrizione leggendola dalla console
+	 * @return La prescrizione letta
+	 */
+	public static Prescription readFromConsole ()
+	{
+		Prescription ris = new Prescription();
+		
+		ris.read();
+		
+		return ris;
+	}
 	
 	/**
 	 * Costruttore senza parametri
@@ -37,13 +60,33 @@ public class Prescription implements BasicIterable<PrescriptionEntry>{
 		}
 	}
 	
+	public boolean contains (PrescriptionEntry pe)
+	{
+		return entries.contains(pe);
+	}
+	
 	/**
 	 * Aggiunge un rimedio alla lista
 	 * @param pe Rimedio da aggiungere
 	 */
 	public void addEntry (PrescriptionEntry pe)
 	{
+		if (this.contains(pe))
+			throw new IllegalArgumentException(ALREADY_PRESENT_REMEDY_MSG);
+		
 		entries.add(pe);
+	}
+	
+	/**
+	 * Aggiunge un rimedio alla lista
+	 * @param pe Rimedio da aggiungere
+	 */
+	public void removeEntry (PrescriptionEntry pe)
+	{
+		if (!this.contains(pe))
+			throw new IllegalArgumentException(NOT_PRESENT_REMEDY_MSG);
+		
+		entries.remove(pe);
 	}
 	
 	/**
@@ -73,6 +116,8 @@ public class Prescription implements BasicIterable<PrescriptionEntry>{
 	{
 		StringBuffer strBuff = new StringBuffer();
 		
+		strBuff.append(LIST_HEAD + "\n");
+		
 		for (PrescriptionEntry pe: this)
 		{
 			strBuff.append(pe.toString() + "\n");
@@ -85,6 +130,57 @@ public class Prescription implements BasicIterable<PrescriptionEntry>{
 	@Override
 	public Iterator<PrescriptionEntry> iterator() {
 		return new BasicIterator<>(this);
+	}
+
+	@Override
+	public void use() {
+		
+		final int INSERT_REMEDY_CHOICE = 1;
+		final int REMOVE_REMEDY_CHOICE = 2;
+		final int PRINT_PRESCRIPTION_CHOICE = 3;
+		
+		// TODO constants
+		MyMenu menu = new MyMenu("Gestione prescrizione: ", "Inserisci rimedio", "Rimuovi rimedio", "Stampa prescrizione");
+		
+		int scelta;
+		
+		while ((scelta = menu.getChoice()) != MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+			case INSERT_REMEDY_CHOICE:
+				try
+				{
+					this.addEntry(PrescriptionEntry.readFromConsole());
+				}
+				catch (IllegalArgumentException e)
+				{
+					IOLib.printLine(e.getMessage());
+				}
+				break;
+			case REMOVE_REMEDY_CHOICE:
+				try
+				{
+					this.removeEntry(PrescriptionEntry.readFromConsole());
+				}
+				catch (IllegalArgumentException e)
+				{
+					IOLib.printLine(e.getMessage());
+				}
+				break;
+			case PRINT_PRESCRIPTION_CHOICE:
+				IOLib.printLine(this.toString());
+				break;
+			}
+		}
+		
+	}
+
+	@Override
+	public void read() {
+		
+		IOLib.printLine(READ_MSG);
+		this.use();
 	}
 	
 	

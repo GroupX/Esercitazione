@@ -274,6 +274,7 @@ public class Pathologies implements BasicIterable<Pathology>, Useable{
 		final int REMOVE_PATHOLOGY_CHOICE = 2;
 		final int PRINT_PATHOLOGIES_CHOICE = 3;
 		
+		// TODO constants
 		MyMenu menu = new MyMenu("Gestione patologie esistenti: ", "Inserisci patologia", "Rimuovi patologia", "Stampa patologie");
 		
 		int scelta;

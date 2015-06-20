@@ -4,6 +4,8 @@ import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathologies;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Person;
 import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillAreas;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Diagnosis;
+import it.unibs.ing.fp.groupX.medicalclinic.visit.Prescription;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
 
 public class MainTest {
 
@@ -19,9 +21,13 @@ public class MainTest {
 //		
 //		sa.use();
 		
-		Diagnosis d = Diagnosis.readFromConsole();
+//		Diagnosis d = Diagnosis.readFromConsole();
+//		
+//		System.out.println(d.toString());
 		
-		System.out.println(d.toString());
+		Prescription p = Prescription.readFromConsole();
+		
+		IOLib.printLine(p.toString());
 	}
 
 }
