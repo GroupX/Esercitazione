@@ -4,6 +4,7 @@ import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathologies;
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
 import it.unibs.ing.fp.groupX.myutil.BasicIterable;
 import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+import it.unibs.ing.fp.groupX.myutil.Useable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Diagnosis implements BasicIterable<Pathology> {
+public class Diagnosis implements BasicIterable<Pathology>, Useable {
 	
 	/** Patologia sofferta */
 	private List<Pathology> pList = new ArrayList<Pathology>();
@@ -121,5 +122,11 @@ public class Diagnosis implements BasicIterable<Pathology> {
 	@Override
 	public Iterator<Pathology> iterator() {
 		return new BasicIterator<>(this);
+	}
+
+	@Override
+	public void use() {
+		// TODO Auto-generated method stub
+		
 	}
 }
