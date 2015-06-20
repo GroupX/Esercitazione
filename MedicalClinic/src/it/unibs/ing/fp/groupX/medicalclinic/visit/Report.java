@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.Readable;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
 import java.util.Date;
@@ -9,9 +11,11 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Report {
+public class Report implements Readable{
 
-	private static String TO_STRING_FORMAT = "Data:%s\n\nDiagnosi:\n%s\n\nPrescrizione:\n%s";
+	private static final String INSERT_DATE_MSG = "Inserisci data del referto [gg/mm/aaaa]: ";
+
+	private static String TO_STRING_FORMAT = "Data:%s\n\n%s\n\n%s";
 	
 	/** Diagnosi */
 	private Diagnosis diagnosis;
@@ -19,6 +23,27 @@ public class Report {
 	private Prescription prescription;
 	/** Data del referto */
 	private Date date;
+	
+	/**
+	 * Metodo factory per creare un referto leggendolo dalla console
+	 * @return Il report letto
+	 */
+	public static Report readFromConsole ()
+	{
+		Report r = new Report();
+		
+		r.read();
+		
+		return r;
+	}
+	
+	/**
+	 * Costruttore vuoto per read
+	 */
+	private Report ()
+	{
+		
+	}
 	
 	/**
 	 * Costruttore
@@ -72,5 +97,16 @@ public class Report {
 	public String toString ()
 	{
 		return String.format(TO_STRING_FORMAT, Utilities.dateToString(date), diagnosis.toString(), prescription.toString());
+	}
+
+	@Override
+	public void read() {
+
+		IOLib.printLine(INSERT_DATE_MSG);
+		this.date = IOLib.readDate();
+		
+		this.diagnosis = Diagnosis.readFromConsole();
+		this.prescription = Prescription.readFromConsole();
+		
 	}
 }

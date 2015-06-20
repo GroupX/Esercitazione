@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class Diagnosis implements BasicIterable<Pathology>, Useable, Readable {
 	
-	private static final String READ_MESSAGE = "Inserisci le patologie/rimuovile usando il menu. Quando hai terminato seleziona esci.";
+	private static final String READ_MESSAGE = "Popola la diagnosi usando il menu, poi scegli esci: ";
 	private static final String LIST_HEAD = "Elenco patologie riscontrate: ";
 	private static final String NOT_PRESENT_PATHOLOGY_MSG = "Patologia non presente";
 	private static final String ALREADY_INSERTED_MSG = "Patologia già inserita";
