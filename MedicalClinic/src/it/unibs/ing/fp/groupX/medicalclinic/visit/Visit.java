@@ -2,8 +2,12 @@ package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Patient;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
+import it.unibs.ing.fp.groupX.myutil.Useable;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.Date;
 
 /**
@@ -11,7 +15,7 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Visit
+public class Visit implements Useable
 {
 	/** Messaggio di errore usato se si tenta di concludere una visita non nello stato di prenotata */
 	private static final String VISIT_NOT_BOOKED_CONCLUDED_MESSAGE = "Non si può concludere una visita che non sia nello stato di prenotata";
@@ -191,5 +195,40 @@ public class Visit
 			strReport = STRINGA_REFERTO_NON_ANCORA_INSERITO;
 		
 		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), strDoctor, strReport);		   
+	}
+
+	@Override
+	public void use() {
+		
+		final int COMPLETA_VISITA_INDEX = 1;
+		final int IMPOSTA_REFERTO_INDEX = 2;
+		
+		MyMenu menu = new MyMenu("Gestione Visita", "Completa visita", "Imposta referto");
+		int scelta;
+		
+		while ((scelta = menu.getChoice())!=MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+				case COMPLETA_VISITA_INDEX:
+					
+					try
+					{
+						this.completeVisit();
+					}
+					catch (IllegalStateException e)
+					{
+						System.out.println(e.getMessage());
+					}
+					
+				break;
+				
+				case IMPOSTA_REFERTO_INDEX:
+					
+					
+					
+					break;
+			}
+		}
 	}
 }
