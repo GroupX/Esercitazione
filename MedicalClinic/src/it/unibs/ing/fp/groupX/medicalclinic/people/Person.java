@@ -42,7 +42,7 @@ public class Person implements Readable
 	/**
 	 * Costruttore privato per read
 	 */
-	private Person ()
+	protected Person ()
 	{
 		
 	}

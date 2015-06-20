@@ -4,6 +4,7 @@ import java.text.ParseException;
 
 import it.unibs.ing.fp.groupX.medicalclinic.mytest.VisitTest;
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathologies;
+import it.unibs.ing.fp.groupX.medicalclinic.people.Patient;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Person;
 import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillAreas;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Diagnosis;
@@ -42,9 +43,13 @@ public class MainTest {
 //		
 //		v.use();
 		
-		ClinicFolder cf = ClinicFolder.readFromConsole();
+//		ClinicFolder cf = ClinicFolder.readFromConsole();
+//		
+//		IOLib.printLine(cf.toString());
 		
-		IOLib.printLine(cf.toString());
+		Patient p = Patient.readFromConsole();
+		
+		IOLib.printLine(p.toString());
 	}
 
 }
