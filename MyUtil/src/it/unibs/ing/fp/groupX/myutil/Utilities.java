@@ -66,12 +66,23 @@ public class Utilities {
 	 */
 	public static Durata timeDifference (Time t1, Time t2)
 	{
-		long t1Minutes = t1.getMinutes() + t1.getHours()*MINUTE_TO_HOUR;
-		long t2Minutes = t2.getMinutes() + t2.getHours()*MINUTE_TO_HOUR;
+		long t1Minutes = timeInMinutes(t1);
+		long t2Minutes = timeInMinutes(t2);
 		
 		Durata ris = new Durata (t2Minutes - t1Minutes, Durata.NULL_TIME);
 		
 		return ris;
+	}
+	
+	/**
+	 * Ritorna l'orario in minuti
+	 * @param t
+	 * 			orario da trasformare
+	 * @return orario espresso in minuti
+	 */
+	public static long timeInMinutes (Time t)
+	{
+		return (long)t.getMinutes() + (long)t.getHours()*MINUTE_TO_HOUR;
 	}
 	
 	/**
@@ -87,5 +98,20 @@ public class Utilities {
 		long time = lapse.toSecondi()*MILLISECONDS_TO_SECONDS + start.getTime();
 		
 		return new Time(time);
+	}
+	
+	/**
+	 * controlla se un orario è contenuto nel range
+	 * @param start
+	 * 			inizio intervallo
+	 * @param end
+	 * 			fine intervallo
+	 * @param t
+	 * 			orario da controllare
+	 * @return true: è contenuto strettamente nel range o coincide con l'inizio; false: altrimenti
+	 */
+	public static boolean timeInRange (Time start, Time end, Time t)
+	{
+		return ( t.before(end) && (t.after(start) || t.equals(start)) );
 	}
 }

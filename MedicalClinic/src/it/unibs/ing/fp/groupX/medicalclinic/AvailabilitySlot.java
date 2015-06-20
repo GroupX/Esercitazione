@@ -3,6 +3,7 @@ package it.unibs.ing.fp.groupX.medicalclinic;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Person;
 import it.unibs.ing.fp.groupX.medicalclinic.people.StaffMember;
+import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
 import java.sql.Time;
@@ -18,6 +19,8 @@ public class AvailabilitySlot {
 	private static final String ADD_ERROR = "Membro del personale già inserito.";
 	/** Messaggio errore rimozione */
 	private static final String REMOVE_ERROR = "Membro del personale non presente nell'elenco.";
+	/** Messaggio errore get con codice fiscale */
+	private static final String GET_BY_CF_ERROR = "Nessun membro del personale trovato con il codice fiscale indicato";
 	
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "%s - %s: ";
@@ -64,6 +67,71 @@ public class AvailabilitySlot {
 	}
 	
 	/**
+	 * @return the start
+	 */
+	public Time getStart() 
+	{
+		return start;
+	}
+
+	/**
+	 * @return the end
+	 */
+	public Time getEnd() 
+	{
+		return end;
+	}
+	
+	/**
+	 * Ritorna il membro di indice index
+	 * @param index
+	 * 			indice del membro
+	 * @return membro di indice index
+	 */
+	public StaffMember get (int index)
+	{
+		return staff.get(index);
+	}
+	
+	/**
+	 * Ritorna il membro con codice fiscale coincidente a quello indicato
+	 * @param cod
+	 * 			codice fiscale del membro desiderato
+	 * @return membro
+	 * @throws IllegalArgumentException Nessun risultato della ricerca
+	 */
+	public StaffMember get (CodiceFiscale cod) throws IllegalArgumentException
+	{
+		for (StaffMember s : staff)
+		{
+			if (s.getCod().equals(cod))
+				return s;
+		}
+		
+		IllegalArgumentException e = new IllegalArgumentException(GET_BY_CF_ERROR);
+		throw e;
+	}
+	
+	/**
+	 * Ritorna l'elenco del personale
+	 * @return elenco personale 
+	 */
+	public ArrayList<StaffMember> getAll ()
+	{
+		return staff;
+	}
+	
+	/**
+	 * Ritorna l'elenco del personale in un array
+	 * @return elenco personale
+	 */
+	public StaffMember[] getAllToArray ()
+	{
+		StaffMember[] s = new StaffMember[staff.size()];
+		return staff.toArray(s);
+	}
+	
+	/**
 	 * Controlla la presenza di un dottore
 	 * @param d
 	 * 			dottore
@@ -93,14 +161,29 @@ public class AvailabilitySlot {
 	 */
 	public boolean contains (Person p)
 	{
-		if (staff.contains(p))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return staff.contains(p);
+	}
+	
+	/**
+	 * Controlla se lo slot inizia nell'orario indicato
+	 * @param t
+	 * 			orario da controllare
+	 * @return true: coincidono; false: altrimenti
+	 */
+	public boolean begins (Time t)
+	{
+		return t.equals(start);
+	}
+	
+	/**
+	 * Controlla se lo slot finisca nell'orario indicato
+	 * @param t
+	 * 			orario da controllare
+	 * @return true: coincidono; false: altrimenti
+	 */
+	public boolean ends (Time t)
+	{
+		return t.equals(end);
 	}
 	
 	/**
@@ -139,6 +222,17 @@ public class AvailabilitySlot {
 		{
 			staff.remove(s);
 		}
+	}
+	
+	/**
+	 * Rimuove il membro del personale indicato da index
+	 * @param index
+	 * 				indice del membro da rimuovere
+	 * @throws IndexOutOfBoundsException indice errato
+	 */
+	public void removeStaffMember (int index) throws IndexOutOfBoundsException
+	{
+		staff.remove(index);
 	}
 	
 	/**
