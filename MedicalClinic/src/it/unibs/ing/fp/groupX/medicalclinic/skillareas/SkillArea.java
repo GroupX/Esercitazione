@@ -1,14 +1,38 @@
 package it.unibs.ing.fp.groupX.medicalclinic.skillareas;
 
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.Readable;
+
 /**
  * Classe che definisce un'area di competenza
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class SkillArea
+public class SkillArea implements Readable
 {
 	/** Nome dell'area di competenza */
 	private String name;
+	
+	/**
+	 * Legge un'area di competenza da console
+	 * @return Area di competenza letta
+	 */
+	public static SkillArea readFromConsole ()
+	{
+		SkillArea ris = new SkillArea();
+		
+		ris.read();
+		
+		return ris;
+	}
+	
+	/**
+	 * Costruttore senza parametri per read
+	 */
+	private SkillArea()
+	{
+		
+	}
 	
 	/**
 	 * Costruttore
@@ -40,5 +64,10 @@ public class SkillArea
 		SkillArea sa = (SkillArea)obj;
 		
 		return this.getName().equalsIgnoreCase(sa.getName());
+	}
+
+	@Override
+	public void read() {
+		name = IOLib.readLine("Inserisci nome dell'area di competenza: ");
 	}
 }

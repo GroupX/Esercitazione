@@ -2,6 +2,9 @@ package it.unibs.ing.fp.groupX.medicalclinic.skillareas;
 
 import it.unibs.ing.fp.groupX.myutil.BasicIterable;
 import it.unibs.ing.fp.groupX.myutil.BasicIterator;
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
+import it.unibs.ing.fp.groupX.myutil.Useable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,8 +16,9 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class SkillAreas implements BasicIterable<SkillArea>
+public class SkillAreas implements BasicIterable<SkillArea>, Useable
 {
+	private static final String LIST_HEAD = "Elenco aree di competenza: ";
 	/** Messaggio di errore nel caso in cui si cercasse di eliminare un'area non presente */
 	private static final String NOT_PRESENT_SKILL_AREA_MESSAGE = "Area di competenza non presente";
 	/** Messaggio di errore in caso di reinserimento della stessa area di competenza */
@@ -114,10 +118,54 @@ public class SkillAreas implements BasicIterable<SkillArea>
 	public String toString ()
 	{
 		StringBuffer buf = new StringBuffer();
+		buf.append(LIST_HEAD);
 		for (SkillArea sa: skillAreas)
 		{
-			buf.append(sa.toString() + "\n");
+			buf.append("\n" + sa.toString());
 		}
+		
 		return buf.toString();
+	}
+
+	@Override
+	public void use() {
+		
+		final int INSERT_SKILL_AREA_CHOICE = 1;
+		final int REMOVE_SKILL_AREA_CHOICE = 2;
+		final int PRINT_SKILL_AREA_CHOICE = 3;
+		
+		MyMenu menu = new MyMenu("Gestione aree di competenza esistenti: ", "Inserisci area di competenza", "Rimuovi area di competenza", "Stampa aree di competenza");
+		
+		int scelta;
+		
+		while ((scelta = menu.getChoice()) != MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+			case INSERT_SKILL_AREA_CHOICE:
+				try
+				{
+					this.add(SkillArea.readFromConsole());
+				}
+				catch (IllegalArgumentException e)
+				{
+					IOLib.printLine(e.getMessage());
+				}
+				break;
+			case REMOVE_SKILL_AREA_CHOICE:
+				try
+				{
+					this.remove(SkillArea.readFromConsole());
+				}
+				catch (IllegalArgumentException e)
+				{
+					IOLib.printLine(e.getMessage());
+				}
+				break;
+			case PRINT_SKILL_AREA_CHOICE:
+				IOLib.printLine(this.toString());
+				break;
+			}
+		}
 	}
 }
