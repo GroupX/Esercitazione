@@ -8,6 +8,7 @@ import it.unibs.ing.fp.groupX.myutil.Gender;
 import it.unibs.ing.fp.groupX.myutil.NumeroTelefonico;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
@@ -16,7 +17,8 @@ import java.util.UUID;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Doctor extends StaffMember implements Readable {
+@SuppressWarnings("serial")
+public class Doctor extends StaffMember implements Readable, Serializable {
 	/** Formato di stampa */
 	private static final String PRINT_FORMAT = "%s\nNumero Albo: %s";
 	/** Formato stampa ridotta */

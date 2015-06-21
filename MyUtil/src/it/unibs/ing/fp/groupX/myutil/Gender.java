@@ -1,11 +1,13 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.io.Serializable;
+
 /**
  * Enum per la gestione del genere di una persona
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public enum Gender implements Readable{
+public enum Gender implements Readable, Serializable {
 	/** Femmina */
 	FEMALE ('F'),
 	/** Maschio */

@@ -4,6 +4,7 @@ import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;
 import it.unibs.ing.fp.groupX.myutil.Gender;
 import it.unibs.ing.fp.groupX.myutil.NumeroTelefonico;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,8 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class StaffMember extends Person
+@SuppressWarnings("serial")
+public class StaffMember extends Person implements Serializable
 {
 	/**
 	 * Costruttore privato per read

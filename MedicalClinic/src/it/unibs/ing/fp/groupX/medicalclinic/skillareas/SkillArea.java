@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.skillareas;
 
+import java.io.Serializable;
+
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 
@@ -8,7 +10,8 @@ import it.unibs.ing.fp.groupX.myutil.Readable;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class SkillArea implements Readable
+@SuppressWarnings("serial")
+public class SkillArea implements Readable, Serializable
 {
 	/** Nome dell'area di competenza */
 	private String name;

@@ -10,6 +10,7 @@ import it.unibs.ing.fp.groupX.myutil.NumeroTelefonico;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -18,7 +19,8 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class SpecialistDoctor extends Doctor implements Readable, Useable {
+@SuppressWarnings("serial")
+public class SpecialistDoctor extends Doctor implements Readable, Useable, Serializable {
 	/** Messaggio errore competenza non trovata */
 	private static final String SKILL_NOT_FOUND_ERROR = "Competenza non trovata";
 	/** Messaggio errore competenza già assegnata */

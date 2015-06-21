@@ -1,4 +1,4 @@
-package it.unibs.ing.fp.groupX.medicalclinic;
+package it.unibs.ing.fp.groupX.medicalclinic.people;
 
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Report;
@@ -9,6 +9,7 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,7 +19,8 @@ import java.util.Iterator;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class ClinicFolder implements BasicIterable<Report>, Useable, Readable
+@SuppressWarnings("serial")
+public class ClinicFolder implements BasicIterable<Report>, Useable, Readable, Serializable
 {
 	private static final String READ_MSG = "Usa il menù per popolare la cartella, poi seleziona esci: ";
 

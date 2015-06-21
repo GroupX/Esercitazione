@@ -3,6 +3,7 @@ package it.unibs.ing.fp.groupX.medicalclinic.people;
 import it.unibs.ing.fp.groupX.myutil.*;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,7 +12,8 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Person implements Readable
+@SuppressWarnings("serial")
+public class Person implements Readable, Serializable
 {
 	private static final String INSERT_BIRTH_LOCATION_MSG = "Inserire luogo di nascita: ";
 	private static final String INSERT_DATE_MSG = "Inserire data di nascita [gg/mm/aaaa]: ";

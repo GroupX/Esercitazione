@@ -1,11 +1,14 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.io.Serializable;
+
 /**
  * Classe che implementa un codice fiscale
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class CodiceFiscale implements Readable {
+@SuppressWarnings("serial")
+public class CodiceFiscale implements Readable, Serializable {
 	private static final String CODE_READ_MESSAGE = "Inserire codice fiscale: ";
 	private static final String NOT_VALID_MESSAGE = "Codice non valido. Reinserire";
 	/** Stringa di errore in inserimento */

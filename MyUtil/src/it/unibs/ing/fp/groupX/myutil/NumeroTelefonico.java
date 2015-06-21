@@ -1,5 +1,6 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -8,7 +9,8 @@ import java.util.Collection;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class NumeroTelefonico implements Readable {
+@SuppressWarnings("serial")
+public class NumeroTelefonico implements Readable, Serializable {
 	private static final String NUMBER_INSERT_MSG = "Inserire numero telefonico [es +39 0376907688]: ";
 	/** Simbolo che separa il prefisso dal numero **/
 	private static final String SEPARATORE_PREFISSO = " ";

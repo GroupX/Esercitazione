@@ -6,6 +6,7 @@ import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class SkillAreas implements BasicIterable<SkillArea>, Useable
+@SuppressWarnings("serial")
+public class SkillAreas implements BasicIterable<SkillArea>, Useable, Serializable
 {
 	private static final String LIST_HEAD = "Elenco aree di competenza: ";
 	/** Messaggio di errore nel caso in cui si cercasse di eliminare un'area non presente */
