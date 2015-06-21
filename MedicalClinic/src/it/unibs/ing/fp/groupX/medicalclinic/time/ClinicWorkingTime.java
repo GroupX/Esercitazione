@@ -4,6 +4,7 @@ import it.unibs.ing.fp.groupX.medicalclinic.people.StaffMember;
 import it.unibs.ing.fp.groupX.myutil.Durata;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -12,7 +13,8 @@ import java.util.ArrayList;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class ClinicWorkingTime
+@SuppressWarnings("serial")
+public class ClinicWorkingTime implements Serializable
 {
 	/** Messaggio errore intervallo orario non valido */
 	public static final String INVALID_RANGE_TIME_ERROR = "Intervallo orario non valido";

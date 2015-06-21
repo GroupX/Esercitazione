@@ -6,6 +6,7 @@ import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,7 +15,8 @@ import java.util.Iterator;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Pathologies implements BasicIterable<Pathology>, Useable{
+@SuppressWarnings("serial")
+public class Pathologies implements BasicIterable<Pathology>, Useable, Serializable{
 
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco patologie:";

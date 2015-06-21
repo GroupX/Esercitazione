@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.pathologies;
 
+import java.io.Serializable;
+
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 
@@ -9,7 +11,8 @@ import it.unibs.ing.fp.groupX.myutil.Readable;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Pathology implements Readable {
+@SuppressWarnings("serial")
+public class Pathology implements Readable, Serializable {
 	private static final String INSERT_PATHOLOGY_MSG = "Inserisci nome della patologia: ";
 	/** Nome */
 	private String name;

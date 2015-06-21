@@ -6,6 +6,7 @@ import it.unibs.ing.fp.groupX.medicalclinic.people.StaffMember;
 import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -14,7 +15,8 @@ import java.util.ArrayList;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class AvailabilitySlot {
+@SuppressWarnings("serial")
+public class AvailabilitySlot implements Serializable {
 	/** Messaggio errore inserimento */
 	private static final String ADD_ERROR = "Membro del personale già inserito.";
 	/** Messaggio errore rimozione */

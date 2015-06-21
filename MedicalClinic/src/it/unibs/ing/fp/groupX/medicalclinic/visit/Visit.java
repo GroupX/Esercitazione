@@ -9,6 +9,7 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,8 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Visit implements Useable
+@SuppressWarnings("serial")
+public class Visit implements Useable, Serializable
 {
 	private static final String WRONG_DATA_MSG = "Impossibile inserire un referto con una data pregressa a quella della visita";
 	/** Messaggio di errore usato se si tenta di concludere una visita non nello stato di prenotata */

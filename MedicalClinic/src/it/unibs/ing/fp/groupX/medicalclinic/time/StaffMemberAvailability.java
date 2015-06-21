@@ -1,8 +1,10 @@
 package it.unibs.ing.fp.groupX.medicalclinic.time;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class StaffMemberAvailability {
+@SuppressWarnings("serial")
+public class StaffMemberAvailability implements Serializable{
 	/** Messaggio errore inserimento con slot già presente */
 	public static final String ADD_REDUNDACY_ERROR = "Slot già presente";
 	/** Messaggio errore rimozione con slot non presente */

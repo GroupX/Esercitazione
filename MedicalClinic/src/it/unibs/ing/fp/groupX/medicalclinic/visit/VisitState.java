@@ -1,11 +1,13 @@
 package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
+import java.io.Serializable;
+
 /**
  * Enum per lo stato della visita
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public enum VisitState {
+public enum VisitState implements Serializable{
 	PRENOTATA("prenotata"),
 	CONCLUSA("conclusa"),
 	REFERTATA("refertata"),

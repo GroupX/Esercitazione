@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
+import java.io.Serializable;
+
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 
@@ -9,7 +11,8 @@ import it.unibs.ing.fp.groupX.myutil.Readable;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class PrescriptionEntry implements Readable{
+@SuppressWarnings("serial")
+public class PrescriptionEntry implements Readable, Serializable{
 
 	private static final String INSERT_PERIOD_MSG = "Inserisci il periodo di assunzione/trattamento [può essere vuoto]: ";
 	private static final String INSERT_FREQUENCY_MSG = "Inserisci la frequenza di assunzione/trattamento [può essere vuoto]: ";

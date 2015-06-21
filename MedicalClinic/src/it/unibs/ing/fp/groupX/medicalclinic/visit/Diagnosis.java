@@ -9,6 +9,7 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +19,8 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Diagnosis implements BasicIterable<Pathology>, Useable, Readable {
+@SuppressWarnings("serial")
+public class Diagnosis implements BasicIterable<Pathology>, Useable, Readable, Serializable {
 	
 	private static final String READ_MESSAGE = "Popola la diagnosi usando il menu, poi scegli esci: ";
 	private static final String LIST_HEAD = "Elenco patologie riscontrate: ";

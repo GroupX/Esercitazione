@@ -4,6 +4,7 @@ import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,7 +12,8 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Report implements Readable{
+@SuppressWarnings("serial")
+public class Report implements Readable, Serializable{
 
 	private static final String INSERT_DATE_MSG = "Inserisci data e l'ora del referto [gg/mm/aaaa hh:mm:ss]: ";
 

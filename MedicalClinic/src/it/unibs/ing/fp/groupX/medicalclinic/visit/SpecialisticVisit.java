@@ -6,9 +6,11 @@ import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillArea;
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SpecialisticVisit extends Visit
+@SuppressWarnings("serial")
+public class SpecialisticVisit extends Visit implements Serializable
 {
 	private static final String TO_STRING_MSG = "Area di competenza: %s\nVisita precedente:\n%s\nIl referto era ok? %s";
 	private static final String PREV_REPORT_OK = "Il referto precedente era ok?";

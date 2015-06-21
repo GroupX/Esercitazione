@@ -1,11 +1,13 @@
 package it.unibs.ing.fp.groupX.medicalclinic.time;
 
+import java.io.Serializable;
+
 /**
  * Enum per i giorni della settimana
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public enum WeekDay {
+public enum WeekDay implements Serializable {
 	LUNEDI(0, "Lunedì"),
 	MARTEDI(1, "Martedì"),
 	MERCOLEDI(2, "Mercoledì"),

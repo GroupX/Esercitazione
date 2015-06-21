@@ -7,6 +7,7 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 import it.unibs.ing.fp.groupX.myutil.Useable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Prescription implements BasicIterable<PrescriptionEntry>, Useable, Readable{
+@SuppressWarnings("serial")
+public class Prescription implements BasicIterable<PrescriptionEntry>, Useable, Readable, Serializable{
 	
 	private static final String READ_MSG = "Usa il menu per popolare la prescrizione, poi seleziona esci: ";
 	private static final String LIST_HEAD = "Prescrizione: ";
