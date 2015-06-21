@@ -10,5 +10,10 @@ public class SpecialisticVisit extends Visit
 {
 	SkillArea skArea;
 	
-	
+	public SpecialisticVisit (Patient patient, String motivation, Date date, VisitState state, Doctor doctor, SkillArea skArea)
+	{
+		super(patient, motivation, date, state, doctor);
+		
+		
+	}
 }

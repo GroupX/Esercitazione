@@ -2,6 +2,8 @@ package it.unibs.ing.fp.groupX.medicalclinic.visit;
 
 import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Patient;
+import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillArea;
+import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillAreas;
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import it.unibs.ing.fp.groupX.myutil.Useable;
@@ -250,5 +252,14 @@ public class Visit implements Useable
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * Ritorna il tipo di visita richiesto.
+	 * @return Tipologia di visita richiesta
+	 */
+	public SkillArea getSkillArea ()
+	{
+		return new SkillArea(SkillAreas.GENERAL_SKILL_AREA_NAME);
 	}
 }

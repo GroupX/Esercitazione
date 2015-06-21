@@ -25,13 +25,15 @@ public class SkillAreas implements BasicIterable<SkillArea>, Useable
 	private static final String ALREADY_INSERTED_MESSAGE = "Area di competenza già inserita";
 	/** Lista delle aree di competenza */
 	private List <SkillArea> skillAreas = new ArrayList<SkillArea>();
+	/** Nome dell'area generale */
+	public static final String GENERAL_SKILL_AREA_NAME = "Generale";	
 	
 	/**
 	 * Costruttore
 	 */
 	public SkillAreas ()
 	{
-		
+		skillAreas.add(new SkillArea(GENERAL_SKILL_AREA_NAME));
 	}
 	
 	/**
