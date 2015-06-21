@@ -21,6 +21,9 @@ import java.util.Date;
  */
 @SuppressWarnings("serial")
 public class SpecialistDoctor extends Doctor implements Readable, Useable, Serializable {
+	/** Tipologia di dipendente */
+	public static final String STAFF_TYPE = "Specialist Doctor";
+	
 	/** Messaggio errore competenza non trovata */
 	private static final String SKILL_NOT_FOUND_ERROR = "Competenza non trovata";
 	/** Messaggio errore competenza già assegnata */

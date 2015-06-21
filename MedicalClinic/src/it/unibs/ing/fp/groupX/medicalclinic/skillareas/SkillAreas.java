@@ -83,7 +83,7 @@ public class SkillAreas implements BasicIterable<SkillArea>, Useable, Serializab
 	 * Rimuove un'area di competenza
 	 * @param sa Area di competenza da rimuovere
 	 */
-	public void remove (SkillArea sa)
+	public void remove (SkillArea sa) throws IllegalArgumentException
 	{
 		if (!contains(sa))
 			throw new IllegalArgumentException(NOT_PRESENT_SKILL_AREA_MESSAGE);
@@ -95,7 +95,7 @@ public class SkillAreas implements BasicIterable<SkillArea>, Useable, Serializab
 	 * Rimuove un'area di competenza
 	 * @param sa Area di competenza da rimuovere
 	 */
-	public void remove (String sa)
+	public void remove (String sa) throws IllegalArgumentException
 	{
 		remove(new SkillArea(sa));
 	}

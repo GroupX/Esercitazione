@@ -15,6 +15,9 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class StaffMember extends Person implements Serializable
 {
+	/** Tipologia di dipendente */
+	public static final String STAFF_TYPE = "General";
+	
 	/**
 	 * Costruttore privato per read
 	 */

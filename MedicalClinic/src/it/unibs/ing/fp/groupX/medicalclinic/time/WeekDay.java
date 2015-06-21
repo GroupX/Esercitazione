@@ -1,6 +1,10 @@
 package it.unibs.ing.fp.groupX.medicalclinic.time;
 
+import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.MyMenu;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Enum per i giorni della settimana
@@ -73,5 +77,82 @@ public enum WeekDay implements Serializable {
 	public boolean after (WeekDay d)
 	{
 		return ( value > d.getValue() );
+	}
+	
+	/**
+	 * Seleziona una serie di giorni chiedendo la scelta a console
+	 * @return elenco di giorni scelti
+	 */
+	public static ArrayList<WeekDay> selectFromConsoleSomeDay ()
+	{
+		ArrayList<WeekDay> ris = new ArrayList<WeekDay>();
+		
+		MyMenu m = new MyMenu("Giorni:");
+		for (WeekDay d : WeekDay.values())
+		{
+			m.addVoice(d.getName());
+		}
+		
+		int scelta;
+		
+		m.print();
+		
+		do
+		{
+			scelta = IOLib.readInt("Seleziona un giorno", MyMenu.EXIT_VALUE, NUM_DAYS);
+			
+			if (!ris.contains(WeekDay.values()[scelta-1]))
+				ris.add(WeekDay.values()[scelta-1]);
+			
+		}while (scelta != MyMenu.EXIT_VALUE);
+		
+		return ris;
+	}
+	
+	/**
+	 * Seleziona un intervallo di giorni chiedendo la scelta a console
+	 * @return elenco dei giorni nell'intervallo
+	 */
+	public static ArrayList<WeekDay> selectFromConsoleLapseDay	()
+	{
+		ArrayList<WeekDay> ris = new ArrayList<WeekDay>();
+		
+		MyMenu m = new MyMenu("Giorni:");
+		for (WeekDay d : WeekDay.values())
+		{
+			m.addVoice(d.getName());
+		}
+		
+		int first, last;
+		
+		m.print();
+		
+		first = IOLib.readInt("Seleziona il primo giorno", MyMenu.EXIT_VALUE, NUM_DAYS);
+		last = IOLib.readInt("Seleziona l'ultimo giorno", MyMenu.EXIT_VALUE, NUM_DAYS);
+		
+		for (int i = first-1; i < last; i++)
+		{
+			ris.add(WeekDay.values()[i]);
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Seleziona un giorno chiedendo la scelta a console
+	 * @return un giorno
+	 */
+	public static WeekDay selectFromConsoleDay ()
+	{
+		MyMenu m = new MyMenu("Giorni:");
+		for (WeekDay d : WeekDay.values())
+		{
+			m.addVoice(d.getName());
+		}
+		
+		int scelta;
+		while ( (scelta=m.getChoice()) == MyMenu.EXIT_VALUE );
+		
+		return WeekDay.values()[scelta-1];
 	}
 }

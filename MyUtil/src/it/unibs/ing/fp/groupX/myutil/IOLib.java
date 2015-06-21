@@ -1,5 +1,6 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
@@ -18,6 +19,7 @@ public class IOLib
 	private static final String INSERT_INDEX_MSG = "Inserisci l'indice: ";
 	private static final String LINE_SEPARATOR = "___________________________________________";
 	private static final String NOT_VALID_DATE_MESSAGE = "Data non valida. Reinserire";
+	private static final String NOT_VALID_TIME_MESSAGE = "Ora non valida. Reinserire";
 	/** Messaggio stampato per richiedere i secondi */
 	private static final String MESSAGGIO_SECONDI = "Secondi: ";
 	/** Messaggio stampato per richiedere i minuti */
@@ -432,7 +434,33 @@ public class IOLib
 		
 		return ris;
 	}
-
+	
+	/**
+	 * Legge un orario
+	 * @return Ora letta
+	 */
+	public static Time readTime ()
+	{
+		boolean ok = false;
+		Time ris = null;
+		
+		while (!ok)
+		{
+			String str = readLine();
+				
+			try
+			{
+				ris = Utilities.stringToTime(str);
+				ok = true;
+			}
+			catch (ParseException e)
+			{
+				System.out.println(NOT_VALID_TIME_MESSAGE);
+			}
+		}
+		
+		return ris;
+	}
 	
 	/**
 	 * Pone una domanda a due vie all'utente

@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -13,6 +14,7 @@ import java.util.Date;
  *
  */
 public class Utilities {
+	private static final String ELEMENT_NOT_FOUND_ERROR = "Elemento non presente nella collection";
 	/** Millisecondi in un secondo */
 	private static final int MILLISECONDS_TO_SECONDS = 100;
 	/** Minuti in un'ora */
@@ -182,5 +184,28 @@ public class Utilities {
 		}
 		
 		return ris;
+	}
+	
+	/**
+	 * Ritorna l'indice dell'elemento cercato nella collection
+	 * @param element
+	 * 				cosa cercare
+	 * @param collection
+	 * 				dove cercare
+	 * @return indice elemento cercato
+	 * @throws IllegalArgumentException elemento non presente nella collection
+	 */
+	public static <E> int getCollectionElementIndex	(E element, Collection<E> collection) throws IllegalArgumentException
+	{
+		int i = 0;
+		for (E obj : collection)
+		{
+			if (obj.equals(element))
+				return i;
+			else
+				i++;
+		}
+		
+		throw new IllegalArgumentException(ELEMENT_NOT_FOUND_ERROR);
 	}
 }

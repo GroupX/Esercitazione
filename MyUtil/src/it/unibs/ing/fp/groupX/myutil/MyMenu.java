@@ -78,7 +78,7 @@ public class MyMenu
 	/**
 	 * Stampa a video titolo e voci del menù
 	 */
-	private void print ()
+	public void print ()
 	{
 		IOLib.printLine (titolo);
 		for (int i = 0; i < voices.size (); i++)

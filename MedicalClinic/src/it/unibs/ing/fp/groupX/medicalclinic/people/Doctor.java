@@ -19,6 +19,9 @@ import java.util.UUID;
  */
 @SuppressWarnings("serial")
 public class Doctor extends StaffMember implements Readable, Serializable {
+	/** Tipologia di dipendente */
+	public static final String STAFF_TYPE = "Doctor";
+	
 	/** Formato di stampa */
 	private static final String PRINT_FORMAT = "%s\nNumero Albo: %s";
 	/** Formato stampa ridotta */
