@@ -1,22 +1,50 @@
 package it.unibs.ing.fp.groupX.medicalclinic.people;
 
-import it.unibs.ing.fp.groupX.medicalclinic.time.WeekDay;
+import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillArea;
+import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillAreas;
+import it.unibs.ing.fp.groupX.medicalclinic.visit.Visit;
 import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;
 import it.unibs.ing.fp.groupX.myutil.Gender;
 import it.unibs.ing.fp.groupX.myutil.NumeroTelefonico;
+import it.unibs.ing.fp.groupX.myutil.Readable;
 
-import java.sql.Time;
 import java.util.Date;
 import java.util.UUID;
 
-public class Doctor extends StaffMember {
+/**
+ * Classe che implementa un medico
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
+public class Doctor extends StaffMember implements Readable {
 	/** Formato di stampa */
 	private static final String PRINT_FORMAT = "%s\nNumero Albo: %s";
+	/** Formato stampa ridotta */
+	private static final String PRINT_FORMAT_SHORT = "Dr. %s %s  N°Albo: %s";
 	
 	/** Numero di albo */
 	private String albo;
-	/** Orari disponibili */
-	private boolean[][] hours;
+	
+	/**
+	 * Costruttore privato per read
+	 */
+	protected Doctor ()
+	{
+		
+	}
+	
+	/**
+	 * Metodo factory che crea un medico leggendolo da console 
+	 * @return
+	 */
+	public static Doctor readFromConsole () 
+	{
+		Doctor ris = new Doctor();
+		
+		ris.read();
+		
+		return ris;
+	}
 	
 	/**
 	 * Costruttore con matrice di boolean per gli orari disponibili
@@ -37,10 +65,9 @@ public class Doctor extends StaffMember {
 	 * @param hours
 	 * 			Orari disponibili del dottore
 	 */
-	public Doctor (String name, String surname, Date birth, String birthPlace, Gender gen, NumeroTelefonico num, CodiceFiscale cod, boolean[][] hours)
+	public Doctor (String name, String surname, Date birth, String birthPlace, Gender gen, NumeroTelefonico num, CodiceFiscale cod)
 	{
 		super(name, surname, birth, birthPlace, gen, num, cod);
-		this.hours = hours.clone();
 		this.albo = generateAlbo();
 	}
 	
@@ -49,10 +76,9 @@ public class Doctor extends StaffMember {
 	 * @param person Persona
 	 * @param hours Orari disponibili del dottore
 	 */
-	public Doctor (Person person, boolean[][] hours)
+	public Doctor (Person person)
 	{
 		super(person);
-		this.hours = hours.clone();
 		this.albo = generateAlbo();
 	}
 	
@@ -66,56 +92,16 @@ public class Doctor extends StaffMember {
 	}
 	
 	/**
-	 * Imposta la disponibilità del dottore
-	 * @param startDay
-	 * 			giorno di partenza
-	 * @param endDay
-	 * 			giorno di fine
-	 * @param startLapse
-	 * 			periodo di inizio
-	 * @param endLapse
-	 * 			periodo di fine
-	 * @param state
-	 * 			stato da impostare
+	 * Controlla se il dottore può eseguire una certa visita
+	 * @param v
+	 * 			visita da controllare
+	 * @return true: può; false: altrimenti
 	 */
-	public void setAvailability (WeekDay startDay, WeekDay endDay, int startLapse, int endLapse, boolean state)
+	public boolean canDo (Visit v)
 	{
-		for (int i = startDay.getValue(); i <= endDay.getValue(); i++)
-		{
-			for (int j = startLapse; j <= endLapse; j++)
-			{
-				hours[j][i] = state;
-			}
-		}
+		return v.getSkillArea().equals(new SkillArea(SkillAreas.GENERAL_SKILL_AREA_NAME));
 	}
 	
-	/**
-	 * Imposta la disponibilità del dottore
-	 * @param day
-	 * 			giorno da impostare
-	 * @param startLapse
-	 * 			periodo di inizio
-	 * @param endLapse
-	 * 			periodo di fine
-	 * @param state
-	 * 			stato da impostare
-	 */
-	public void setAvailability (WeekDay day, int startLapse, int endLapse, boolean state)
-	{
-		for (int i = startLapse; i <= endLapse; i++)
-		{
-			hours[i][day.getValue()] = state;
-		}
-	}
-	
-	
-	
-
-
-
-
-
-
 	/**
 	 * Override di toString
 	 * @return stringa descrittiva dell'oggetto
@@ -126,6 +112,15 @@ public class Doctor extends StaffMember {
 	}
 	
 	/**
+	 * Override di toStringShort
+	 * @return stringa descrittiva abbreviata dell'oggetto
+	 */
+	@Override
+	public String toStringShort() {
+		return String.format(PRINT_FORMAT_SHORT, getName(), getSurname(), albo);
+	}
+	
+	/**
 	 * Genera il numero univoco dell'Albo attraverso l'uso della classe UUID di java
 	 * @return Numero di Albo
 	 */
@@ -133,5 +128,12 @@ public class Doctor extends StaffMember {
 	{
 		UUID id = UUID.randomUUID();
 		return id.toString();
+	}
+	
+	@Override
+	public void read() {
+		super.read();
+		
+		this.albo = generateAlbo();
 	}
 }

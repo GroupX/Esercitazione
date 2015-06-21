@@ -3,6 +3,7 @@ package it.unibs.ing.fp.groupX.medicalclinic.people;
 import it.unibs.ing.fp.groupX.medicalclinic.ClinicFolder;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.PrescriptionEntry;
 import it.unibs.ing.fp.groupX.myutil.*;
+import it.unibs.ing.fp.groupX.myutil.Readable;
 
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
  *
  */
-public class Patient extends Person implements Useable
+public class Patient extends Person implements Useable, Readable
 {
 	/** Cartella clinica */
 	private ClinicFolder fol;

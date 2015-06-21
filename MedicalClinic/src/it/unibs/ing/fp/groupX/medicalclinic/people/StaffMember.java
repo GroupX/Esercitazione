@@ -14,6 +14,14 @@ import java.util.Date;
 public class StaffMember extends Person
 {
 	/**
+	 * Costruttore privato per read
+	 */
+	protected StaffMember ()
+	{
+		
+	}
+	
+	/**
 	 * Costruttore che inizializza gli attributi
 	 * @param name
 	 * 			nome

@@ -22,7 +22,7 @@ public class VisitTest {
 	public static Visit getTestVisit () throws ParseException
 	{
 		Patient p = new Patient(PersonTest.getTestPerson1(), new ClinicFolder());
-		Doctor d = new Doctor(PersonTest.getTestPerson2(), new boolean[1][1]);
+		Doctor d = new Doctor(PersonTest.getTestPerson2());
 		
 		return new Visit(p, "Febbre", Utilities.stringToDate("22/07/2015"), d);
 	}
@@ -30,7 +30,7 @@ public class VisitTest {
 	public static Visit getUnprenotableTestVisit () throws IllegalArgumentException, ParseException
 	{
 		Patient p = new Patient(PersonTest.getTestPerson1(), new ClinicFolder());
-		Doctor d = new Doctor(PersonTest.getTestPerson2(), new boolean[1][1]);
+		Doctor d = new Doctor(PersonTest.getTestPerson2());
 		
 		return new Visit(p, "Febbre", Utilities.stringToDate("22/07/2015"), VisitState.NON_PRENOTABILE, d);
 	}
