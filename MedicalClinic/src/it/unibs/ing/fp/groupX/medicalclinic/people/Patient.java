@@ -1,7 +1,6 @@
 package it.unibs.ing.fp.groupX.medicalclinic.people;
 
 import it.unibs.ing.fp.groupX.medicalclinic.ClinicFolder;
-import it.unibs.ing.fp.groupX.medicalclinic.visit.PrescriptionEntry;
 import it.unibs.ing.fp.groupX.myutil.*;
 import it.unibs.ing.fp.groupX.myutil.Readable;
 

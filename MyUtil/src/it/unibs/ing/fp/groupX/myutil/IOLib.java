@@ -402,6 +402,34 @@ public class IOLib
 		
 		return ris;
 	}
+
+	/**
+	 * Legge una data con l'ora
+	 * @return Data letta
+	 */
+	public static Date readDateTime ()
+	{
+		boolean ok = false;
+		Date ris = null;
+		
+		while (!ok)
+		{
+			String str = readLine();
+				
+			try
+			{
+				ris = Utilities.stringToDateTime(str);
+				ok = true;
+			}
+			catch (ParseException e)
+			{
+				System.out.println(NOT_VALID_DATE_MESSAGE);
+			}
+		}
+		
+		return ris;
+	}
+
 	
 	/**
 	 * Pone una domanda a due vie all'utente

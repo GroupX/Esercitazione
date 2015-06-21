@@ -1,6 +1,5 @@
 package it.unibs.ing.fp.groupX.medicalclinic.people;
 
-import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathology;
 import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillArea;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Visit;
 import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;

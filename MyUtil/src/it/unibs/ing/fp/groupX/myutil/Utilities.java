@@ -21,6 +21,8 @@ public class Utilities {
 	private static String DATE_FORMAT = "dd/MM/yyyy";
 	/** Formato dell'ora */
 	private static final String TIME_FORMAT = "hh:mm:ss";
+	/** Formato della data con l'ora */
+	private static final String DATE_TIME_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
 	
 	/**
 	 * Trasforma una data in stringa
@@ -57,6 +59,44 @@ public class Utilities {
 	{
 		DateFormat df = new SimpleDateFormat(TIME_FORMAT);
 		return df.format(t);
+	}
+	
+	/**
+	 * Trasforma una stringa in un orario
+	 * @param s
+	 * 			stringa da trasformare
+	 * @return Ora corrispondente alla stringa
+	 * @throws ParseException lanciata se la stringa non rispetta il formato
+	 */
+	public static Time stringToTime (String s) throws ParseException
+	{
+		DateFormat df = new SimpleDateFormat(TIME_FORMAT);
+		Date d = df.parse(s);
+		return new Time(d.getTime());
+	}
+	
+	/**
+	 * Trasforma una data con orario in una stringa
+	 * @param d
+	 * 			data e ora da trasformare
+	 * @return Stringa che rappresenta la data e l'ora
+	 */
+	public static String dateTimeToString (Date d)
+	{
+		DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT);
+		return df.format(d);
+	}
+	
+	/**
+	 * Trasforma una stringa in data con ora
+	 * @param s Stringa da trasformare
+	 * @return Data con ora corrispondente alla stringa
+	 * @throws ParseException lanciata se la stringa non rispetta il formato
+	 */
+	public static Date stringToDateTime (String s) throws ParseException
+	{
+		DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT);
+		return df.parse(s);
 	}
 	
 	/**

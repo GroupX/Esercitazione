@@ -200,7 +200,7 @@ public class Visit implements Useable
 		else
 			strReport = STRINGA_REFERTO_NON_ANCORA_INSERITO;
 		
-		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateToString(date), state.toString(), strDoctor, strReport);		   
+		return String.format(TO_STRING_FORMAT, patient.toStringShort(), motivation, Utilities.dateTimeToString(date), state.toString(), strDoctor, strReport);		   
 	}
 
 	@Override

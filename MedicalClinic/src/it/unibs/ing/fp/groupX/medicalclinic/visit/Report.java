@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Report implements Readable{
 
-	private static final String INSERT_DATE_MSG = "Inserisci data del referto [gg/mm/aaaa]: ";
+	private static final String INSERT_DATE_MSG = "Inserisci data e l'ora del referto [gg/mm/aaaa hh:mm:ss]: ";
 
 	private static String TO_STRING_FORMAT = "Data:%s\n\n%s\n\n%s";
 	
@@ -96,14 +96,14 @@ public class Report implements Readable{
 	@Override
 	public String toString ()
 	{
-		return String.format(TO_STRING_FORMAT, Utilities.dateToString(date), diagnosis.toString(), prescription.toString());
+		return String.format(TO_STRING_FORMAT, Utilities.dateTimeToString(date), diagnosis.toString(), prescription.toString());
 	}
 
 	@Override
 	public void read() {
 
 		IOLib.printLine(INSERT_DATE_MSG);
-		this.date = IOLib.readDate();
+		this.date = IOLib.readDateTime();
 		
 		this.diagnosis = Diagnosis.readFromConsole();
 		this.prescription = Prescription.readFromConsole();
