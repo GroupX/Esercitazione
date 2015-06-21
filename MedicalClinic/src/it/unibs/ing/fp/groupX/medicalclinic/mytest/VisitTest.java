@@ -35,12 +35,6 @@ public class VisitTest {
 		return new Visit(p, "Febbre", Utilities.stringToDate("22/07/2015"), VisitState.NON_PRENOTABILE, d);
 	}
 	
-	@Test
-	public void visitCreationTest() throws Exception {
-		Visit v = getTestVisit();
-		
-		assertEquals("Paziente: Paolo  Pasquali  CF: PSQPLA95H01E897I\nMotivo: Febbre\nData: 22/07/2015\nStato: prenotata\nDottore: Davide  Tosatto  CF: TSTDVD95R30F205T\nReferto:\nNon ancora impostato", v.toString());
-	}
 	
 	@Test
 	public void visitStatesTest() throws Exception {

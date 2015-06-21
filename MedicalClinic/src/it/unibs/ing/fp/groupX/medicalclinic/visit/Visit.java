@@ -75,6 +75,14 @@ public class Visit implements Useable
 	}
 	
 	/**
+	 * Costruttore copia
+	 * @param v Visita da copiare
+	 */
+	public Visit(Visit v) {
+		this(v.patient, v.motivation, v.date, v.state, v.doctor);
+	}
+
+	/**
 	 * Ritorna lo stato della visita
 	 * @return Stato della visita
 	 */
