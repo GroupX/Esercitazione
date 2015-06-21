@@ -18,6 +18,14 @@ import java.util.Iterator;
 @SuppressWarnings("serial")
 public class Pathologies implements BasicIterable<Pathology>, Useable, Serializable{
 
+	private static final String PRINT_PATHOLOGIES = "Stampa patologie";
+
+	private static final String REMOVE_PATHOLOGY = "Rimuovi patologia";
+
+	private static final String INSERT_PATHOLOGY = "Inserisci patologia";
+
+	private static final String MENU_TITLE = "Gestione patologie esistenti: ";
+
 	/** Intestazione di stampa */
 	private static final String PRINT_HEADER = "Elenco patologie:";
 	
@@ -36,7 +44,7 @@ public class Pathologies implements BasicIterable<Pathology>, Useable, Serializa
 	 * Setta l'elenco delle patologie. Aggiunto per permettere di leggerlo da file.
 	 * @param p Elenco patologie
 	 */
-	public void setPathologies (Pathologies p)
+	public static void setPathologies (Pathologies p)
 	{
 		instance = p;
 	}
@@ -286,7 +294,7 @@ public class Pathologies implements BasicIterable<Pathology>, Useable, Serializa
 		final int PRINT_PATHOLOGIES_CHOICE = 3;
 		
 		// TODO constants
-		MyMenu menu = new MyMenu("Gestione patologie esistenti: ", "Inserisci patologia", "Rimuovi patologia", "Stampa patologie");
+		MyMenu menu = new MyMenu(MENU_TITLE, INSERT_PATHOLOGY, REMOVE_PATHOLOGY, PRINT_PATHOLOGIES);
 		
 		int scelta;
 		

@@ -85,6 +85,12 @@ public class SpecialisticVisit extends Visit implements Serializable
 	}
 	
 	@Override
+	public SkillArea getSkillArea ()
+	{
+		return skArea;
+	}
+	
+	@Override
 	public String toString ()
 	{
 		StringBuffer buf = new StringBuffer(super.toString());
