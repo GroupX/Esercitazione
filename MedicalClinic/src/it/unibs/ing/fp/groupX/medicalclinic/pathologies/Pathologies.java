@@ -33,6 +33,15 @@ public class Pathologies implements BasicIterable<Pathology>, Useable, Serializa
 	private ArrayList<Pathology> list = new ArrayList<Pathology>();
 	
 	/**
+	 * Setta l'elenco delle patologie. Aggiunto per permettere di leggerlo da file.
+	 * @param p Elenco patologie
+	 */
+	public void setPathologies (Pathologies p)
+	{
+		instance = p;
+	}
+	
+	/**
 	 * Costruttore privato
 	 */
 	private Pathologies ()
