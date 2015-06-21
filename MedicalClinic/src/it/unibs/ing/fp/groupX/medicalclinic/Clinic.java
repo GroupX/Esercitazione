@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import it.unibs.ing.fp.groupX.medicalclinic.aviability.AvailabilityPeriod;
+import it.unibs.ing.fp.groupX.medicalclinic.aviability.*;
 import it.unibs.ing.fp.groupX.medicalclinic.people.*;
 import it.unibs.ing.fp.groupX.medicalclinic.skillareas.*;
-import it.unibs.ing.fp.groupX.medicalclinic.time.*;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.*;
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
@@ -25,6 +24,9 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String WEEKDAY_ALREADY_INSERT_ERROR = "Giorno già inserito";
+	private static final String DATE_NOT_FOUND = "Data non trovata";
+	private static final String PATIENT_NOT_FOUND = "Paziente non trovato";
 	private static final String MEMBER_NOT_FOUND = "Membro non trovato";
 	private static final String INSERT_SURNAME = "Inserisci cognome: ";
 	private static final String INSERT_NAME = "Inserisci nome: ";
@@ -154,9 +156,30 @@ public class Clinic implements Useable, Serializable
 	
 	/**
 	 * Cerca un periodo di disponibilità
-	 * @param d Giorno 
-	 * @param time Ora
+	 * @param sm
+	 * 			dipendente coinvolto
 	 * @return Lista dei periodi trovati
+	 */
+	public List<AvailabilityPeriod> searchPeriod (StaffMember sm)
+	{
+		ArrayList <AvailabilityPeriod> ris = new ArrayList<>();
+		
+		for (AvailabilityPeriod p : availability)
+		{
+			if (p.getSm().equals(sm))
+				ris.add(p);
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Cerca un dipendente con nome e cognome indicati
+	 * @param name
+	 * 			nome
+	 * @param surname
+	 * 			cognome
+	 * @return elenco di dipendenti compatibili
 	 */
 	public List<StaffMember> searchStaffMember (String name, String surname)
 	{
@@ -172,10 +195,66 @@ public class Clinic implements Useable, Serializable
 	}
 	
 	/**
+	 * Cerca un paziente con nome e cognome indicati
+	 * @param name
+	 * 			nome
+	 * @param surname
+	 * 			cognome
+	 * @return elenco di pazienti compatibili
+	 */
+	public List<Patient> searchPatient (String name, String surname)
+	{
+		ArrayList<Patient> ris = new ArrayList<>();
+		
+		for (Patient p : patients)
+		{
+			if(p.getName().equalsIgnoreCase(name) && p.getSurname().equalsIgnoreCase(surname))
+				ris.add(p);
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna un periodo di disponibilità leggendo la data e l'ora
+	 * @return periodo di disponibilità
+	 */
+	public AvailabilityPeriod getPeriodFromDate ()
+	{
+		Date d = IOLib.readDate();
+		Date time = IOLib.readTime();
+		List<AvailabilityPeriod> l = searchPeriod(d, time);
+		
+		if (l.size() == 0)
+			throw new IllegalArgumentException(DATE_NOT_FOUND);
+		else if (l.size() == 1)
+			return l.get(0);
+		
+		return IOLib.getCollectionElement(l);
+	}
+	
+	/**
+	 * Ritorna un periodo di disponibilità da un dipendente
+	 * @return periodo di disponibilità
+	 */
+	public AvailabilityPeriod getPeriodFromStaffMember ()
+	{
+		StaffMember sm = getStaffMember();
+		List<AvailabilityPeriod> l = searchPeriod(sm);
+		
+		if (l.size() == 0)
+			throw new IllegalArgumentException(DATE_NOT_FOUND);
+		else if (l.size() == 1)
+			return l.get(0);
+		
+		return IOLib.getCollectionElement(l);
+	}
+	
+	/**
 	 * Ritorna uno staff member leggendo nome e cognome
 	 * @return StaffMember scelto dall'utente
 	 */
-	public StaffMember getStaffMember ()
+	public StaffMember getStaffMember () throws IllegalArgumentException
 	{
 		String name = IOLib.readLine(INSERT_NAME);
 		String surname = IOLib.readLine(INSERT_SURNAME);
@@ -183,15 +262,51 @@ public class Clinic implements Useable, Serializable
 		
 		if (l.size() == 0)
 			throw new IllegalArgumentException(MEMBER_NOT_FOUND);
+		else if (l.size() == 1)
+			return l.get(0);
 		
-		return IOLib.getCollectionElement(searchStaffMember(name, surname));
+		return IOLib.getCollectionElement(l);
 	}
 	
+	/**
+	 * Ritorna un paziente leggendo nome e cognome
+	 * @return paziente scelto dall'utente
+	 */
+	public Patient getPatient () throws IllegalArgumentException
+	{
+		String name = IOLib.readLine(INSERT_NAME);
+		String surname = IOLib.readLine(INSERT_SURNAME);
+		List<Patient> l = searchPatient(name, surname);
+		
+		if (l.size() == 0)
+			throw new IllegalArgumentException(PATIENT_NOT_FOUND);
+		else if (l.size() == 1)
+			return l.get(0);
+		
+		return IOLib.getCollectionElement(l);
+	}
+	
+	/**
+	 * Ritorna un elenco di giorni scelti dall'utente via console
+	 * @return elenco di giorni
+	 */
 	public List <WeekDay> readWeekDays ()
 	{
 		ArrayList<WeekDay> wd = new ArrayList<>();
 		
-		// TODO finire
+		boolean another = true;
+		
+		while (another)
+		{
+			WeekDay d = WeekDay.readFromConsole();
+			
+			if (!wd.contains(d))
+				wd.add(d);
+			else
+				IOLib.printLine(WEEKDAY_ALREADY_INSERT_ERROR);
+			
+			another = IOLib.twoWayQuestion("Aggiungere un altro giorno?");
+		}
 		
 		return wd;
 	}
@@ -248,12 +363,44 @@ public class Clinic implements Useable, Serializable
 					Date endTime = IOLib.readTimeInDate();
 					
 					weekday = IOLib.twoWayQuestion("Giorni della settimana specifici?");
-					
-					availability.add(new AvailabilityPeriod(startDay, endDay, startTime, endTime, member));
+					if (weekday)
+					{
+						availability.add(new AvailabilityPeriod(startDay, endDay, startTime, endTime, member, readWeekDays()));
+					}
+					else
+					{
+						availability.add(new AvailabilityPeriod(startDay, endDay, startTime, endTime, member));
+					}
 					
 					break;
 					
 				case REMOVE_PERIOD:
+					
+					final int VIA_PERIOD = 1;
+					final int VIA_STAFF_MEMBER = 2;
+					
+					MyMenu rMenu = new MyMenu("Come cercare il periodo di disponibilità:", "Inserisci periodo", "Inserisci dipendente coinvolto");
+					
+					int s;
+					
+					while ((s = rMenu.getChoice())!=MyMenu.EXIT_VALUE)
+					{
+						switch (s)
+						{
+							case VIA_PERIOD:
+								
+								availability.remove(getPeriodFromDate());
+								
+								break;
+								
+							case VIA_STAFF_MEMBER:
+								
+								availability.remove(getPeriodFromStaffMember());
+								
+								break;
+						}
+					}
+					
 					break;
 					
 				case PRINT_PERIODS:

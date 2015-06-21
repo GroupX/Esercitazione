@@ -10,7 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class AvailabilityPeriod implements Serializable{
-	
+	private Date startDay;
 	private Date endDay;
 	private Date startTime;
 	private Date endTime;
@@ -55,7 +55,6 @@ public class AvailabilityPeriod implements Serializable{
 		this(startDay, endDay, startTime, endTime, sm, null);
 	}
 	
-	private Date startDay;
 	/**
 	 * @return the startDay
 	 */

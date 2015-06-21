@@ -466,10 +466,10 @@ public class IOLib
 	 * Legge un orario
 	 * @return Ora letta
 	 */
-	public static Time readTime ()
+	public static Date readTime ()
 	{
 		boolean ok = false;
-		Time ris = null;
+		Date ris = null;
 		
 		while (!ok)
 		{
@@ -477,7 +477,7 @@ public class IOLib
 				
 			try
 			{
-				ris = Utilities.stringToTime(str);
+				ris = Utilities.stringToTimeInDate(str);
 				ok = true;
 			}
 			catch (ParseException e)
