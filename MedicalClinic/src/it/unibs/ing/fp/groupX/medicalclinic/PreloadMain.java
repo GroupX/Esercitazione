@@ -12,7 +12,13 @@ public class PreloadMain {
 	private static final int VISIT_NUMBER = 6;
 	private static final int PATHOLOGIES_NUMBER = 3;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
+		preloadPathologies();
+	}
+	
+	public static void preloadPathologies ()
+	{
 		Pathology[] p = new Pathology[PATHOLOGIES_NUMBER];
 		
 		p[0] = new Pathology("Tonsillite");
@@ -34,5 +40,4 @@ public class PreloadMain {
 			e.printStackTrace();
 		}
 	}
-
 }
