@@ -22,5 +22,7 @@ public class DataManager
 		new FileOutputStream(f)));
 
 		archivio.writeObject(Pathologies.get());
+		
+		archivio.close();
 	}
 }
