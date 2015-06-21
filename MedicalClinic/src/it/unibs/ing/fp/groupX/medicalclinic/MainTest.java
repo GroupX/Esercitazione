@@ -2,7 +2,10 @@ package it.unibs.ing.fp.groupX.medicalclinic;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
+import it.unibs.ing.fp.groupX.medicalclinic.aviability.AvailabilityPeriod;
+import it.unibs.ing.fp.groupX.medicalclinic.aviability.WeekDay;
 import it.unibs.ing.fp.groupX.medicalclinic.mytest.PersonTest;
 import it.unibs.ing.fp.groupX.medicalclinic.mytest.VisitTest;
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathologies;
@@ -14,6 +17,7 @@ import it.unibs.ing.fp.groupX.medicalclinic.visit.Prescription;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Report;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Visit;
 import it.unibs.ing.fp.groupX.myutil.IOLib;
+import it.unibs.ing.fp.groupX.myutil.Utilities;
 
 public class MainTest {
 
@@ -53,14 +57,23 @@ public class MainTest {
 //		
 //		IOLib.printLine(p.toString());
 		
-		ArrayList <Person> p = new ArrayList<>();
+//		ArrayList <Person> p = new ArrayList<>();
+//		
+//		p.add(PersonTest.getTestPerson1());
+//		p.add(PersonTest.getTestPerson2());
+//		
+//		Person pers = IOLib.getCollectionElement(p);
+//		
+//		IOLib.printLine(pers.toString());
 		
-		p.add(PersonTest.getTestPerson1());
-		p.add(PersonTest.getTestPerson2());
+//		IOLib.printLine(WeekDay.getWeekDay(new Date()).getName());
 		
-		Person pers = IOLib.getCollectionElement(p);
+//		AvailabilityPeriod p = new AvailabilityPeriod(Utilities.stringToDate("22/10/2014"), Utilities.stringToDate("25/10/2014"), Utilities.stringToTime("08:00:00"), Utilities.stringToTime("18:00:00"), null);
+//		System.out.println(p.compatibleWith(Utilities.stringToDate("25/10/2014"), Utilities.stringToTime("08:00:00")));
 		
-		IOLib.printLine(pers.toString());
+		Clinic c = new Clinic();
+		
+		c.use();
 	}
 
 }

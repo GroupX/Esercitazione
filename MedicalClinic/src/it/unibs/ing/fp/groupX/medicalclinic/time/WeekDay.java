@@ -5,6 +5,8 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Enum per i giorni della settimana
@@ -12,13 +14,16 @@ import java.util.ArrayList;
  *
  */
 public enum WeekDay implements Serializable {
-	LUNEDI(0, "Lunedì"),
-	MARTEDI(1, "Martedì"),
-	MERCOLEDI(2, "Mercoledì"),
-	GIOVEDI(3, "Giovedì"),
-	VENERDI(4, "Venerdì"),
-	SABATO(5, "Sabato"),
-	DOMENICA(6, "Domenica");
+
+	LUNEDI(0),
+	MARTEDI(1),
+	MERCOLEDI(2),
+	GIOVEDI(3),
+	VENERDI(4),
+	SABATO(5),
+	DOMENICA(6);
+	
+	private final String[] nameList = {"Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"};
 	
 	/** Numero di giorni della settimana */
 	public static final int NUM_DAYS = 7;
@@ -28,15 +33,25 @@ public enum WeekDay implements Serializable {
 	/** Nome del giorno */
 	private String name;
 	
+	public static WeekDay getWeekDay (Date date)
+	{
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+		
+		return new WeekDay (dayOfWeek);
+	}
+	
 	/**
 	 * Costruttore privato
 	 * @param value
 	 * 			valore del giorno
 	 */
-	private WeekDay (int value, String name)
+	private WeekDay (int value)
 	{
 		this.value = value;
-		this.name = name;
+		this.name = nameList[value];
 	}
 	
 	/**

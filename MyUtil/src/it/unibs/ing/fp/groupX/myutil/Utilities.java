@@ -22,9 +22,10 @@ public class Utilities {
 	/** Formato della data*/
 	private static String DATE_FORMAT = "dd/MM/yyyy";
 	/** Formato dell'ora */
-	private static final String TIME_FORMAT = "hh:mm:ss";
+	private static final String TIME_FORMAT = "HH:mm:ss";
 	/** Formato della data con l'ora */
 	private static final String DATE_TIME_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
+	
 	
 	/**
 	 * Trasforma una data in stringa
@@ -87,6 +88,31 @@ public class Utilities {
 	{
 		DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT);
 		return df.format(d);
+	}
+	
+	/**
+	 * Trasforma una data contenente solo orario in stringa
+	 * @param d Data
+	 * @return Stringa rappresentativa
+	 */
+	public static String timeInDateToString (Date d)
+	{
+		DateFormat df = new SimpleDateFormat(TIME_FORMAT);
+		return df.format(d);
+	}
+	
+	/**
+	 * Trasforma una stringa in una data contenente solo l'orario
+	 * @param s Stringa contenente l'orario
+	 * @return Data letta
+	 * @throws ParseException Impossibile convertire la stringa in data
+	 */
+	public static Date stringToTimeInDate (String s) throws ParseException
+	{
+		if (s.equals("")) //Ritorna la data attuale nel caso il campo sia omesso
+			return new Date();
+		DateFormat df = new SimpleDateFormat(TIME_FORMAT);
+		return df.parse(s);
 	}
 	
 	/**

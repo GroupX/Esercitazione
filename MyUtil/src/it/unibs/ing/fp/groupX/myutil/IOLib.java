@@ -436,6 +436,33 @@ public class IOLib
 	}
 	
 	/**
+	 * Legge una data con solo l'orario
+	 * @return Data letta
+	 */
+	public static Date readTimeInDate ()
+	{
+		boolean ok = false;
+		Date ris = null;
+		
+		while (!ok)
+		{
+			String str = readLine();
+				
+			try
+			{
+				ris = Utilities.stringToTimeInDate(str);
+				ok = true;
+			}
+			catch (ParseException e)
+			{
+				System.out.println(NOT_VALID_DATE_MESSAGE);
+			}
+		}
+		
+		return ris;
+	}
+	
+	/**
 	 * Legge un orario
 	 * @return Ora letta
 	 */
@@ -475,11 +502,11 @@ public class IOLib
 		{
 			response = IOLib.readLine (question+" "+TWO_WAY_QUESTION_RESPONSE_FORMAT);
 			
-			if (!response.equals (TWO_WAY_QUESTION_YES) || !response.equals(TWO_WAY_QUESTION_NO))
+			if (!response.equals (TWO_WAY_QUESTION_YES) && !response.equals(TWO_WAY_QUESTION_NO))
 			{
 				IOLib.printLine (TWO_WAY_QUESTION_RESPONSE_ERROR);
 			}
-		}while (!response.equals (TWO_WAY_QUESTION_YES) || !response.equals(TWO_WAY_QUESTION_NO));
+		}while (!response.equals (TWO_WAY_QUESTION_YES) && !response.equals(TWO_WAY_QUESTION_NO));
 		
 		if (response.equals (TWO_WAY_QUESTION_YES))
 			return true;
@@ -507,6 +534,9 @@ public class IOLib
 	 */
 	public static <E> E getCollectionElement (Collection<E> collection)
 	{
+		if (collection.size() == 1)
+			return collection.iterator().next();
+		
 		printCollection (collection);
 		
 		int choice;

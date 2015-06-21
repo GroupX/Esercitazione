@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import it.unibs.ing.fp.groupX.medicalclinic.aviability.AvailabilityPeriod;
 import it.unibs.ing.fp.groupX.medicalclinic.people.*;
 import it.unibs.ing.fp.groupX.medicalclinic.skillareas.*;
 import it.unibs.ing.fp.groupX.medicalclinic.time.*;
@@ -22,6 +25,9 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String MEMBER_NOT_FOUND = "Membro non trovato";
+	private static final String INSERT_SURNAME = "Inserisci cognome: ";
+	private static final String INSERT_NAME = "Inserisci nome: ";
 	private static final String INSERT_STAFF_MEMBER_MESSAGE = "Seleziona il dipendente:";
 	private static final String INSERT_END_TIME_MESSAGE = "Inserisci orario fine disponibilità: ";
 	private static final String INSERT_START_TIME_MESSAGE = "Inserisci orario inizio disponibilità: ";
@@ -47,28 +53,21 @@ public class Clinic implements Useable, Serializable
 	
 	/** Aree di competenza della clinica */
 	private SkillAreas skAreas = new SkillAreas();
-	/** Tabella orari della clinica */
-	private ClinicWorkingTime timetable;
 	/** Elenco delle visite tenute nella clinica */
 	private ArrayList<Visit> visits = new ArrayList<Visit>();
 	/** Elenco del personale della clinica */
 	private ArrayList<StaffMember> staff = new ArrayList<StaffMember>();
 	/** Elenco dei pazienti della clinica */
 	private ArrayList<Patient> patients = new ArrayList<Patient>();
+	/** Lista di orari di disponibilità */
+	List<AvailabilityPeriod> availability = new ArrayList<>();
 	
 	/**
 	 * Costruttore
 	 */
 	public Clinic ()
 	{
-		try
-		{
-			timetable = new ClinicWorkingTime(Utilities.stringToTime(OPEN_TIME), Utilities.stringToTime(CLOSE_TIME));
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
+		
 	}
 	
 	
@@ -135,119 +134,135 @@ public class Clinic implements Useable, Serializable
 	}
 	
 	/**
+	 * Cerca un periodo di disponibilità
+	 * @param d Giorno 
+	 * @param time Ora
+	 * @return Lista dei periodi trovati
+	 */
+	public List<AvailabilityPeriod> searchPeriod (Date d, Date time)
+	{
+		ArrayList <AvailabilityPeriod> ris = new ArrayList<>();
+		
+		for (AvailabilityPeriod p : availability)
+		{
+			if (p.compatibleWith(d, time))
+				ris.add(p);
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Cerca un periodo di disponibilità
+	 * @param d Giorno 
+	 * @param time Ora
+	 * @return Lista dei periodi trovati
+	 */
+	public List<StaffMember> searchStaffMember (String name, String surname)
+	{
+		ArrayList<StaffMember> ris = new ArrayList<>();
+		
+		for (StaffMember sm : staff)
+		{
+			if(sm.getName().equalsIgnoreCase(name) && sm.getSurname().equalsIgnoreCase(surname))
+				ris.add(sm);
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna uno staff member leggendo nome e cognome
+	 * @return StaffMember scelto dall'utente
+	 */
+	public StaffMember getStaffMember ()
+	{
+		String name = IOLib.readLine(INSERT_NAME);
+		String surname = IOLib.readLine(INSERT_SURNAME);
+		List<StaffMember> l = searchStaffMember(name, surname);
+		
+		if (l.size() == 0)
+			throw new IllegalArgumentException(MEMBER_NOT_FOUND);
+		
+		return IOLib.getCollectionElement(searchStaffMember(name, surname));
+	}
+	
+	public List <WeekDay> readWeekDays ()
+	{
+		ArrayList<WeekDay> wd = new ArrayList<>();
+		
+		// TODO finire
+		
+		return wd;
+	}
+	
+	/**
 	 * Voce menu riguardante gli orari
 	 */
 	private void useTimetable ()
 	{
-		final int ADD_DAY_VOICE = 1;
-		final int ADD_DAYS_VOICE = 2;
-		final int ADD_PERIOD_VOICE = 3;
-		final int ADD_DAY_STAFF_VOICE = 4;
-		final int ADD_DAYS_STAFF_VOICE = 5;
-		final int ADD_PERIOD_STAFF_VOICE = 6;
-		final int REMOVE_DAY_VOICE = 7;
-		final int REMOVE_DAYS_VOICE = 8;
-		final int REMOVE_PERIOD_VOICE = 9;
-		final int REMOVE_DAY_STAFF_VOICE = 10;
-		final int REMOVE_DAYS_STAFF_VOICE = 11;
-		final int REMOVE_PERIOD_STAFF_VOICE = 12;
-		final int PRINT_DAY_VOICE = 13;
-		final int PRINT_DAYS_VOICE = 14;
-		final int PRINT_PERIOD_VOICE = 15;
-		final int PRINT_ALL_VOICE = 16;
+		final int ADD_PERIOD = 1;
+		final int REMOVE_PERIOD = 2;
+		final int PRINT_PERIODS = 3;
 		
-		MyMenu tMenu = new MyMenu(TIMETABLE_MENU, "Aggiungi disponibilità dipendente in un giorno",
-												  "Aggiungi disponibilità dipendente in più giorni",
-												  "Aggiungi disponibilità dipendente in serie di giorni",
-												  "Aggiungi disponibilità personale in un giorno",
-												  "Aggiugni disponibilità personale in più giorni",
-												  "Rimuovi disponibilità dipendente in un giorno",
-												  "Rimuovi disponibilità dipendente in più giorni",
-												  "Rimuovi disponibilità dipendente in serie di giorni",
-												  "Rimuovi disponibilità personale in un giorno",
-												  "Rimuovi disponibilità personale in più giorni",
-												  "Stampa disponibilità di un giorno",
-												  "Stampa disponibilità di più giorni",
-												  "Stampa disponibilità di serie di giorni",
-												  "Stampa disponibilità settimana");
+		MyMenu tMenu = new MyMenu(TIMETABLE_MENU, "Aggiungi disponibilità",
+												  "Rimuovi disponibilità",
+												  "Stampa disponibilità");
 		
 		int scelta;
-		Time startTime, endTime;
-		WeekDay day;
-		ArrayList<WeekDay> days;
-		StaffMember sm;
 		
 		while ((scelta = tMenu.getChoice())!=MyMenu.EXIT_VALUE)
 		{
 			switch (scelta)
 			{
-				case ADD_DAY_VOICE:
+				case ADD_PERIOD:
 					
-					day = WeekDay.selectFromConsoleDay();
+					boolean ok = false;
+					StaffMember member = null;
 					
-					IOLib.printLine(INSERT_START_TIME_MESSAGE);
-					startTime = IOLib.readTime();
-					
-					IOLib.printLine(INSERT_END_TIME_MESSAGE);
-					endTime = IOLib.readTime();
-					
-					IOLib.printLine(INSERT_STAFF_MEMBER_MESSAGE);
-					sm = IOLib.getCollectionElement(staff);
-					
-					try
+					while (!ok)
 					{
-						timetable.setAvailability(sm, day, startTime, endTime);
-					}
-					catch (IllegalArgumentException e)
-					{
-						e.printStackTrace();
+						try
+						{
+							member = getStaffMember();
+							ok = true;
+						}
+						catch (IllegalArgumentException e)
+						{
+							IOLib.printLine(e.getMessage());
+						}
 					}
 					
+					boolean weekday = false;
+					
+					IOLib.printLine("Inserisci data inizio:[gg/mm/aaaa] ");
+					Date startDay = IOLib.readDate();
+					
+					IOLib.printLine("Inserisci data fine:[gg/mm/aaaa] ");
+					Date endDay = IOLib.readDate();
+					
+					IOLib.printLine("Inserisci orario inizio:[hh:mm:ss] ");
+					Date startTime = IOLib.readTimeInDate();
+					
+					IOLib.printLine("Inserisci orario fine:[hh:mm:ss] ");
+					Date endTime = IOLib.readTimeInDate();
+					
+					weekday = IOLib.twoWayQuestion("Giorni della settimana specifici?");
+					
+					availability.add(new AvailabilityPeriod(startDay, endDay, startTime, endTime, member));
+					
 					break;
 					
-				case ADD_DAYS_VOICE:
+				case REMOVE_PERIOD:
 					break;
 					
-				case ADD_PERIOD_VOICE:
-					break;
+				case PRINT_PERIODS:
 					
-				case ADD_DAY_STAFF_VOICE:
-					break;
+					for (AvailabilityPeriod p : availability)
+					{
+						IOLib.printLine(p.toString()+"\n\n");
+					}
 					
-				case ADD_DAYS_STAFF_VOICE:
-					break;
-					
-				case ADD_PERIOD_STAFF_VOICE:
-					break;
-					
-				case REMOVE_DAY_VOICE:
-					break;
-					
-				case REMOVE_DAYS_VOICE:
-					break;
-					
-				case REMOVE_PERIOD_VOICE:
-					break;
-					
-				case REMOVE_DAY_STAFF_VOICE:
-					break;
-					
-				case REMOVE_DAYS_STAFF_VOICE:
-					break;
-					
-				case REMOVE_PERIOD_STAFF_VOICE:
-					break;
-					
-				case PRINT_DAY_VOICE:
-					break;
-					
-				case PRINT_DAYS_VOICE:
-					break;
-					
-				case PRINT_PERIOD_VOICE:
-					break;
-					
-				case PRINT_ALL_VOICE:
 					break;
 			}
 		}
@@ -258,12 +273,13 @@ public class Clinic implements Useable, Serializable
 	 */
 	private void useStaff ()
 	{
+		
 		final int ADD_GENERAL = 1;
 		final int ADD_SPECIALISTIC = 2;
 		final int CHANGE = 3;
 		final int REMOVE = 4;
 		
-		MyMenu sMenu = new MyMenu(STAFF_MENU, "Aggiungi dottore generico", "Aggiungi dottore specialistico", "Modifica", "Rimuovi");
+		MyMenu sMenu = new MyMenu(STAFF_MENU, "Aggiungi dottore generico", "Aggiungi dottore specialistico", "Modifica dottore specialistico", "Rimuovi");
 		int scelta;
 		
 		while ((scelta = sMenu.getChoice())!=MyMenu.EXIT_VALUE)
@@ -301,12 +317,12 @@ public class Clinic implements Useable, Serializable
 					break;
 					
 				case CHANGE:
-					// Non so se va, ma è la prima cosa che mi è venuta in mente
+				
 					ArrayList<SpecialistDoctor> specDot = new ArrayList<SpecialistDoctor>();
 					
 					for (StaffMember sm : staff)
 					{
-						if (sm.STAFF_TYPE.equalsIgnoreCase(SpecialistDoctor.STAFF_TYPE))
+						if (sm instanceof SpecialistDoctor)
 						{
 							specDot.add((SpecialistDoctor) sm);
 						}
