@@ -1,6 +1,7 @@
 package it.unibs.ing.fp.groupX.myutil;
 
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -14,6 +15,8 @@ import javax.xml.crypto.Data;
  */
 public class IOLib
 {	
+	private static final String INSERT_INDEX_MSG = "Inserisci l'indice: ";
+	private static final String LINE_SEPARATOR = "___________________________________________";
 	private static final String NOT_VALID_DATE_MESSAGE = "Data non valida. Reinserire";
 	/** Messaggio stampato per richiedere i secondi */
 	private static final String MESSAGGIO_SECONDI = "Secondi: ";
@@ -453,5 +456,48 @@ public class IOLib
 		if (response.equals (TWO_WAY_QUESTION_YES))
 			return true;
 		return false;
+	}
+	
+	/**
+	 * Stampa a video una collection
+	 * @param collection Collection da stampare
+	 */
+	public static <E> void printCollection (Collection<E> collection)
+	{
+		int i = 1;
+		for(E obj : collection)
+		{
+			IOLib.printLine(Integer.toString(i) + ".\n" + obj.toString() + "\n" + LINE_SEPARATOR + "\n");
+			i++;
+		}
+	}
+	
+	/**
+	 * Richiede un elemento di una collection all'utente e poi ritorna l'elemento scelto
+	 * @param collection Collection in cui scegliere
+	 * @return Elemento scelto
+	 */
+	public static <E> E getCollectionElement (Collection<E> collection)
+	{
+		printCollection (collection);
+		
+		int choice;
+		
+		do
+		{
+			choice = IOLib.readInt(INSERT_INDEX_MSG);
+		}
+		while (choice <= 0 || choice > collection.size());
+		
+		int i = 1;
+		
+		for(E obj : collection)
+		{
+			if (i == choice)
+				return obj;
+			i++;
+		}
+		
+		return null;
 	}
 }
