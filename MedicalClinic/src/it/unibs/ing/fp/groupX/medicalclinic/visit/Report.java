@@ -15,7 +15,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Report implements Readable, Serializable{
 
-	private static final String INSERT_DATE_MSG = "Inserisci data e l'ora del referto [gg/mm/aaaa hh:mm:ss]: ";
+	private static final String INSERT_DATE_MSG = "Inserisci data e l'ora del referto [gg/mm/aaaa hh:mm]: ";
 
 	private static String TO_STRING_FORMAT = "Data:%s\n\n%s\n\n%s";
 	
