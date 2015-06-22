@@ -543,10 +543,25 @@ public class IOLib
 	}
 	
 	/**
+	 * Ritorna la dimensione di un iterable
+	 * @param collection Collezione
+	 * @return Dimensione
+	 */
+	public static <E> int getIterableSize (Iterable<E> collection)
+	{
+		int i = 1;
+		for(E obj : collection)
+		{
+			i++;
+		}
+		return i - 1;
+	}
+	
+	/**
 	 * Stampa a video una collection
 	 * @param collection Collection da stampare
 	 */
-	public static <E> void printCollection (Collection<E> collection)
+	public static <E> void printIterable (Iterable<E> collection)
 	{
 		int i = 1;
 		for(E obj : collection)
@@ -561,12 +576,14 @@ public class IOLib
 	 * @param collection Collection in cui scegliere
 	 * @return Elemento scelto
 	 */
-	public static <E> E getCollectionElement (Collection<E> collection)
+	public static <E> E getIterableElement (Iterable<E> collection)
 	{
-		if (collection.size() == 1)
+		int size = getIterableSize(collection);
+		
+		if (size == 1)
 			return collection.iterator().next();
 		
-		printCollection (collection);
+		printIterable (collection);
 		
 		int choice;
 		
@@ -574,7 +591,7 @@ public class IOLib
 		{
 			choice = IOLib.readInt(INSERT_INDEX_MSG);
 		}
-		while (choice <= 0 || choice > collection.size());
+		while (choice <= 0 || choice > size);
 		
 		int i = 1;
 		

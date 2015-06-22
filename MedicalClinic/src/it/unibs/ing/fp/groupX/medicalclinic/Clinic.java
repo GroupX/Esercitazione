@@ -24,6 +24,7 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String NO_SKILL_AREA = "Area di competenza non esistente";
 	private static final String NO_PERIOD = "Nessun periodo trovato";
 	private static final String NO_VISIT_MSG = "Nessuna visita trovata";
 	private static final String NO_COMPATIBLE_DATES = "Non esistono orari compatibili successivi. Provare orari precedenti";
@@ -100,6 +101,11 @@ public class Clinic implements Useable, Serializable
 		{
 			skAreas.remove(sa);
 		}
+	}
+	
+	public boolean hasSkillArea (SkillArea sa)
+	{
+		return skAreas.contains(sa);
 	}
 	
 	public void addVisit (Visit v) throws IllegalArgumentException
@@ -294,6 +300,62 @@ public class Clinic implements Useable, Serializable
 	}
 	
 	/**
+	 * Ritorna una lista di dottori specialisti che possono visitare in una certa data
+	 * @param d data (con ora)
+	 * @param sk Area di competenza richiesta
+	 * @return Lista di dottori
+	 */
+	public List<SpecialistDoctor> getAvailableSpecialistDoctor (Date d, SkillArea sk)
+	{
+		ArrayList<SpecialistDoctor> ris = new ArrayList<>();
+		
+		try {
+			Date onlyTime = Utilities.stringToTimeInDate(Utilities.timeInDateToString(d));
+			Date onlyDate = Utilities.stringToDate(Utilities.dateToString(d));
+			
+			for (AvailabilityPeriod p: availability)
+			{
+				if (p.compatibleWith(onlyDate, onlyTime))
+				{
+					if (p.getSm() instanceof SpecialistDoctor)
+					{
+						SpecialistDoctor doc = (SpecialistDoctor) p.getSm();
+						
+						boolean add = true;
+						
+						if (doc.isAble(sk))
+						{
+						
+							List<Visit> visitsDoctor = searchVisit(doc);
+							
+							for (Visit v : visitsDoctor)
+							{
+								if (v.overlaps(d))
+										add = false;
+							}
+						}
+						else
+						{
+							add = false;
+						}
+						
+						if (!ris.contains(doc) && add)
+							ris.add(doc);
+					}
+				}
+			}
+			
+			
+		} catch (ParseException e) {
+			// E' per forza già corretta
+			e.printStackTrace();
+		}
+		
+		return ris;
+		
+	}
+	
+	/**
 	 * Ritorna vero se esistono periodi seguenti compatibili, false altrimenti
 	 * @param d Data
 	 * @return true: esistono altri periodi compatibili, false: non esistono
@@ -307,17 +369,17 @@ public class Clinic implements Useable, Serializable
 			
 			for (AvailabilityPeriod p : availability)
 			{
-				if (p.getEndDay().compareTo(onlyDate)>=0)
+				if (p.getEndDay().compareTo(onlyDate)>0)
 				{
-					if (p.getEndTime().compareTo(onlyTime)>=0)
-					{
-						return true;
-					}
+					return true;
 				}
-			}
+				else if (p.getEndDay().compareTo(onlyDate)==0 && p.getEndTime().compareTo(onlyTime)>=0)
+				{
+					return true;
+				}
 			
 			return false;
-			
+			}
 		} catch (ParseException e) {
 			// E' già corretta per forza
 			e.printStackTrace();
@@ -344,7 +406,33 @@ public class Clinic implements Useable, Serializable
 			if (dLst.size() != 0)
 				ok = true;
 			
-			if (!areThereSubsequentDates(next))
+			if (!areThereSubsequentDates(next) && !ok)
+				throw new IllegalArgumentException(NO_COMPATIBLE_DATES);
+			
+		}while (!ok);
+		
+		return next;
+	}
+	
+	/**
+	 * Ritorna la prossima data suggerita
+	 * @param d Data desiderata
+	 * @param sk Area di competenza richiesta
+	 * @return Data suggerita
+	 */
+	public Date suggestNextDate (Date d, SkillArea sk)
+	{
+		Date next = d;
+		boolean ok = false;
+		
+		do 
+		{
+			next = Utilities.getNextDate30Min(next);
+			List<SpecialistDoctor> dLst = getAvailableSpecialistDoctor(next, sk);
+			if (dLst.size() != 0)
+				ok = true;
+			
+			if (!areThereSubsequentDates(next) && !ok)
 				throw new IllegalArgumentException(NO_COMPATIBLE_DATES);
 			
 		}while (!ok);
@@ -367,14 +455,20 @@ public class Clinic implements Useable, Serializable
 		
 		int scelta;
 		
+		boolean ok;
+		Patient p;
+		boolean dateOk;
+		Date date;
+		String motivation;
+		
 		while ( (scelta=vMenu.getChoice()) != MyMenu.EXIT_VALUE )
 		{
 			switch (scelta)
 			{
 				case ADD_GENERAL_VOICE:
 					
-					boolean ok = false;
-					Patient p = null;
+					ok = false;
+					p = null;
 					do
 					{
 						try
@@ -389,10 +483,10 @@ public class Clinic implements Useable, Serializable
 						}
 					}while (!ok);
 					
-					boolean dateOk = false;
+					dateOk = false;
 					
 					List <Doctor> dList = null;
-					Date date = null;
+					date = null;
 					
 					while (!dateOk)
 					{
@@ -421,83 +515,9 @@ public class Clinic implements Useable, Serializable
 						}
 					}
 					
-					Doctor doc = IOLib.getCollectionElement(dList);
+					Doctor doc = IOLib.getIterableElement(dList);
 					
-//					IOLib.printLine("Seleziona il dottore per la visita:");
-//					Doctor d = getDoctor();
-					
-					String motivation = IOLib.readLine("Inserisci la motivazione della visita: ");
-					
-//					boolean dateOk = false;
-//
-//					
-//					while (!dateOk)
-//					{
-//						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm:ss]");
-//						date = IOLib.readDateTime();
-//						
-//						try {
-//							Date onlyTime = Utilities.stringToTimeInDate(Utilities.timeInDateToString(date));
-//							Date onlyDate = Utilities.stringToDate(Utilities.dateToString(date));
-//							
-//							List<AvailabilityPeriod> periods = searchPeriod(d);
-//							
-//							int i;
-//							 //Se arriva alla fine della List è perche non ne ha trovata una compatibile
-//							//Nessun periodo di disponibilità del dottore contiene la data
-//							for (i = 0; i < periods.size() && !periods.get(i).compatibleWith(onlyDate, onlyTime); i++);
-//							
-//							if (i != periods.size())
-//							{
-//								//Controllo che l'ora richiesta permetta lo svolgimento dell'intera durata di una visita prima della chiusura della clinica
-//								//(controllo sull'orario di apertura implicito nel controllo di compatibilità con le disponibilità)
-//								if ( Math.abs(onlyTime.getTime() - Utilities.stringToTimeInDate(CLOSE_TIME).getTime()) >= Visit.DURATION_MINUTES )
-//								{
-//									List<Visit> visitsDoctor = searchVisit(d);
-//									boolean stop = false;
-//									
-//									//Se arriva alla fine della List è perchè nessuna visita in programma per il dottore va in conflitto con la data richiesta
-//									for (i = 0; i < visitsDoctor.size() && !stop; i++)
-//									{
-//										if (visitsDoctor.get(i).getDate().compareTo(date) != 0)
-//										{
-//											stop = true;
-//										}
-//										else if ( Math.abs(visitsDoctor.get(i).getDate().getTime() - date.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE) < Visit.DURATION_MINUTES )
-//										{
-//											//Math.abs(visitsDoctor.get(i).getDate().getTime() - date.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE)
-//											//Distanza in minuti tra una data e l'altra
-//											// < Visit.DURATION_MINUTES
-//											//Se la distanza è minore della durata della visita si sovrappongono
-//											stop = true;
-//										}
-//									}
-//									
-//									if (i == visitsDoctor.size())
-//									{
-//										//CERCA DATA DISPONIBILE
-//										/**
-//										 * dateOk = IOLib.twoWayQuestion("La data e l'ora inseriti non sono disponibili, la disponibilità più vicina è "+Utilities.timeInDateToString(date)+". La si vuole confermare?");
-//										 */
-//									}
-//									else
-//									{
-//										dateOk = true;
-//									}
-//								}
-//								else
-//								{
-//									//ORA NON COMPATIBILE --> CERCA DATA DISPONIBILE
-//								}
-//							}
-//							else
-//							{
-//								//CERCA DATA DISPONIBILE
-//							}
-//						} catch (ParseException e) {
-//							e.printStackTrace();
-//						}
-//					}
+					motivation = IOLib.readLine("Inserisci la motivazione della visita: ");
 					
 					visits.add(new Visit(p, motivation, date, doc));
 
@@ -505,7 +525,61 @@ public class Clinic implements Useable, Serializable
 					
 				case ADD_SPECIALISTIC_VOICE:
 					
+					ok = false;
+					p = null;
+					do
+					{
+						try
+						{
+							IOLib.printLine("Seleziona il paziente per la visita: ");
+							p = getPatient();
+							ok = true;
+						}
+						catch (IllegalArgumentException e)
+						{
+							IOLib.printLine(e.getMessage());
+						}
+					}while (!ok);
 					
+					dateOk = false;
+					
+					List <SpecialistDoctor> sdList = null;
+					date = null;
+					
+					SkillArea sa = getSkillArea();
+					
+					while (!dateOk)
+					{
+						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm]");
+						date = IOLib.readDateTime();
+						
+						sdList = getAvailableSpecialistDoctor(date, sa);
+						
+						if (sdList.size() == 0)
+						{
+							IOLib.printLine("Impossibile all'orario specificato");
+							
+							try
+							{
+								Date d = suggestNextDate(date, sa);
+								IOLib.printLine(String.format("Prossima data disponibile: %s", Utilities.dateTimeToString(d)));
+							}
+							catch (IllegalArgumentException e)
+							{
+								IOLib.printLine(e.getMessage());
+							}
+						}
+						else
+						{
+							dateOk = true;
+						}
+					}
+					
+					SpecialistDoctor sdoc = IOLib.getIterableElement(sdList);
+					
+					motivation = IOLib.readLine("Inserisci la motivazione della visita: ");
+					
+					visits.add(new SpecialisticVisit(p, motivation, date, sdoc, sa));
 					
 					break;
 					
@@ -585,7 +659,7 @@ public class Clinic implements Useable, Serializable
 				
 				vList = searchVisit(d);
 				
-				ris = IOLib.getCollectionElement(vList);
+				ris = IOLib.getIterableElement(vList);
 					
 				break;
 				
@@ -595,7 +669,7 @@ public class Clinic implements Useable, Serializable
 				
 				vList = searchVisit(p);
 				
-				ris = IOLib.getCollectionElement(vList);
+				ris = IOLib.getIterableElement(vList);
 				
 				break;
 				
@@ -605,13 +679,13 @@ public class Clinic implements Useable, Serializable
 				
 				vList = searchVisit(dt);
 				
-				ris = IOLib.getCollectionElement(vList);
+				ris = IOLib.getIterableElement(vList);
 				
 				break;	
 				
 			case SEARCH_ALL_VOICE:
 				
-				ris = IOLib.getCollectionElement(visits);
+				ris = IOLib.getIterableElement(visits);
 		}
 		
 		if (ris == null)
@@ -842,7 +916,7 @@ public class Clinic implements Useable, Serializable
 		else if (l.size() == 1)
 			return l.get(0);
 		
-		return IOLib.getCollectionElement(l);
+		return IOLib.getIterableElement(l);
 	}
 	
 	/**
@@ -859,7 +933,7 @@ public class Clinic implements Useable, Serializable
 		else if (l.size() == 1)
 			return l.get(0);
 		
-		return IOLib.getCollectionElement(l);
+		return IOLib.getIterableElement(l);
 	}
 	
 	/**
@@ -896,7 +970,7 @@ public class Clinic implements Useable, Serializable
 				
 			case SEARCH_ALL_VOICE:
 				
-				ris = IOLib.getCollectionElement(availability);
+				ris = IOLib.getIterableElement(availability);
 		}
 		
 		if (ris == null)
@@ -935,13 +1009,13 @@ public class Clinic implements Useable, Serializable
 			else if (l.size() == 1)
 				return l.get(0);
 			
-			ris = IOLib.getCollectionElement(l);
+			ris = IOLib.getIterableElement(l);
 			
 			break;
 			
 		case SEARCH_ALL_VOICE:
 			
-			ris = IOLib.getCollectionElement(staff);
+			ris = IOLib.getIterableElement(staff);
 			
 			break;
 			
@@ -997,13 +1071,13 @@ public class Clinic implements Useable, Serializable
 			else if (l.size() == 1)
 				return l.get(0);
 			
-			ris = IOLib.getCollectionElement(l);
+			ris = IOLib.getIterableElement(l);
 			
 			break;
 			
 		case SEARCH_ALL_VOICE:
 			
-			ris = IOLib.getCollectionElement(getDoctorsFromStaff());
+			ris = IOLib.getIterableElement(getDoctorsFromStaff());
 			
 			break;
 			
@@ -1062,7 +1136,7 @@ public class Clinic implements Useable, Serializable
 			else if (l.size() == 1)
 				return l.get(0);
 			
-			ris = IOLib.getCollectionElement(l);
+			ris = IOLib.getIterableElement(l);
 			
 			break;
 		case SEARCH_SKILL_AREA_VOICE:
@@ -1075,7 +1149,7 @@ public class Clinic implements Useable, Serializable
 			break;
 		case SEARCH_ALL_VOICE:
 			
-			ris = IOLib.getCollectionElement(getSpecialistDoctorsFromStaff());
+			ris = IOLib.getIterableElement(getSpecialistDoctorsFromStaff());
 			
 			break;
 			
@@ -1114,13 +1188,13 @@ public class Clinic implements Useable, Serializable
 			else if (l.size() == 1)
 				return l.get(0);
 			
-			ris = IOLib.getCollectionElement(l);
+			ris = IOLib.getIterableElement(l);
 			
 			break;
 			
 		case SEARCH_ALL_VOICE:
 			
-			ris = IOLib.getCollectionElement(patients);
+			ris = IOLib.getIterableElement(patients);
 			
 			break;
 			
@@ -1480,5 +1554,52 @@ public class Clinic implements Useable, Serializable
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * Ritorna una skill area presente nella clinica
+	 * @return
+	 */
+	public SkillArea getSkillArea()
+	{
+		final int SEARCH_NAME_VOICE = 1;
+		final int SEARCH_ALL_VOICE = 2;
+		
+		MyMenu vMenu = new MyMenu("Ricerca area di competenza", false, "Cerca per nome", "Cerca tra tutte");
+		
+		int scelta;
+
+		SkillArea sk = null;
+		
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
+		{
+		case SEARCH_NAME_VOICE:
+			
+			boolean ok = false;
+			
+			do
+			{
+				sk = SkillArea.readFromConsole();
+				
+				if (skAreas.contains(sk))
+					ok = true;
+				else
+					IOLib.printLine(NO_SKILL_AREA);
+			}while (!ok);
+			
+			break;
+			
+		case SEARCH_ALL_VOICE:
+			
+			sk = IOLib.getIterableElement(skAreas);
+			
+			break;
+			
+		}
+
+		
+		return sk;
 	}
 }
