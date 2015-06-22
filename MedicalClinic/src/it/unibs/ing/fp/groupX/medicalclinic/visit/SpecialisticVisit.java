@@ -9,6 +9,11 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Classe che implementa una visita specialistica
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 @SuppressWarnings("serial")
 public class SpecialisticVisit extends Visit implements Serializable
 {

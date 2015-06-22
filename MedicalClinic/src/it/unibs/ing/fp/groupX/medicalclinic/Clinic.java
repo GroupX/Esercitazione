@@ -154,6 +154,11 @@ public class Clinic implements Useable, Serializable
 		
 	}
 	
+	/**
+	 * Aggiunge area di competenza
+	 * @param sa Area da aggiungere
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void addSkillArea (SkillArea sa) throws IllegalArgumentException
 	{
 		if (skAreas.contains(sa))
@@ -166,6 +171,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Rimuove un'area di competenza
+	 * @param sa Area da rimuovere
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void removeSkillArea (SkillArea sa) throws IllegalArgumentException
 	{
 		if (!skAreas.contains(sa))
@@ -178,11 +188,21 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Dice se contiene l'area di competenza passata
+	 * @param sa Area di competenza
+	 * @return true: c'è false: non c'è
+	 */
 	public boolean hasSkillArea (SkillArea sa)
 	{
 		return skAreas.contains(sa);
 	}
 	
+	/**
+	 * Aggiunge una visita
+	 * @param v Visita da aggiungere
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void addVisit (Visit v) throws IllegalArgumentException
 	{
 		if (visits.contains(v))
@@ -195,6 +215,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Rimuove una visita
+	 * @param v Visita da rimuovere
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void removeVisit (Visit v) throws IllegalArgumentException
 	{
 		if (!visits.contains(v))
@@ -207,6 +232,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Aggiunge un dipendente
+	 * @param sm Dipendente
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void addStaffMember (StaffMember sm) throws IllegalArgumentException
 	{
 		if (staff.contains(sm))
@@ -219,6 +249,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Rimuove un membro dello staff
+	 * @param sm Membro 
+	 * @throws IllegalArgumentException errore
+	 */
 	public void removeStaffMember (StaffMember sm) throws IllegalArgumentException
 	{
 		if (!staff.contains(sm))
@@ -231,6 +266,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Aggiunge un paziente
+	 * @param p Paziente
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void addPatient (Patient p) throws IllegalArgumentException
 	{
 		if (patients.contains(p))
@@ -243,6 +283,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Rimuove un paziente
+	 * @param p Paziente
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void removePatient (Patient p) throws IllegalArgumentException
 	{
 		if (!patients.contains(p))
@@ -255,6 +300,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Aggiunge un periodo di disponibilità
+	 * @param ap Periodo
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void addAvailability (AvailabilityPeriod ap) throws IllegalArgumentException
 	{
 		if (availability.contains(ap))
@@ -267,6 +317,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	/**
+	 * Rimuove un periodo di disponibilità
+	 * @param ap Periodo
+	 * @throws IllegalArgumentException Errore
+	 */
 	public void removeAvailability (AvailabilityPeriod ap) throws IllegalArgumentException
 	{
 		if (!availability.contains(ap))

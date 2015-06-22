@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Classe che implementa un giorno della settimana
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 @SuppressWarnings("serial")
 public class WeekDay implements Serializable, Readable{
 	

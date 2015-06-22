@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe che implementa un periodo di disponibilità per un membro della clinica
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 @SuppressWarnings("serial")
 public class AvailabilityPeriod implements Serializable{
 	private Date startDay;
