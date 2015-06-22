@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -396,8 +397,13 @@ public class Clinic implements Useable, Serializable
 	 */
 	public Date suggestNextDate (Date d)
 	{
-		Date next = d;
+		
 		boolean ok = false;
+		
+		if (d.compareTo(getMinDate())<0)
+			d = getMinDate();
+		
+		Date next = d;
 		
 		do 
 		{
@@ -415,6 +421,30 @@ public class Clinic implements Useable, Serializable
 	}
 	
 	/**
+	 * Restituisce la data minima da cui iniziare a cercare per la data suggerita
+	 * @return Data minima
+	 */
+	public Date getMinDate ()
+	{
+		Date min = null;
+		
+		for (AvailabilityPeriod p : availability)
+		{
+			if (min == null)
+				min = p.getStartDay();
+			else if (p.getStartDay().compareTo(min)<0)
+				min = p.getStartDay();
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(min);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		return cal.getTime();
+	}
+	
+	/**
 	 * Ritorna la prossima data suggerita
 	 * @param d Data desiderata
 	 * @param sk Area di competenza richiesta
@@ -422,8 +452,13 @@ public class Clinic implements Useable, Serializable
 	 */
 	public Date suggestNextDate (Date d, SkillArea sk)
 	{
-		Date next = d;
+		
 		boolean ok = false;
+		
+		if (d.compareTo(getMinDate())<0)
+			d = getMinDate();
+		
+		Date next = d;
 		
 		do 
 		{
