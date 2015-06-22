@@ -12,7 +12,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class SpecialisticVisit extends Visit implements Serializable
 {
-	private static final String TO_STRING_MSG = "Area di competenza: %s\nVisita precedente:\n%s\nIl referto era ok? %s";
+	private static final String TO_STRING_MSG = "\nArea di competenza: %s\nVisita precedente:\n%s\nIl referto era ok? %s";
 	private static final String PREV_REPORT_OK = "Il referto precedente era ok?";
 	private static final String PREV_VISIT_NOT_SET_MSG = "Impossibile settare. Visita precedente non impostata.";
 	private static final String VISIT_NOT_REFERTED_MSG = "Impossibile salvare informazioni sulla visita precedente senza che sia stato impostato il referto.";

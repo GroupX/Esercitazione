@@ -24,6 +24,8 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String NO_PERIOD = "Nessun periodo trovato";
+	private static final String NO_VISIT_MSG = "Nessuna visita trovata";
 	private static final String NO_COMPATIBLE_DATES = "Non esistono orari compatibili successivi. Provare orari precedenti";
 	private static final String TIME_INCOMPATIBLE_WITH_CLINIC_TIME = "Orario non rispetta gli orari della clinica";
 	private static final String READ_SKILL_AREA_NOT_FOUND_ERROR = "Area di competenza inserita non presente nell'elenco";
@@ -509,23 +511,52 @@ public class Clinic implements Useable, Serializable
 					
 				case CHANGE_VOICE:
 					
-					Visit v = getVisit();
-					
-					v.use();
+					try
+					{
+						Visit v = getVisit();
+						
+						v.use();
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
 					
 				case REMOVE_VOICE:
 					
-					
+					try
+					{
+						Visit v = getVisit();
+						
+						boolean sure = IOLib.twoWayQuestion("Sicuro di voler rimuovere? ");
+						
+						if (sure)
+							visits.remove(v);
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
 					
 				case PRINT_VOICE:
-					
-					getVisit();
+											
+					try
+					{
+						Visit v = getVisit();
+						
+						IOLib.printLine(v.toString());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
+
 			}
 		}
 	}
@@ -535,8 +566,9 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_DOCTOR_VOICE = 1;
 		final int SEARCH_PATIENT_VOICE = 2;
 		final int SEARCH_DATE_VOICE = 3;
+		final int SEARCH_ALL_VOICE = 4;
 		
-		MyMenu vMenu = new MyMenu("Ricerca visite", false, "Cerca per dottore", "Cerca per pazioente", "Cerca per data");
+		MyMenu vMenu = new MyMenu("Ricerca visite", false, "Cerca per dottore", "Cerca per paziente", "Cerca per data", "Scegli tra tutte");
 		
 		Visit ris = null;
 		
@@ -554,7 +586,7 @@ public class Clinic implements Useable, Serializable
 				vList = searchVisit(d);
 				
 				ris = IOLib.getCollectionElement(vList);
-				
+					
 				break;
 				
 			case SEARCH_PATIENT_VOICE:
@@ -576,7 +608,14 @@ public class Clinic implements Useable, Serializable
 				ris = IOLib.getCollectionElement(vList);
 				
 				break;	
+				
+			case SEARCH_ALL_VOICE:
+				
+				ris = IOLib.getCollectionElement(visits);
 		}
+		
+		if (ris == null)
+			throw new IllegalArgumentException(NO_VISIT_MSG);
 		
 		return ris;
 	}
@@ -726,20 +765,38 @@ public class Clinic implements Useable, Serializable
 	 * 			cognome
 	 * @return elenco di dottori specialistici compatibili
 	 */
-	public List<SpecialistDoctor> searchSpecialistDoctor (String name, String surname, SkillArea sa)
+	public List<SpecialistDoctor> searchSpecialistDoctor (String name, String surname)
 	{
 		ArrayList<SpecialistDoctor> ris = new ArrayList<>();
 		
-		for (StaffMember sm : staff)
+		for (SpecialistDoctor sd : getSpecialistDoctorsFromStaff())
 		{
 			
-			if(sm.getName().equalsIgnoreCase(name) && sm.getSurname().equalsIgnoreCase(surname) && sm instanceof SpecialistDoctor)
+			if(sd.getName().equalsIgnoreCase(name) && sd.getSurname().equalsIgnoreCase(surname))
 			{
-				SpecialistDoctor sd = (SpecialistDoctor) sm;
-				if (sa == null)
-					ris.add(sd);
-				else if (sd.isAble(sa))
-					ris.add(sd);
+				ris.add(sd);
+			}
+				
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ricerca dottore specialistico per area di competenza
+	 * @param sa Area
+	 * @return dottore
+	 */
+	public List<SpecialistDoctor> searchSpecialistDoctor (SkillArea sa)
+	{
+		ArrayList<SpecialistDoctor> ris = new ArrayList<>();
+		
+		for (SpecialistDoctor sd : getSpecialistDoctorsFromStaff())
+		{
+			
+			if(sd.isAble(sa))
+			{
+				ris.add(sd);
 			}
 				
 		}
@@ -806,21 +863,108 @@ public class Clinic implements Useable, Serializable
 	}
 	
 	/**
+	 * Ritorna un periodo cercandolo
+	 * @return Il periodo richiesto
+	 */
+	public AvailabilityPeriod getPeriod () 
+	{
+		final int SEARCH_STAFF_VOICE = 1;
+		final int SEARCH_DATE_VOICE = 2;
+		final int SEARCH_ALL_VOICE = 3;
+		
+		MyMenu vMenu = new MyMenu("Ricerca periodi", false, "Cerca per membro", "Cerca per data", "Cerca tra tutte");
+		
+		AvailabilityPeriod ris = null;
+		
+		int scelta;
+
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
+		{
+			case SEARCH_STAFF_VOICE:
+				
+				ris = getPeriodFromStaffMember();
+					
+				break;
+				
+			case SEARCH_DATE_VOICE:
+				
+				ris = getPeriodFromDate();
+				
+				break;	
+				
+			case SEARCH_ALL_VOICE:
+				
+				ris = IOLib.getCollectionElement(availability);
+		}
+		
+		if (ris == null)
+			throw new IllegalArgumentException(NO_PERIOD);
+		
+		return ris;
+	}
+	
+	/**
 	 * Ritorna uno staff member leggendo nome e cognome
 	 * @return StaffMember scelto dall'utente
 	 */
 	public StaffMember getStaffMember () throws IllegalArgumentException
 	{
-		String name = IOLib.readLine(INSERT_NAME);
-		String surname = IOLib.readLine(INSERT_SURNAME);
-		List<StaffMember> l = searchStaffMember(name, surname);
+		final int SEARCH_NAME_VOICE = 1;
+		final int SEARCH_ALL_VOICE = 2;
 		
-		if (l.size() == 0)
-			throw new IllegalArgumentException(MEMBER_NOT_FOUND);
-		else if (l.size() == 1)
-			return l.get(0);
+		MyMenu vMenu = new MyMenu("Ricerca staff", false, "Cerca per nome e cognome", "Cerca tra tutti");
 		
-		return IOLib.getCollectionElement(l);
+		StaffMember ris = null;
+		
+		int scelta;
+
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
+		{
+		case SEARCH_NAME_VOICE:
+			
+			String name = IOLib.readLine(INSERT_NAME);
+			String surname = IOLib.readLine(INSERT_SURNAME);
+			List<StaffMember> l = searchStaffMember(name, surname);
+			
+			if (l.size() == 0)
+				throw new IllegalArgumentException(MEMBER_NOT_FOUND);
+			else if (l.size() == 1)
+				return l.get(0);
+			
+			ris = IOLib.getCollectionElement(l);
+			
+			break;
+			
+		case SEARCH_ALL_VOICE:
+			
+			ris = IOLib.getCollectionElement(staff);
+			
+			break;
+			
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna solo i dottori
+	 * @return dottori
+	 */
+	public List<Doctor> getDoctorsFromStaff ()
+	{
+		ArrayList<Doctor> ris = new ArrayList<>();
+		
+		for (StaffMember m : staff)
+		{
+			if (m instanceof Doctor)
+				ris.add((Doctor)m);
+		}
+		
+		return ris;
 	}
 	
 	/**
@@ -829,16 +973,62 @@ public class Clinic implements Useable, Serializable
 	 */
 	public Doctor getDoctor () throws IllegalArgumentException
 	{
-		String name = IOLib.readLine(INSERT_NAME);
-		String surname = IOLib.readLine(INSERT_SURNAME);
-		List<Doctor> l = searchDoctor(name, surname);
+		final int SEARCH_NAME_VOICE = 1;
+		final int SEARCH_ALL_VOICE = 2;
 		
-		if (l.size() == 0)
-			throw new IllegalArgumentException(MEMBER_NOT_FOUND);
-		else if (l.size() == 1)
-			return l.get(0);
+		MyMenu vMenu = new MyMenu("Ricerca dottori", false, "Cerca per nome e cognome", "Cerca tra tutti");
 		
-		return IOLib.getCollectionElement(l);
+		Doctor ris = null;
+		
+		int scelta;
+
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
+		{
+		case SEARCH_NAME_VOICE:
+			
+			String name = IOLib.readLine(INSERT_NAME);
+			String surname = IOLib.readLine(INSERT_SURNAME);
+			List<Doctor> l = searchDoctor(name, surname);
+			
+			if (l.size() == 0)
+				throw new IllegalArgumentException(MEMBER_NOT_FOUND);
+			else if (l.size() == 1)
+				return l.get(0);
+			
+			ris = IOLib.getCollectionElement(l);
+			
+			break;
+			
+		case SEARCH_ALL_VOICE:
+			
+			ris = IOLib.getCollectionElement(getDoctorsFromStaff());
+			
+			break;
+			
+		}
+		
+		return ris;
+		
+		
+	}
+	
+	/**
+	 * Ritorna solo i dottori specialistici
+	 * @return dottori specialistici
+	 */
+	public List<SpecialistDoctor> getSpecialistDoctorsFromStaff ()
+	{
+		ArrayList<SpecialistDoctor> ris = new ArrayList<>();
+		
+		for (StaffMember m : staff)
+		{
+			if (m instanceof SpecialistDoctor)
+				ris.add((SpecialistDoctor)m);
+		}
+		
+		return ris;
 	}
 	
 	/**
@@ -847,24 +1037,51 @@ public class Clinic implements Useable, Serializable
 	 */
 	public SpecialistDoctor getSpecialistDoctor () throws IllegalArgumentException
 	{
-		String name = IOLib.readLine(INSERT_NAME);
-		String surname = IOLib.readLine(INSERT_SURNAME);
-		SkillArea sa = SkillArea.readFromConsole();
+		final int SEARCH_NAME_VOICE = 1;
+		final int SEARCH_SKILL_AREA_VOICE = 2;
+		final int SEARCH_ALL_VOICE = 3;
 		
-		while (!skAreas.contains(sa))
+		MyMenu vMenu = new MyMenu("Ricerca dottori specialistici", false, "Cerca per nome e cognome", "Cerca per area di competenza", "Cerca tra tutti");
+		
+		SpecialistDoctor ris = null;
+		
+		int scelta;
+
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
 		{
-			IOLib.printLine(READ_SKILL_AREA_NOT_FOUND_ERROR);
-			sa = SkillArea.readFromConsole();
+		case SEARCH_NAME_VOICE:
+			
+			String name = IOLib.readLine(INSERT_NAME);
+			String surname = IOLib.readLine(INSERT_SURNAME);
+			List<SpecialistDoctor> l = searchSpecialistDoctor(name, surname);
+			
+			if (l.size() == 0)
+				throw new IllegalArgumentException(MEMBER_NOT_FOUND);
+			else if (l.size() == 1)
+				return l.get(0);
+			
+			ris = IOLib.getCollectionElement(l);
+			
+			break;
+		case SEARCH_SKILL_AREA_VOICE:
+			
+			SkillArea sa = SkillArea.readFromConsole();
+			
+			if (!skAreas.contains(sa))
+				throw new IllegalArgumentException(READ_SKILL_AREA_NOT_FOUND_ERROR);
+			
+			break;
+		case SEARCH_ALL_VOICE:
+			
+			ris = IOLib.getCollectionElement(getSpecialistDoctorsFromStaff());
+			
+			break;
+			
 		}
 		
-		List<SpecialistDoctor> l = searchSpecialistDoctor(name, surname, sa);
-		
-		if (l.size() == 0)
-			throw new IllegalArgumentException(MEMBER_NOT_FOUND);
-		else if (l.size() == 1)
-			return l.get(0);
-		
-		return IOLib.getCollectionElement(l);
+		return ris;
 	}
 	
 	/**
@@ -873,16 +1090,43 @@ public class Clinic implements Useable, Serializable
 	 */
 	public Patient getPatient () throws IllegalArgumentException
 	{
-		String name = IOLib.readLine(INSERT_NAME);
-		String surname = IOLib.readLine(INSERT_SURNAME);
-		List<Patient> l = searchPatient(name, surname);
+		final int SEARCH_NAME_VOICE = 1;
+		final int SEARCH_ALL_VOICE = 2;
 		
-		if (l.size() == 0)
-			throw new IllegalArgumentException(PATIENT_NOT_FOUND);
-		else if (l.size() == 1)
-			return l.get(0);
+		MyMenu vMenu = new MyMenu("Ricerca pazienti", false, "Cerca per nome e cognome", "Cerca tra tutti");
 		
-		return IOLib.getCollectionElement(l);
+		Patient ris = null;
+		
+		int scelta;
+
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
+		{
+		case SEARCH_NAME_VOICE:
+			
+			String name = IOLib.readLine(INSERT_NAME);
+			String surname = IOLib.readLine(INSERT_SURNAME);
+			List<Patient> l = searchPatient(name, surname);
+			
+			if (l.size() == 0)
+				throw new IllegalArgumentException(PATIENT_NOT_FOUND);
+			else if (l.size() == 1)
+				return l.get(0);
+			
+			ris = IOLib.getCollectionElement(l);
+			
+			break;
+			
+		case SEARCH_ALL_VOICE:
+			
+			ris = IOLib.getCollectionElement(patients);
+			
+			break;
+			
+		}
+		
+		return ris;
 	}
 	
 	/**
@@ -1001,98 +1245,69 @@ public class Clinic implements Useable, Serializable
 					
 				case REMOVE_PERIOD:
 					
-					final int VIA_PERIOD = 1;
-					final int VIA_STAFF_MEMBER = 2;
+//					final int VIA_PERIOD = 1;
+//					final int VIA_STAFF_MEMBER = 2;
+//					
+//					MyMenu rMenu = new MyMenu("Come cercare il periodo di disponibilità:", false, "Inserisci periodo", "Inserisci dipendente coinvolto");
+//					
+//					s = rMenu.getChoice();
+//					
+//					switch (s)
+//					{
+//						case VIA_PERIOD:
+//							
+//							
+//							try
+//							{
+//								availability.remove(getPeriodFromDate());
+//							}
+//							catch (IllegalArgumentException e)
+//							{
+//								IOLib.printLine(e.getMessage());
+//							}
+//							
+//							break;
+//							
+//						case VIA_STAFF_MEMBER:
+//							
+//							
+//							try
+//							{
+//								availability.remove(getPeriodFromStaffMember());
+//							}
+//							catch (IllegalArgumentException e)
+//							{
+//								IOLib.printLine(e.getMessage());
+//							}
+//							
+//							break;
+//					}
 					
-					MyMenu rMenu = new MyMenu("Come cercare il periodo di disponibilità:", false, "Inserisci periodo", "Inserisci dipendente coinvolto");
-					
-					s = rMenu.getChoice();
-					
-					switch (s)
+					try
 					{
-						case VIA_PERIOD:
-							
-							
-							try
-							{
-								availability.remove(getPeriodFromDate());
-							}
-							catch (IllegalArgumentException e)
-							{
-								IOLib.printLine(e.getMessage());
-							}
-							
-							break;
-							
-						case VIA_STAFF_MEMBER:
-							
-							
-							try
-							{
-								availability.remove(getPeriodFromStaffMember());
-							}
-							catch (IllegalArgumentException e)
-							{
-								IOLib.printLine(e.getMessage());
-							}
-							
-							break;
+						AvailabilityPeriod p = getPeriod();
+						
+						availability.remove(p);
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.toString());
 					}
 					
 					break;
 					
 				case PRINT_PERIODS:
 					
-					final int PRINT_VIA_PERIOD = 1;
-					final int PRINT_VIA_STAFF_MEMBER = 2;
-					final int PRINT_ALL = 3;
-					
-					MyMenu pMenu = new MyMenu("Seleziona il metodo di ricerca", false, "Inserisci periodo", "Inserisci dipendente coinvolto", "Stampa tutto");
-					
-					AvailabilityPeriod toPrint;
-					
-					s = pMenu.getChoice();
-					
-					switch (s)
+							
+					try
 					{
-						case PRINT_VIA_PERIOD:
-							
-							try
-							{
-								toPrint = getPeriodFromDate();
-								
-								IOLib.printLine(toPrint.toString());
-							}
-							catch (IllegalArgumentException e)
-							{
-								IOLib.printLine(e.getMessage());
-							}
-							
-							break;
-							
-						case PRINT_VIA_STAFF_MEMBER:
-							
-							try
-							{
-								toPrint = getPeriodFromStaffMember();
-								
-								IOLib.printLine(toPrint.toString());
-							}
-							catch (IllegalArgumentException e)
-							{
-								IOLib.printLine(e.getMessage());
-							}
-							
-							break;
+						AvailabilityPeriod p = getPeriod();
 						
-						case PRINT_ALL:
-							
-							for (AvailabilityPeriod p : availability)
-							{
-								IOLib.printLine(p.toString()+"\n\n");
-							}
-							
-							break;
+						IOLib.printLine(p.toString());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.toString());
 					}
 					
 					break;
