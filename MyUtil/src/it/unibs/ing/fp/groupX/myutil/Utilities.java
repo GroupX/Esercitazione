@@ -147,6 +147,22 @@ public class Utilities {
 	}
 	
 	/**
+	 * Trasforma una stringa in data (ritorna la data attuale se il campo non è corretto). Uso consigliato solo se si è sicuri che la stringa rispetta il formato (esempio con costanti)
+	 * @param s Stringa da trasformare
+	 * @return Data corrispondente alla stringa
+	 */
+	public static Date stringToDateNoException (String s)
+	{
+		DateFormat df = new SimpleDateFormat(DATE_FORMAT);
+		try {
+			return df.parse(s);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return new Date();
+		}
+	}
+	
+	/**
 	 * Restituisce il lasso di tempo tra un orario e un altro
 	 * @param t1
 	 * 			Orario 1

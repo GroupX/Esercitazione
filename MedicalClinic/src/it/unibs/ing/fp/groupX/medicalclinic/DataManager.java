@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 public class DataManager
 {
 	private static final String PATHOLOGIES_FILE_NAME = "pathologies.dat";
+	private static final String CLINIC_FILE_NAME = "clinic.dat";
 	
 	public static void savePathologies () throws FileNotFoundException, IOException
 	{
@@ -40,5 +41,34 @@ public class DataManager
 		Pathologies.setPathologies((Pathologies)sorgente.readObject());
 		
 		sorgente.close();
+	}
+	
+	public static void saveClinic (Clinic c) throws FileNotFoundException, IOException
+	{
+		File f = new File(CLINIC_FILE_NAME);
+
+		ObjectOutputStream archivio = new ObjectOutputStream(
+		new BufferedOutputStream(
+		new FileOutputStream(f)));
+
+		archivio.writeObject(c);
+		
+		archivio.close();
+	}
+	
+	public static Clinic loadClinic () throws FileNotFoundException, IOException, ClassNotFoundException
+	{
+		Clinic ris;
+		File f = new File(CLINIC_FILE_NAME);
+		
+		ObjectInputStream sorgente = new ObjectInputStream(
+				new BufferedInputStream(
+				new FileInputStream(f)));
+		
+		ris = (Clinic)sorgente.readObject();
+		
+		sorgente.close();
+		
+		return ris;
 	}
 }

@@ -52,6 +52,20 @@ public class ClinicFolder implements BasicIterable<Report>, Useable, Readable, S
 	}
 	
 	/**
+	 * Costruttore
+	 * @param reports
+	 * 			Reperti da inserire
+	 */
+	public ClinicFolder (Report ... reports)
+	{
+		this();
+		for (Report r : reports)
+		{
+			this.reports.add(r);
+		}
+	}
+	
+	/**
 	 * Costruttore copia
 	 * @param fol
 	 * 			Cartella clinica da copiare
