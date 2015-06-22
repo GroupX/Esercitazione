@@ -33,11 +33,11 @@ public class PreloadMain {
 	
 	public static final int REPORT_NUMBER = 5;
 	public static final Report[] DEFAULT_REPORT = {
-				new Report(new Diagnosis(new Pathology("Tonsillite")), new Prescription(new PrescriptionEntry("Antinfiammatorio")), new Date()),
-				new Report(new Diagnosis(new Pathology("Tumore al cervello")), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
-				new Report(new Diagnosis(new Pathology("Lesione al ginocchio")), new Prescription(new PrescriptionEntry("Gesso")), new Date()),
-				new Report(new Diagnosis(new Pathology("Tumore al cervello"),new Pathology("Lesione al ginocchio")), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
-				new Report(new Diagnosis((new Pathology("Tonsillite")),new Pathology("Lesione al ginocchio")), new Prescription(new PrescriptionEntry("Riposo")), new Date()),
+				new Report(new Diagnosis(new Pathology(DEFAULT_PATHOLOGIES[0])), new Prescription(new PrescriptionEntry("Antinfiammatorio")), new Date()),
+				new Report(new Diagnosis(new Pathology(DEFAULT_PATHOLOGIES[1])), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
+				new Report(new Diagnosis(new Pathology(DEFAULT_PATHOLOGIES[2])), new Prescription(new PrescriptionEntry("Gesso")), new Date()),
+				new Report(new Diagnosis(new Pathology(DEFAULT_PATHOLOGIES[1]),new Pathology(DEFAULT_PATHOLOGIES[2])), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
+				new Report(new Diagnosis((new Pathology(DEFAULT_PATHOLOGIES[0])),new Pathology(DEFAULT_PATHOLOGIES[2])), new Prescription(new PrescriptionEntry("Riposo")), new Date()),
 				};
 	
 	public static final int STAFF_NUMBER = 4;

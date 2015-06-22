@@ -9,6 +9,10 @@ import it.unibs.ing.fp.groupX.myutil.MyMenu;
 
 public class MedicalClinicMain
 {
+	/** Messaggio errore caricamento clinica da file */
+	private static final String LOAD_CLINIC_ERROR = "Errore nella fase di caricamento dati. Clinica resettata.";
+	/** Messaggio errore caricamento patologie da file */
+	private static final String LOAD_PATHOLOGIES_ERROR = "Errore nella fase di caricamento dati. Nessuna patologia in memoria.";
 	/** Messaggio di avvenuto salvataggio */
 	private static final String SAVE_SUCCESS_MESSAGGE = "Dati salvati con successo.";
 	/** Titolo menu */
@@ -33,19 +37,14 @@ public class MedicalClinicMain
 		//Precaricamento dei dati su file
 		try {
 			DataManager.loadPathologies();
+		} catch (Exception e2) {
+			IOLib.printLine(LOAD_PATHOLOGIES_ERROR);
+		}
+		try {
 			c = DataManager.loadClinic();
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (Exception e1) {
 			c = new Clinic();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			c = new Clinic();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			c = new Clinic();
+			IOLib.printLine(LOAD_CLINIC_ERROR);
 		}
 		
 		//Inizio programma
