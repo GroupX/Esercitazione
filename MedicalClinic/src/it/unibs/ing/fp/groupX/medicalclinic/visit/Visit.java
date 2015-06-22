@@ -195,6 +195,23 @@ public class Visit implements Useable, Serializable
 	}
 	
 	/**
+	 * Constrolla se si sovrappone con una data
+	 * @param d Data
+	 * @return true: si sovrappone, false: no
+	 */
+	public boolean overlaps (Date d)
+	{
+		if (this.date.equals(d))
+			return true;
+		else if (Math.abs(this.date.getTime() - d.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE) < Visit.DURATION_MINUTES)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Override di toString
 	 */
 	@Override

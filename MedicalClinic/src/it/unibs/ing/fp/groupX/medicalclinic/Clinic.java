@@ -24,6 +24,7 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String NO_COMPATIBLE_DATES = "Non esistono orari compatibili successivi. Provare orari precedenti";
 	private static final String TIME_INCOMPATIBLE_WITH_CLINIC_TIME = "Orario non rispetta gli orari della clinica";
 	private static final String READ_SKILL_AREA_NOT_FOUND_ERROR = "Area di competenza inserita non presente nell'elenco";
 	private static final String AVAILABILITY_PERIOD_ADD_REDUNDANCY_ERROR = "Periodo di disponibilità già presente";
@@ -130,6 +131,112 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	
+	/**
+	 * Ritorna una lista di dottori che possono visitare in una certa data
+	 * @param d data (con ora)
+	 * @return Lista di dottori
+	 */
+	public List<Doctor> getAvailableDoctor (Date d)
+	{
+		ArrayList<Doctor> ris = new ArrayList<>();
+		
+		try {
+			Date onlyTime = Utilities.stringToTimeInDate(Utilities.timeInDateToString(d));
+			Date onlyDate = Utilities.stringToDate(Utilities.dateToString(d));
+			
+			for (AvailabilityPeriod p: availability)
+			{
+				if (p.compatibleWith(onlyDate, onlyTime))
+				{
+					if (p.getSm() instanceof Doctor)
+					{
+						Doctor doc = (Doctor) p.getSm();
+						
+						boolean add = true;
+						List<Visit> visitsDoctor = searchVisit(doc);
+						
+						for (Visit v : visitsDoctor)
+						{
+							if (v.overlaps(d))
+									add = false;
+						}
+						
+						if (!ris.contains(doc) && add)
+							ris.add(doc);
+					}
+				}
+			}
+			
+			
+		} catch (ParseException e) {
+			// E' per forza già corretta
+			e.printStackTrace();
+		}
+		
+		return ris;
+		
+	}
+	
+	/**
+	 * Ritorna vero se esistono periodi seguenti compatibili, false altrimenti
+	 * @param d Data
+	 * @return true: esistono altri periodi compatibili, false: non esistono
+	 */
+	public boolean areThereSubsequentDates (Date d)
+	{
+		
+		try {
+			Date onlyTime = Utilities.stringToTimeInDate(Utilities.timeInDateToString(d));
+			Date onlyDate = Utilities.stringToDate(Utilities.dateToString(d));
+			
+			for (AvailabilityPeriod p : availability)
+			{
+				if (p.getEndDay().compareTo(onlyDate)>=0)
+				{
+					if (p.getEndTime().compareTo(onlyTime)>=0)
+					{
+						return true;
+					}
+				}
+			}
+			
+			return false;
+			
+		} catch (ParseException e) {
+			// E' già corretta per forza
+			e.printStackTrace();
+		}
+		
+		return false;
+
+	}
+	
+	/**
+	 * Ritorna la prossima data suggerita
+	 * @param d Data desiderata
+	 * @return Data suggerita
+	 */
+	public Date suggestNextDate (Date d)
+	{
+		Date next = d;
+		boolean ok = false;
+		
+		do 
+		{
+			next = Utilities.getNextDate30Min(next);
+			List<Doctor> dLst = getAvailableDoctor(d);
+			if (dLst.size() != 0)
+				ok = true;
+			
+			if (!areThereSubsequentDates(next))
+				throw new IllegalArgumentException(NO_COMPATIBLE_DATES);
+			
+		}while (!ok);
+		
+		return next;
+	}
+	
 	/**
 	 * Voce menu riguardante le visite
 	 */
@@ -151,86 +258,133 @@ public class Clinic implements Useable, Serializable
 			{
 				case ADD_GENERAL_VOICE:
 					
-					IOLib.printLine("Seleziona il paziente per la visita:");
-					Patient p = getPatient();
-					
-					IOLib.printLine("Seleziona il dottore per la visita:");
-					Doctor d = getDoctor();
-					
-					String motivation = IOLib.readLine("Inserisci la motivazione della data");
+					boolean ok = false;
+					Patient p = null;
+					do
+					{
+						try
+						{
+							IOLib.printLine("Seleziona il paziente per la visita: ");
+							p = getPatient();
+							ok = true;
+						}
+						catch (IllegalArgumentException e)
+						{
+							IOLib.printLine(e.getMessage());
+						}
+					}while (!ok);
 					
 					boolean dateOk = false;
+					
+					List <Doctor> dList = null;
 					Date date = null;
 					
 					while (!dateOk)
 					{
-						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm:ss]");
+						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm]");
 						date = IOLib.readDateTime();
 						
-						try {
-							Date onlyTime = Utilities.stringToTimeInDate(Utilities.timeInDateToString(date));
-							Date onlyDate = Utilities.stringToDate(Utilities.dateToString(date));
+						dList = getAvailableDoctor(date);
+						
+						if (dList.size() == 0)
+						{
+							IOLib.printLine("Impossibile all'orario specificato");
 							
-							List<AvailabilityPeriod> periods = searchPeriod(d);
-							
-							int i;
-							 //Se arriva alla fine della List è perche non ne ha trovata una compatibile
-							//Nessun periodo di disponibilità del dottore contiene la data
-							for (i = 0; i < periods.size() && !periods.get(i).compatibleWith(onlyDate, onlyTime); i++);
-							
-							if (i != periods.size())
+							try
 							{
-								//Controllo che l'ora richiesta permetta lo svolgimento dell'intera durata di una visita prima della chiusura della clinica
-								//(controllo sull'orario di apertura implicito nel controllo di compatibilità con le disponibilità)
-								if ( Math.abs(onlyTime.getTime() - Utilities.stringToTimeInDate(CLOSE_TIME).getTime()) >= Visit.DURATION_MINUTES )
-								{
-									List<Visit> visitsDoctor = searchVisit(d);
-									boolean stop = false;
-									
-									//Se arriva alla fine della List è perchè nessuna visita in programma per il dottore va in conflitto con la data richiesta
-									for (i = 0; i < visitsDoctor.size() && !stop; i++)
-									{
-										if (visitsDoctor.get(i).getDate().compareTo(date) != 0)
-										{
-											stop = true;
-										}
-										else if ( Math.abs(visitsDoctor.get(i).getDate().getTime() - date.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE) < Visit.DURATION_MINUTES )
-										{
-											//Math.abs(visitsDoctor.get(i).getDate().getTime() - date.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE)
-											//Distanza in minuti tra una data e l'altra
-											// < Visit.DURATION_MINUTES
-											//Se la distanza è minore della durata della visita si sovrappongono
-											stop = true;
-										}
-									}
-									
-									if (i == visitsDoctor.size())
-									{
-										//CERCA DATA DISPONIBILE
-										/**
-										 * dateOk = IOLib.twoWayQuestion("La data e l'ora inseriti non sono disponibili, la disponibilità più vicina è "+Utilities.timeInDateToString(date)+". La si vuole confermare?");
-										 */
-									}
-									else
-									{
-										dateOk = true;
-									}
-								}
-								else
-								{
-									//ORA NON COMPATIBILE --> CERCA DATA DISPONIBILE
-								}
+								Date d = suggestNextDate(date);
+								IOLib.printLine(String.format("Prossima data disponibile: %s", Utilities.dateTimeToString(d)));
 							}
-							else
+							catch (IllegalArgumentException e)
 							{
-								//CERCA DATA DISPONIBILE
+								IOLib.printLine(e.getMessage());
 							}
-						} catch (ParseException e) {
-							e.printStackTrace();
+						}
+						else
+						{
+							dateOk = true;
 						}
 					}
 					
-					visits.add(new Visit(p, motivation, date, d));
+					Doctor doc = IOLib.getCollectionElement(dList);
+					
+//					IOLib.printLine("Seleziona il dottore per la visita:");
+//					Doctor d = getDoctor();
+					
+					String motivation = IOLib.readLine("Inserisci la motivazione della visita: ");
+					
+//					boolean dateOk = false;
+//
+//					
+//					while (!dateOk)
+//					{
+//						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm:ss]");
+//						date = IOLib.readDateTime();
+//						
+//						try {
+//							Date onlyTime = Utilities.stringToTimeInDate(Utilities.timeInDateToString(date));
+//							Date onlyDate = Utilities.stringToDate(Utilities.dateToString(date));
+//							
+//							List<AvailabilityPeriod> periods = searchPeriod(d);
+//							
+//							int i;
+//							 //Se arriva alla fine della List è perche non ne ha trovata una compatibile
+//							//Nessun periodo di disponibilità del dottore contiene la data
+//							for (i = 0; i < periods.size() && !periods.get(i).compatibleWith(onlyDate, onlyTime); i++);
+//							
+//							if (i != periods.size())
+//							{
+//								//Controllo che l'ora richiesta permetta lo svolgimento dell'intera durata di una visita prima della chiusura della clinica
+//								//(controllo sull'orario di apertura implicito nel controllo di compatibilità con le disponibilità)
+//								if ( Math.abs(onlyTime.getTime() - Utilities.stringToTimeInDate(CLOSE_TIME).getTime()) >= Visit.DURATION_MINUTES )
+//								{
+//									List<Visit> visitsDoctor = searchVisit(d);
+//									boolean stop = false;
+//									
+//									//Se arriva alla fine della List è perchè nessuna visita in programma per il dottore va in conflitto con la data richiesta
+//									for (i = 0; i < visitsDoctor.size() && !stop; i++)
+//									{
+//										if (visitsDoctor.get(i).getDate().compareTo(date) != 0)
+//										{
+//											stop = true;
+//										}
+//										else if ( Math.abs(visitsDoctor.get(i).getDate().getTime() - date.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE) < Visit.DURATION_MINUTES )
+//										{
+//											//Math.abs(visitsDoctor.get(i).getDate().getTime() - date.getTime())/(Utilities.MILLISECONDS_TO_SECONDS*Utilities.SECOND_TO_MINUTE)
+//											//Distanza in minuti tra una data e l'altra
+//											// < Visit.DURATION_MINUTES
+//											//Se la distanza è minore della durata della visita si sovrappongono
+//											stop = true;
+//										}
+//									}
+//									
+//									if (i == visitsDoctor.size())
+//									{
+//										//CERCA DATA DISPONIBILE
+//										/**
+//										 * dateOk = IOLib.twoWayQuestion("La data e l'ora inseriti non sono disponibili, la disponibilità più vicina è "+Utilities.timeInDateToString(date)+". La si vuole confermare?");
+//										 */
+//									}
+//									else
+//									{
+//										dateOk = true;
+//									}
+//								}
+//								else
+//								{
+//									//ORA NON COMPATIBILE --> CERCA DATA DISPONIBILE
+//								}
+//							}
+//							else
+//							{
+//								//CERCA DATA DISPONIBILE
+//							}
+//						} catch (ParseException e) {
+//							e.printStackTrace();
+//						}
+//					}
+					
+					visits.add(new Visit(p, motivation, date, doc));
 
 					break;
 					

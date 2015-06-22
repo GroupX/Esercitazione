@@ -2,6 +2,7 @@ package it.unibs.ing.fp.groupX.myutil;
 
 import java.sql.Time;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
@@ -16,6 +17,7 @@ import javax.xml.crypto.Data;
  */
 public class IOLib
 {	
+	private static final String ONLY_ROUNDED_TIME_MSG = "Validi solo orari arrotondati di 30 min";
 	private static final String INSERT_INDEX_MSG = "Inserisci l'indice: ";
 	private static final String LINE_SEPARATOR = "___________________________________________";
 	private static final String NOT_VALID_DATE_MESSAGE = "Data non valida. Reinserire";
@@ -424,7 +426,16 @@ public class IOLib
 			try
 			{
 				ris = Utilities.stringToDateTime(str);
-				ok = true;
+				
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(ris);
+				int min = calendar.get(Calendar.MINUTE);
+				int sec = calendar.get(Calendar.SECOND);
+				
+				if (sec == 0 && min % 30 == 0)
+					ok = true;
+				else
+					IOLib.printLine(ONLY_ROUNDED_TIME_MSG);
 			}
 			catch (ParseException e)
 			{
@@ -451,7 +462,16 @@ public class IOLib
 			try
 			{
 				ris = Utilities.stringToTimeInDate(str);
-				ok = true;
+				
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(ris);
+				int min = calendar.get(Calendar.MINUTE);
+				int sec = calendar.get(Calendar.SECOND);
+				
+				if (sec == 0 && min % 30 == 0)
+					ok = true;
+				else
+					IOLib.printLine(ONLY_ROUNDED_TIME_MSG);
 			}
 			catch (ParseException e)
 			{
@@ -478,7 +498,16 @@ public class IOLib
 			try
 			{
 				ris = Utilities.stringToTimeInDate(str);
-				ok = true;
+				
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(ris);
+				int min = calendar.get(Calendar.MINUTE);
+				int sec = calendar.get(Calendar.SECOND);
+				
+				if (sec == 0 && min % 30 == 0)
+					ok = true;
+				else
+					IOLib.printLine(ONLY_ROUNDED_TIME_MSG);
 			}
 			catch (ParseException e)
 			{

@@ -16,7 +16,7 @@ import java.util.Date;
 public class Utilities {
 	private static final String ELEMENT_NOT_FOUND_ERROR = "Elemento non presente nella collection";
 	/** Millisecondi in un secondo */
-	public static final int MILLISECONDS_TO_SECONDS = 100;
+	public static final int MILLISECONDS_TO_SECONDS = 1000;
 	/** Minuti in un'ora */
 	public static final int MINUTE_TO_HOUR = 60;
 	/** Secondi in un minuto */
@@ -24,7 +24,7 @@ public class Utilities {
 	/** Formato della data*/
 	private static String DATE_FORMAT = "dd/MM/yyyy";
 	/** Formato dell'ora */
-	private static final String TIME_FORMAT = "HH:mm:ss";
+	private static final String TIME_FORMAT = "HH:mm";
 	/** Formato della data con l'ora */
 	private static final String DATE_TIME_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
 	
@@ -252,5 +252,16 @@ public class Utilities {
 		}
 		
 		throw new IllegalArgumentException(ELEMENT_NOT_FOUND_ERROR);
+	}
+	
+	/**
+	 * Ritorna la prossima data avanzando di 30 min
+	 * @param d Data
+	 * @return data avanzata di 30 min
+	 */
+	public static Date getNextDate30Min (Date d)
+	{
+		long t= d.getTime();
+		return new Date(t + (30 * MILLISECONDS_TO_SECONDS * SECOND_TO_MINUTE));
 	}
 }
