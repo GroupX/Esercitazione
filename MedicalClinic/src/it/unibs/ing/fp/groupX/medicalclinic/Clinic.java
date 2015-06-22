@@ -1325,8 +1325,9 @@ public class Clinic implements Useable, Serializable
 		final int ADD_SPECIALISTIC = 2;
 		final int CHANGE = 3;
 		final int REMOVE = 4;
+		final int PRINT = 5;
 		
-		MyMenu sMenu = new MyMenu(STAFF_MENU, "Aggiungi dottore generico", "Aggiungi dottore specialistico", "Modifica dottore specialistico", "Rimuovi");
+		MyMenu sMenu = new MyMenu(STAFF_MENU, "Aggiungi dottore generico", "Aggiungi dottore specialistico", "Modifica dottore specialistico", "Rimuovi", "Stampa");
 		int scelta;
 		
 		while ((scelta = sMenu.getChoice())!=MyMenu.EXIT_VALUE)
@@ -1364,24 +1365,41 @@ public class Clinic implements Useable, Serializable
 					break;
 					
 				case CHANGE:
-				
-					ArrayList<SpecialistDoctor> specDot = new ArrayList<SpecialistDoctor>();
 					
-					for (StaffMember sm : staff)
+					try
 					{
-						if (sm instanceof SpecialistDoctor)
-						{
-							specDot.add((SpecialistDoctor) sm);
-						}
+						getSpecialistDoctor().use();
 					}
-					
-					IOLib.getCollectionElement(specDot).use();
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
 				
 				case REMOVE:
 					
-					staff.remove(IOLib.getCollectionElement(staff));
+					try
+					{
+						staff.remove(getStaffMember());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
+					
+					break;
+					
+				case PRINT:
+					
+					try
+					{
+						IOLib.printLine(getStaffMember().toString());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
 			}
@@ -1396,8 +1414,9 @@ public class Clinic implements Useable, Serializable
 		final int ADD = 1;
 		final int CHANGE = 2;
 		final int REMOVE = 3;
+		final int PRINT = 4;
 		
-		MyMenu pMenu = new MyMenu(PATIENT_MENU, "Aggiungi", "Modifica", "Rimuovi");
+		MyMenu pMenu = new MyMenu(PATIENT_MENU, "Aggiungi", "Modifica", "Rimuovi", "Stampa");
 		int scelta;
 		
 		while ((scelta = pMenu.getChoice())!=MyMenu.EXIT_VALUE)
@@ -1421,13 +1440,42 @@ public class Clinic implements Useable, Serializable
 				
 				case CHANGE:
 					
-					IOLib.getCollectionElement(patients).use();
+					try
+					{
+					
+						getPatient().use();
+					
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
 					
 				case REMOVE:
 					
-					patients.remove(IOLib.getCollectionElement(patients));
+					try
+					{
+						patients.remove(getPatient());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
+					
+					break;
+					
+				case PRINT:
+					
+					try
+					{
+						IOLib.printLine(getPatient().toString());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
 					
 					break;
 			}
