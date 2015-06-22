@@ -7,6 +7,11 @@ import it.unibs.ing.fp.groupX.medicalclinic.pathologies.Pathologies;
 import it.unibs.ing.fp.groupX.myutil.IOLib;
 import it.unibs.ing.fp.groupX.myutil.MyMenu;
 
+/**
+ * Main principale, da avviare per l'esecuzione del programma
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class MedicalClinicMain
 {
 	/** Messaggio errore caricamento clinica da file */

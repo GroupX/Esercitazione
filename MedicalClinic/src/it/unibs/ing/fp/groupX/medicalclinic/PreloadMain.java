@@ -24,6 +24,11 @@ import it.unibs.ing.fp.groupX.myutil.Gender;
 import it.unibs.ing.fp.groupX.myutil.NumeroTelefonico;
 import it.unibs.ing.fp.groupX.myutil.Utilities;
 
+/**
+ * Main che inizializza i file con i dati di default
+ * @author Gruppo X (Manuel Mazzardi, Paolo Pasquali, Davide Tosatto)
+ *
+ */
 public class PreloadMain {
 	public static final int PATHOLOGIES_NUMBER = 3;
 	public static final String[] DEFAULT_PATHOLOGIES = {"Tonsillite", "Tumore al cervello", "Lesione al ginocchio"};
