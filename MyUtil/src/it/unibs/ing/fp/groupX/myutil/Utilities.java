@@ -16,9 +16,11 @@ import java.util.Date;
 public class Utilities {
 	private static final String ELEMENT_NOT_FOUND_ERROR = "Elemento non presente nella collection";
 	/** Millisecondi in un secondo */
-	private static final int MILLISECONDS_TO_SECONDS = 100;
+	public static final int MILLISECONDS_TO_SECONDS = 100;
 	/** Minuti in un'ora */
-	private static final int MINUTE_TO_HOUR = 60;
+	public static final int MINUTE_TO_HOUR = 60;
+	/** Secondi in un minuto */
+	public static final int SECOND_TO_MINUTE = 60;
 	/** Formato della data*/
 	private static String DATE_FORMAT = "dd/MM/yyyy";
 	/** Formato dell'ora */
@@ -125,6 +127,23 @@ public class Utilities {
 	{
 		DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT);
 		return df.parse(s);
+	}
+	
+	/**
+	 * Trasforma una stringa in data (ritorna la data attuale se il campo non è corretto). Uso consigliato solo se si è sicuri che la stringa rispetta il formato (esempio con costanti)
+	 * @param s
+	 * 			stringa da trasformare
+	 * @return data rappresentante la stringa (o data attuale se stringa non corretta)
+	 */
+	public static Date stringToTimeInDateNoException (String s)
+	{
+		DateFormat df = new SimpleDateFormat(TIME_FORMAT);
+		try {
+			return df.parse(s);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return new Date();
+		}
 	}
 	
 	/**

@@ -20,6 +20,9 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Visit implements Useable, Serializable
 {
+	/** Dimensioni in minuti della durata di una visita */
+	public static final int DURATION_MINUTES = 30;
+	
 	private static final String WRONG_DATA_MSG = "Impossibile inserire un referto con una data pregressa a quella della visita";
 	/** Messaggio di errore usato se si tenta di concludere una visita non nello stato di prenotata */
 	private static final String VISIT_NOT_BOOKED_CONCLUDED_MESSAGE = "Non si può concludere una visita che non sia nello stato di prenotata";
