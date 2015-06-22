@@ -13,7 +13,7 @@ public class WeekDay implements Serializable, Readable{
 	
 	private static final String SELECT_DAY = "Selezione giorno della settimana:\n";
 
-	private final String[] nameList = {"Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"};
+	private static final String[] nameList = {"Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"};
 	
 	/** Numero di giorni della settimana */
 	public static final int NUM_DAYS = 7;
