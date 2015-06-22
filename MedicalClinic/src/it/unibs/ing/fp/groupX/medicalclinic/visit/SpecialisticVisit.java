@@ -62,6 +62,20 @@ public class SpecialisticVisit extends Visit implements Serializable
 	 * @param date Data della visita
 	 * @param doctor Dottore specialistico interessato
 	 * @param skArea Area di competenza richiesta per la visita
+	 * @param prevVisit Visita precedente (può essere null)
+	 */
+	public SpecialisticVisit (Patient patient, String motivation, Date date, SpecialistDoctor doctor, SkillArea skArea, Visit prevVisit)
+	{
+		this(patient, motivation, date, VisitState.PRENOTATA, doctor, skArea, prevVisit);
+	}
+	
+	/**
+	 * Costruttore
+	 * @param patient Paziente
+	 * @param motivation Motivo della visita
+	 * @param date Data della visita
+	 * @param doctor Dottore specialistico interessato
+	 * @param skArea Area di competenza richiesta per la visita
 	 */
 	public SpecialisticVisit (Patient patient, String motivation, Date date, SpecialistDoctor doctor, SkillArea skArea)
 	{

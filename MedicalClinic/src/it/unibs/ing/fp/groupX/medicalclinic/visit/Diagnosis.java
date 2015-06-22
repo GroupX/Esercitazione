@@ -22,6 +22,7 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class Diagnosis implements BasicIterable<Pathology>, Useable, Readable, Serializable {
 	
+	private static final String UNABLE_TO_ADD_PATHOLOGY = "Impossibile inserire. Patologia non esistente. Patologie esistenti: \n";
 	private static final String READ_MESSAGE = "Popola la diagnosi usando il menu, poi scegli esci: ";
 	private static final String LIST_HEAD = "Elenco patologie riscontrate: ";
 	private static final String NOT_PRESENT_PATHOLOGY_MSG = "Patologia non presente";
@@ -192,7 +193,12 @@ public class Diagnosis implements BasicIterable<Pathology>, Useable, Readable, S
 			case INSERT_PATHOLOGY_CHOICE:
 				try
 				{
-					this.addPathology(Pathology.readFromConsole());
+					Pathology p = Pathology.readFromConsole();
+					
+					if (Pathologies.get().contains(p))
+						this.addPathology(Pathologies.get().get(p.getName()));
+					else
+						IOLib.printLine(UNABLE_TO_ADD_PATHOLOGY + Pathologies.get().toString() + "\n");
 				}
 				catch (IllegalArgumentException e)
 				{

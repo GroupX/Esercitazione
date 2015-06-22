@@ -25,6 +25,7 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String CONNECT_TO_PREV_VISIT = "Collegare a visita pregressa (se è presente solo una visita verrà collegata a quella)?";
 	private static final String ALREADY_INSERTED_PATIENT = "Il paziente risulta già inserito";
 	private static final String ALL_SEARCH_SKILL_AREA = "Cerca tra tutte";
 	private static final String SEARCH_BY_NAME = "Cerca per nome";
@@ -737,7 +738,16 @@ public class Clinic implements Useable, Serializable
 					
 					motivation = IOLib.readLine(INSERT_MOTIVATION);
 					
-					visits.add(new SpecialisticVisit(p, motivation, date, sdoc, sa));
+					boolean linkToPrevVisit = IOLib.twoWayQuestion(CONNECT_TO_PREV_VISIT);
+					
+					Visit prev = null;
+					
+					if (linkToPrevVisit)
+					{
+						prev = IOLib.getIterableElement(searchVisit(p));
+					}
+					
+					visits.add(new SpecialisticVisit(p, motivation, date, sdoc, sa, prev));
 					
 					break;
 					
@@ -793,6 +803,11 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	
+	/**
+	 * Riotrna una visita cercandola tra quelle esistenti
+	 * @return Visita scelta
+	 */
 	public Visit getVisit ()
 	{
 		final int SEARCH_DOCTOR_VOICE = 1;
