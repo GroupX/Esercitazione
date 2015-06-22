@@ -79,12 +79,12 @@ public class PreloadMain {
 	
 	public static final int VISIT_NUMBER = 6;
 	public static final Visit[] DEFAULT_VISIT = {
-				new Visit(DEFAULT_PATIENTS[0], "Controllo generico", new Date(), (Doctor)DEFAULT_STAFF[0]),
-				new Visit(DEFAULT_PATIENTS[3], "Mal di gola", new Date(), (Doctor)DEFAULT_STAFF[1]),
-				new Visit(DEFAULT_PATIENTS[2], "Mal di testa", new Date(), (Doctor)DEFAULT_STAFF[0]),
-				new SpecialisticVisit(new Visit(DEFAULT_PATIENTS[0], "Sospetto tumore", new Date(), (SpecialistDoctor)DEFAULT_STAFF[2]), new SkillArea(DEFAULT_SKILL_AREAS[0]), new Visit(DEFAULT_PATIENTS[0], "Controllo generico", new Date(), (Doctor)DEFAULT_STAFF[0])),
-				new SpecialisticVisit(DEFAULT_PATIENTS[1], "Irritazione pelle", new Date(), (SpecialistDoctor)DEFAULT_STAFF[3], new SkillArea(DEFAULT_SKILL_AREAS[1])),
-				new SpecialisticVisit(DEFAULT_PATIENTS[3], "Allergia", new Date(), (SpecialistDoctor)DEFAULT_STAFF[3], new SkillArea(DEFAULT_SKILL_AREAS[2])),
+				new Visit(DEFAULT_PATIENTS[0], "Controllo generico", Utilities.stringToDateTimeNoException("03/06/2015 08:30"), (Doctor)DEFAULT_STAFF[0]),
+				new Visit(DEFAULT_PATIENTS[3], "Mal di gola", Utilities.stringToDateTimeNoException("15/09/2015 12:30"), (Doctor)DEFAULT_STAFF[1]),
+				new Visit(DEFAULT_PATIENTS[2], "Mal di testa", Utilities.stringToDateTimeNoException("11/07/2015 09:00"), (Doctor)DEFAULT_STAFF[0]),
+				new SpecialisticVisit(new Visit(DEFAULT_PATIENTS[0], "Sospetto tumore", Utilities.stringToDateTimeNoException("15/06/2015 10:00"), (SpecialistDoctor)DEFAULT_STAFF[2]), new SkillArea(DEFAULT_SKILL_AREAS[0]), new Visit(DEFAULT_PATIENTS[0], "Controllo generico", new Date(), (Doctor)DEFAULT_STAFF[0])),
+				new SpecialisticVisit(DEFAULT_PATIENTS[1], "Irritazione pelle", Utilities.stringToDateTimeNoException("05/08/2015 15:30"), (SpecialistDoctor)DEFAULT_STAFF[3], new SkillArea(DEFAULT_SKILL_AREAS[1])),
+				new SpecialisticVisit(DEFAULT_PATIENTS[3], "Allergia", Utilities.stringToDateTimeNoException("31/08/2015 17:00"), (SpecialistDoctor)DEFAULT_STAFF[3], new SkillArea(DEFAULT_SKILL_AREAS[2])),
 				};
 	
 	

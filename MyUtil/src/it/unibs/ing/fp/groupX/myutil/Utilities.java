@@ -130,6 +130,22 @@ public class Utilities {
 	}
 	
 	/**
+	 * Trasforma una stringa in data con ora (ritorna la data attuale se il campo non è corretto). Uso consigliato solo se si è sicuri che la stringa rispetta il formato (esempio con costanti)
+	 * @param s Stringa da trasformare
+	 * @return Data con ora corrispondente alla stringa
+	 */
+	public static Date stringToDateTimeNoException (String s)
+	{
+		DateFormat df = new SimpleDateFormat(DATE_TIME_FORMAT);
+		try {
+			return df.parse(s);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return new Date();
+		}
+	}
+	
+	/**
 	 * Trasforma una stringa in data (ritorna la data attuale se il campo non è corretto). Uso consigliato solo se si è sicuri che la stringa rispetta il formato (esempio con costanti)
 	 * @param s
 	 * 			stringa da trasformare
