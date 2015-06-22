@@ -71,12 +71,14 @@ public class MainTest {
 //		AvailabilityPeriod p = new AvailabilityPeriod(Utilities.stringToDate("22/10/2014"), Utilities.stringToDate("25/10/2014"), Utilities.stringToTime("08:00:00"), Utilities.stringToTime("18:00:00"), null);
 //		System.out.println(p.compatibleWith(Utilities.stringToDate("25/10/2014"), Utilities.stringToTime("08:00:00")));
 		
-//		Clinic c = new Clinic();
-//		
-//		c.use();
+		PreloadMain.resetToDefaultPathologies();
 		
-		IOLib.readDateTime();
-		IOLib.readTimeInDate();
+		Clinic c = PreloadMain.resetToDefaultClinic();
+		
+		c.use();
+		
+//		IOLib.readDateTime();
+//		IOLib.readTimeInDate();
 	}
 
 }

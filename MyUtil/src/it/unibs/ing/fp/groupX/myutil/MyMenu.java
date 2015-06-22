@@ -25,6 +25,8 @@ public class MyMenu
 	private final static String CHOICE_MESSAGE = "Scegli una voce del menu':";
 	/** Messaggio di errore per la scelta di voce */
 	private final static String ERROR_SELECTION_VOICE = "Voce selezionata inesistente.";
+	/** Vero se si deve stampare exit */
+	private boolean exit = true;
 	
 	/**
 	 * Costruttore generico che inizializza l'elenco delle voci come vuoto
@@ -34,6 +36,20 @@ public class MyMenu
 	public MyMenu (String titolo)
 	{
 		this.titolo = titolo;
+		voices = new ArrayList<String>();
+	}
+	
+	/**
+	 * Costruttore generico che inizializza l'elenco delle voci come vuoto
+	 * @param titolo
+	 * 			Titolo del menù
+	 *  @param exit
+	 * 			true se si deve stampare la voce di uscita, false altrimenti
+	 */
+	public MyMenu (String titolo, boolean exit)
+	{
+		this.titolo = titolo;
+		this.exit = exit;
 		voices = new ArrayList<String>();
 	}
 	
@@ -51,6 +67,22 @@ public class MyMenu
 	}
 	
 	/**
+	 * Costruttore che inizializza l'elenco delle voci da un array dinamico
+	 * @param titolo
+	 * 			Titolo del menù
+	 * @param voices 
+	 * 			Elenco delle voci
+	 * @param exit
+	 * 			true se si deve stampare la voce di uscita, false altrimenti
+	 */
+	public MyMenu (String titolo, boolean exit, ArrayList<String> voices)
+	{
+		this.titolo = titolo;
+		this.voices = voices;
+		this.exit = exit;
+	}
+	
+	/**
 	 * Costruttore che inizializza l'elenco delle voci da una serie di voci
 	 * @param titolo
 	 * 			Titolo del menù
@@ -60,6 +92,24 @@ public class MyMenu
 	public MyMenu (String titolo, String ... voice)
 	{
 		this(titolo);
+		for(String s : voice)
+		{
+			addVoice(s);
+		}
+	}
+	
+	/**
+	 * Costruttore che inizializza l'elenco delle voci da una serie di voci
+	 * @param titolo
+	 * 			Titolo del menù
+	 * @param voice 
+	 * 			Elenco delle voci
+	 *  @param exit
+	 * 			true se si deve stampare la voce di uscita, false altrimenti
+	 */
+	public MyMenu (String titolo, boolean exit, String ... voice)
+	{
+		this(titolo, exit);
 		for(String s : voice)
 		{
 			addVoice(s);
@@ -85,7 +135,7 @@ public class MyMenu
 		{
 			IOLib.printLine ((i+1) + " - " + voices.get (i));
 		}
-		IOLib.printLine (EXIT_VOICE);
+		if (exit) IOLib.printLine (EXIT_VOICE);
 	}
 	
 	/**
@@ -105,7 +155,7 @@ public class MyMenu
 				IOLib.printLine(ERROR_SELECTION_VOICE);
 			}
 			
-		}while ( choice < EXIT_VALUE || choice > voices.size() );
+		}while ( (exit == true && choice < EXIT_VALUE) || (exit == false && choice <= EXIT_VALUE) || choice > voices.size() );
 		
 		return choice;
 	}

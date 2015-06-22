@@ -33,11 +33,11 @@ public class PreloadMain {
 	
 	public static final int REPORT_NUMBER = 5;
 	public static final Report[] DEFAULT_REPORT = {
-				new Report(new Diagnosis(Pathologies.get().get(0)), new Prescription(new PrescriptionEntry("Antinfiammatorio")), new Date()),
-				new Report(new Diagnosis(Pathologies.get().get(1)), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
-				new Report(new Diagnosis(Pathologies.get().get(2)), new Prescription(new PrescriptionEntry("Gesso")), new Date()),
-				new Report(new Diagnosis(Pathologies.get().get(1),Pathologies.get().get(2)), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
-				new Report(new Diagnosis(Pathologies.get().get(0),Pathologies.get().get(2)), new Prescription(new PrescriptionEntry("Riposo")), new Date()),
+				new Report(new Diagnosis(new Pathology("Tonsillite")), new Prescription(new PrescriptionEntry("Antinfiammatorio")), new Date()),
+				new Report(new Diagnosis(new Pathology("Tumore al cervello")), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
+				new Report(new Diagnosis(new Pathology("Lesione al ginocchio")), new Prescription(new PrescriptionEntry("Gesso")), new Date()),
+				new Report(new Diagnosis(new Pathology("Tumore al cervello"),new Pathology("Lesione al ginocchio")), new Prescription(new PrescriptionEntry("Condolianze")), new Date()),
+				new Report(new Diagnosis((new Pathology("Tonsillite")),new Pathology("Lesione al ginocchio")), new Prescription(new PrescriptionEntry("Riposo")), new Date()),
 				};
 	
 	public static final int STAFF_NUMBER = 4;
@@ -46,7 +46,7 @@ public class PreloadMain {
 	
 	public static final Person[] DEFAULT_PEOPLE = {
 				new Person("Mario", "Rossi", Utilities.stringToDateNoException("01/01/1980"), "Roma", Gender.MALE, new NumeroTelefonico("+39 333 3333333"), new CodiceFiscale("RSSMRA80A01H501U")),
-				new Person("Giulia", "Bianchi", Utilities.stringToDateNoException("01/02/1985"), "Firenze", Gender.FEMALE, new NumeroTelefonico("+39 333 3333334"), new CodiceFiscale("BNCGLI85B41D612K ")),
+				new Person("Giulia", "Bianchi", Utilities.stringToDateNoException("01/02/1985"), "Firenze", Gender.FEMALE, new NumeroTelefonico("+39 333 3333334"), new CodiceFiscale("BNCGLI85B41D612K")),
 				new Person("Luca", "Neri", Utilities.stringToDateNoException("01/03/1975"), "Milano", Gender.MALE, new NumeroTelefonico("+39 333 3333335"), new CodiceFiscale("NRELCU75C01F205C")),
 				new Person("Sara", "Gialli", Utilities.stringToDateNoException("01/04/1990"), "Torino", Gender.FEMALE, new NumeroTelefonico("+39 333 3333336"), new CodiceFiscale("GLLSRA90D41L219W")),
 				new Person("Matteo", "Verdi", Utilities.stringToDateNoException("01/05/1999"), "Desenzano", Gender.MALE, new NumeroTelefonico("+39 333 3333337"), new CodiceFiscale("VRDMTT99E01D284N")),
@@ -95,7 +95,7 @@ public class PreloadMain {
 		resetToDefaultClinic();
 	}
 	
-	public static void resetToDefaultClinic ()
+	public static Clinic resetToDefaultClinic ()
 	{
 		Clinic c = new Clinic();
 		
@@ -134,6 +134,8 @@ public class PreloadMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		return c;
 	}
 	
 	public static void resetToDefaultPathologies ()

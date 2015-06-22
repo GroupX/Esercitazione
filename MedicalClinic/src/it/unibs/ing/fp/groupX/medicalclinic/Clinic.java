@@ -338,7 +338,7 @@ public class Clinic implements Useable, Serializable
 		do 
 		{
 			next = Utilities.getNextDate30Min(next);
-			List<Doctor> dLst = getAvailableDoctor(d);
+			List<Doctor> dLst = getAvailableDoctor(next);
 			if (dLst.size() != 0)
 				ok = true;
 			
@@ -509,7 +509,9 @@ public class Clinic implements Useable, Serializable
 					
 				case CHANGE_VOICE:
 					
+					Visit v = getVisit();
 					
+					v.use();
 					
 					break;
 					
@@ -521,11 +523,62 @@ public class Clinic implements Useable, Serializable
 					
 				case PRINT_VOICE:
 					
-					
+					getVisit();
 					
 					break;
 			}
 		}
+	}
+	
+	public Visit getVisit ()
+	{
+		final int SEARCH_DOCTOR_VOICE = 1;
+		final int SEARCH_PATIENT_VOICE = 2;
+		final int SEARCH_DATE_VOICE = 3;
+		
+		MyMenu vMenu = new MyMenu("Ricerca visite", false, "Cerca per dottore", "Cerca per pazioente", "Cerca per data");
+		
+		Visit ris = null;
+		
+		int scelta;
+		List<Visit> vList;
+
+		scelta = vMenu.getChoice();
+
+		switch (scelta)
+		{
+			case SEARCH_DOCTOR_VOICE:
+				
+				Doctor d = getDoctor();
+				
+				vList = searchVisit(d);
+				
+				ris = IOLib.getCollectionElement(vList);
+				
+				break;
+				
+			case SEARCH_PATIENT_VOICE:
+				
+				Patient p = getPatient();
+				
+				vList = searchVisit(p);
+				
+				ris = IOLib.getCollectionElement(vList);
+				
+				break;
+				
+			case SEARCH_DATE_VOICE:
+				
+				Date dt = IOLib.readDateTime();
+				
+				vList = searchVisit(dt);
+				
+				ris = IOLib.getCollectionElement(vList);
+				
+				break;	
+		}
+		
+		return ris;
 	}
 	
 	/**
@@ -951,40 +1004,39 @@ public class Clinic implements Useable, Serializable
 					final int VIA_PERIOD = 1;
 					final int VIA_STAFF_MEMBER = 2;
 					
-					MyMenu rMenu = new MyMenu("Come cercare il periodo di disponibilità:", "Inserisci periodo", "Inserisci dipendente coinvolto");
+					MyMenu rMenu = new MyMenu("Come cercare il periodo di disponibilità:", false, "Inserisci periodo", "Inserisci dipendente coinvolto");
 					
-					while ((s = rMenu.getChoice())!=MyMenu.EXIT_VALUE)
+					s = rMenu.getChoice();
+					
+					switch (s)
 					{
-						switch (s)
-						{
-							case VIA_PERIOD:
-								
-								
-								try
-								{
-									availability.remove(getPeriodFromDate());
-								}
-								catch (IllegalArgumentException e)
-								{
-									IOLib.printLine(e.getMessage());
-								}
-								
-								break;
-								
-							case VIA_STAFF_MEMBER:
-								
-								
-								try
-								{
-									availability.remove(getPeriodFromStaffMember());
-								}
-								catch (IllegalArgumentException e)
-								{
-									IOLib.printLine(e.getMessage());
-								}
-								
-								break;
-						}
+						case VIA_PERIOD:
+							
+							
+							try
+							{
+								availability.remove(getPeriodFromDate());
+							}
+							catch (IllegalArgumentException e)
+							{
+								IOLib.printLine(e.getMessage());
+							}
+							
+							break;
+							
+						case VIA_STAFF_MEMBER:
+							
+							
+							try
+							{
+								availability.remove(getPeriodFromStaffMember());
+							}
+							catch (IllegalArgumentException e)
+							{
+								IOLib.printLine(e.getMessage());
+							}
+							
+							break;
 					}
 					
 					break;
@@ -995,53 +1047,52 @@ public class Clinic implements Useable, Serializable
 					final int PRINT_VIA_STAFF_MEMBER = 2;
 					final int PRINT_ALL = 3;
 					
-					MyMenu pMenu = new MyMenu("Seleziona il metodo di ricerca", "Inserisci periodo", "Inserisci dipendente coinvolto", "Stampa tutto");
+					MyMenu pMenu = new MyMenu("Seleziona il metodo di ricerca", false, "Inserisci periodo", "Inserisci dipendente coinvolto", "Stampa tutto");
 					
 					AvailabilityPeriod toPrint;
 					
-					while ((s = pMenu.getChoice())!=MyMenu.EXIT_VALUE)
+					s = pMenu.getChoice();
+					
+					switch (s)
 					{
-						switch (s)
-						{
-							case PRINT_VIA_PERIOD:
-								
-								try
-								{
-									toPrint = getPeriodFromDate();
-									
-									IOLib.printLine(toPrint.toString());
-								}
-								catch (IllegalArgumentException e)
-								{
-									IOLib.printLine(e.getMessage());
-								}
-								
-								break;
-								
-							case PRINT_VIA_STAFF_MEMBER:
-								
-								try
-								{
-									toPrint = getPeriodFromStaffMember();
-									
-									IOLib.printLine(toPrint.toString());
-								}
-								catch (IllegalArgumentException e)
-								{
-									IOLib.printLine(e.getMessage());
-								}
-								
-								break;
+						case PRINT_VIA_PERIOD:
 							
-							case PRINT_ALL:
+							try
+							{
+								toPrint = getPeriodFromDate();
 								
-								for (AvailabilityPeriod p : availability)
-								{
-									IOLib.printLine(p.toString()+"\n\n");
-								}
+								IOLib.printLine(toPrint.toString());
+							}
+							catch (IllegalArgumentException e)
+							{
+								IOLib.printLine(e.getMessage());
+							}
+							
+							break;
+							
+						case PRINT_VIA_STAFF_MEMBER:
+							
+							try
+							{
+								toPrint = getPeriodFromStaffMember();
 								
-								break;
-						}
+								IOLib.printLine(toPrint.toString());
+							}
+							catch (IllegalArgumentException e)
+							{
+								IOLib.printLine(e.getMessage());
+							}
+							
+							break;
+						
+						case PRINT_ALL:
+							
+							for (AvailabilityPeriod p : availability)
+							{
+								IOLib.printLine(p.toString()+"\n\n");
+							}
+							
+							break;
 					}
 					
 					break;
