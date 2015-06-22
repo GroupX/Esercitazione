@@ -25,6 +25,64 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String ALREADY_INSERTED_PATIENT = "Il paziente risulta già inserito";
+	private static final String ALL_SEARCH_SKILL_AREA = "Cerca tra tutte";
+	private static final String SEARCH_BY_NAME = "Cerca per nome";
+	private static final String SKILL_AREA_RESEARCH_MENU = "Ricerca area di competenza";
+	private static final String MODIFY_PATIENT = "Modifica";
+	private static final String ALREADY_INSERTED_DOCTOR = "Il dottore risulta già inserito";
+	private static final String MODIFY_SPECIALIST_DOCTOR = "Modifica dottore specialistico";
+	private static final String ADD_SPECIALISTIC_DOCTOR = "Aggiungi dottore specialistico";
+	private static final String ADD_GENERIC_DOCTOR = "Aggiungi dottore generico";
+	private static final String SPECIFIC_WEEK_DAYS = "Giorni della settimana specifici?";
+	private static final String INSERT_END_TIME = "Inserisci orario fine:[hh:mm:ss] ";
+	private static final String INSERT_BEGIN_TIME = "Inserisci orario inizio:[hh:mm] ";
+	private static final String INSERT_END_DATE = "Inserisci data fine:[gg/mm/aaaa] ";
+	private static final String INSERT_BEGIN_DATE = "Inserisci data inizio:[gg/mm/aaaa] ";
+	private static final String PRINT_AVAILABILITY = "Stampa disponibilità";
+	private static final String REMOVE_AVAILABILITY = "Rimuovi disponibilità";
+	private static final String ADD_AVAILABILITY = "Aggiungi disponibilità";
+	private static final String ADD_ANOTHER_DAY = "Aggiungere un altro giorno?";
+	private static final String PATIENT_RESEARCH_MENU = "Ricerca pazienti";
+	private static final String SKILL_AREA_RESEARCH = "Cerca per area di competenza";
+	private static final String SPECIALISTIC_DOCTOR_RESEARCH_MENU = "Ricerca dottori specialistici";
+	private static final String DOCTOR_RESEARCH_MENU = "Ricerca dottori";
+	private static final String NAME_AND_SURNAME_RESEARCH = "Cerca per nome e cognome";
+	private static final String STAFF_RESEARCH = "Ricerca staff";
+	private static final String ALL_RESEARCH = "Cerca tra tutti";
+	private static final String MEMBER_RESEARCH = "Cerca per membro";
+	private static final String PERIOD_RESEARCH = "Ricerca periodi";
+	private static final String INSERT_TIME = "Inserisci l'ora [hh:mm:ss]";
+	private static final String INSERT_DATE = "Inserisci la data [dd/MM/aaaa]";
+	private static final String ALL_DATE_RESEARCH = "Scegli tra tutte";
+	private static final String DATE_RESEARCH = "Cerca per data";
+	private static final String PATIENT_RESEARCH = "Cerca per paziente";
+	private static final String DOCTOR_RESEARCH = "Cerca per dottore";
+	private static final String VISIT_RESEARCH = "Ricerca visite";
+	private static final String SURE_TO_REMOVE = "Sicuro di voler rimuovere? ";
+	private static final String INSERT_MOTIVATION = "Inserisci la motivazione della visita: ";
+	private static final String NEXT_DATE = "Prossima data disponibile: %s";
+	private static final String IMPOSSIBLE_AT_SPECIFIED_TIME = "Impossibile all'orario specificato";
+	private static final String INSERT_DATE_TIME = "Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm]";
+	private static final String SELECT_PATIENT = "Seleziona il paziente per la visita: ";
+	private static final String PRINT_VISIT = "Stampa visita";
+	private static final String REMOVE_VISIT = "Rimuovi visita";
+	private static final String MODIFY_VISIT = "Modifica visita";
+	private static final String ADD_SPECIALISTIC_VISIT = "Aggiungi visita specialistica";
+	private static final String ADD_GENERIC_VISIT = "Aggiungi visita generica";
+	private static final String SKILL_AREA_ALREADY_INSERTED = "L'area di competenza risulta già inserita";
+	private static final String PRINT_PATIENT = "Stampa";
+	private static final String REMOVE_PATIENT = "Rimuovi";
+	private static final String ADD_PATIENT = "Aggiungi";
+	private static final String PERIOD_NOT_INSERTED = "Periodo di disponibilità non inserito";
+	private static final String PERIOD_ALREADY_INSERTED = "Periodo di disponibilità già inserito";
+	private static final String PATIENT_NOT_INSERTED = "Paziente non inserito";
+	private static final String PATIENT_ALREADY_INSERTED = "Paziente già inserito";
+	private static final String MEMBER_NOT_INSERTED = "Dipendente non inserito";
+	private static final String MEMBER_ALREADY_INSERTED = "Dipendente già inserito";
+	private static final String VISIT_NOT_PRESENT = "Visita non inserita";
+	private static final String ALREADY_INSERTED_VISIT = "Visita già inserita";
+	private static final String ALREADY_INSERTED_SKILL_AREA = "Area di competenza già inserita";
 	private static final String NO_SKILL_AREA = "Area di competenza non esistente";
 	private static final String NO_PERIOD = "Nessun periodo trovato";
 	private static final String NO_VISIT_MSG = "Nessuna visita trovata";
@@ -86,7 +144,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (skAreas.contains(sa))
 		{
-			throw new IllegalArgumentException("Area di competenza già inserita");
+			throw new IllegalArgumentException(ALREADY_INSERTED_SKILL_AREA);
 		}
 		else
 		{
@@ -98,7 +156,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (!skAreas.contains(sa))
 		{
-			throw new IllegalArgumentException("Area di competenza non inserita");
+			throw new IllegalArgumentException(NO_SKILL_AREA);
 		}
 		else
 		{
@@ -115,7 +173,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (visits.contains(v))
 		{
-			throw new IllegalArgumentException("Visita già inserita");
+			throw new IllegalArgumentException(ALREADY_INSERTED_VISIT);
 		}
 		else
 		{
@@ -127,7 +185,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (!visits.contains(v))
 		{
-			throw new IllegalArgumentException("Visita non inserita");
+			throw new IllegalArgumentException(VISIT_NOT_PRESENT);
 		}
 		else
 		{
@@ -139,7 +197,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (staff.contains(sm))
 		{
-			throw new IllegalArgumentException("Dipendente già inserito");
+			throw new IllegalArgumentException(MEMBER_ALREADY_INSERTED);
 		}
 		else
 		{
@@ -151,7 +209,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (!staff.contains(sm))
 		{
-			throw new IllegalArgumentException("Dipendente non inserito");
+			throw new IllegalArgumentException(MEMBER_NOT_INSERTED);
 		}
 		else
 		{
@@ -163,7 +221,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (patients.contains(p))
 		{
-			throw new IllegalArgumentException("Paziente già inserito");
+			throw new IllegalArgumentException(PATIENT_ALREADY_INSERTED);
 		}
 		else
 		{
@@ -175,7 +233,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (!patients.contains(p))
 		{
-			throw new IllegalArgumentException("Paziente non inserito");
+			throw new IllegalArgumentException(PATIENT_NOT_INSERTED);
 		}
 		else
 		{
@@ -187,7 +245,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (availability.contains(ap))
 		{
-			throw new IllegalArgumentException("Periodo di disponibilità già inserito");
+			throw new IllegalArgumentException(PERIOD_ALREADY_INSERTED);
 		}
 		else
 		{
@@ -199,7 +257,7 @@ public class Clinic implements Useable, Serializable
 	{
 		if (!availability.contains(ap))
 		{
-			throw new IllegalArgumentException("Periodo di disponibilità non inserito");
+			throw new IllegalArgumentException(PERIOD_NOT_INSERTED);
 		}
 		else
 		{
@@ -268,7 +326,7 @@ public class Clinic implements Useable, Serializable
 		final int REMOVE = 2;
 		final int PRINT = 3;
 		
-		MyMenu sMenu = new MyMenu(PATIENT_MENU, "Aggiungi", "Rimuovi", "Stampa");
+		MyMenu sMenu = new MyMenu(PATIENT_MENU, ADD_PATIENT, REMOVE_PATIENT, PRINT_PATIENT);
 		int scelta;
 		
 		while ((scelta = sMenu.getChoice())!=MyMenu.EXIT_VALUE)
@@ -281,7 +339,7 @@ public class Clinic implements Useable, Serializable
 					
 					if (skAreas.contains(sa))
 					{
-						IOLib.printLine("L'area di competenza risulta già inserita");
+						IOLib.printLine(SKILL_AREA_ALREADY_INSERTED);
 					}
 					else
 					{
@@ -551,7 +609,7 @@ public class Clinic implements Useable, Serializable
 		final int REMOVE_VOICE = 4;
 		final int PRINT_VOICE = 5;
 		
-		MyMenu vMenu = new MyMenu(VISIT_MENU, "Aggiungi visita generica", "Aggiungi visita specialistica", "Modifica visita", "Rimuovi visita", "Stampa visita");
+		MyMenu vMenu = new MyMenu(VISIT_MENU, ADD_GENERIC_VISIT, ADD_SPECIALISTIC_VISIT, MODIFY_VISIT, REMOVE_VISIT, PRINT_VISIT);
 		
 		int scelta;
 		
@@ -573,7 +631,7 @@ public class Clinic implements Useable, Serializable
 					{
 						try
 						{
-							IOLib.printLine("Seleziona il paziente per la visita: ");
+							IOLib.printLine(SELECT_PATIENT);
 							p = getPatient();
 							ok = true;
 						}
@@ -590,19 +648,19 @@ public class Clinic implements Useable, Serializable
 					
 					while (!dateOk)
 					{
-						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm]");
+						IOLib.printLine(INSERT_DATE_TIME);
 						date = IOLib.readDateTime();
 						
 						dList = getAvailableDoctor(date);
 						
 						if (dList.size() == 0)
 						{
-							IOLib.printLine("Impossibile all'orario specificato");
+							IOLib.printLine(IMPOSSIBLE_AT_SPECIFIED_TIME);
 							
 							try
 							{
 								Date d = suggestNextDate(date);
-								IOLib.printLine(String.format("Prossima data disponibile: %s", Utilities.dateTimeToString(d)));
+								IOLib.printLine(String.format(NEXT_DATE, Utilities.dateTimeToString(d)));
 							}
 							catch (IllegalArgumentException e)
 							{
@@ -617,7 +675,7 @@ public class Clinic implements Useable, Serializable
 					
 					Doctor doc = IOLib.getIterableElement(dList);
 					
-					motivation = IOLib.readLine("Inserisci la motivazione della visita: ");
+					motivation = IOLib.readLine(INSERT_MOTIVATION);
 					
 					visits.add(new Visit(p, motivation, date, doc));
 
@@ -631,7 +689,7 @@ public class Clinic implements Useable, Serializable
 					{
 						try
 						{
-							IOLib.printLine("Seleziona il paziente per la visita: ");
+							IOLib.printLine(SELECT_PATIENT);
 							p = getPatient();
 							ok = true;
 						}
@@ -650,19 +708,19 @@ public class Clinic implements Useable, Serializable
 					
 					while (!dateOk)
 					{
-						IOLib.printLine("Inserisci la data e l'ora desiderata: [gg/MM/aaaa oo:mm]");
+						IOLib.printLine(INSERT_DATE_TIME);
 						date = IOLib.readDateTime();
 						
 						sdList = getAvailableSpecialistDoctor(date, sa);
 						
 						if (sdList.size() == 0)
 						{
-							IOLib.printLine("Impossibile all'orario specificato");
+							IOLib.printLine(IMPOSSIBLE_AT_SPECIFIED_TIME);
 							
 							try
 							{
 								Date d = suggestNextDate(date, sa);
-								IOLib.printLine(String.format("Prossima data disponibile: %s", Utilities.dateTimeToString(d)));
+								IOLib.printLine(String.format(NEXT_DATE, Utilities.dateTimeToString(d)));
 							}
 							catch (IllegalArgumentException e)
 							{
@@ -677,7 +735,7 @@ public class Clinic implements Useable, Serializable
 					
 					SpecialistDoctor sdoc = IOLib.getIterableElement(sdList);
 					
-					motivation = IOLib.readLine("Inserisci la motivazione della visita: ");
+					motivation = IOLib.readLine(INSERT_MOTIVATION);
 					
 					visits.add(new SpecialisticVisit(p, motivation, date, sdoc, sa));
 					
@@ -704,7 +762,7 @@ public class Clinic implements Useable, Serializable
 					{
 						Visit v = getVisit();
 						
-						boolean sure = IOLib.twoWayQuestion("Sicuro di voler rimuovere? ");
+						boolean sure = IOLib.twoWayQuestion(SURE_TO_REMOVE);
 						
 						if (sure)
 							visits.remove(v);
@@ -742,7 +800,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_DATE_VOICE = 3;
 		final int SEARCH_ALL_VOICE = 4;
 		
-		MyMenu vMenu = new MyMenu("Ricerca visite", false, "Cerca per dottore", "Cerca per paziente", "Cerca per data", "Scegli tra tutte");
+		MyMenu vMenu = new MyMenu(VISIT_RESEARCH, false, DOCTOR_RESEARCH, PATIENT_RESEARCH, DATE_RESEARCH, ALL_DATE_RESEARCH);
 		
 		Visit ris = null;
 		
@@ -1005,9 +1063,9 @@ public class Clinic implements Useable, Serializable
 	 */
 	public AvailabilityPeriod getPeriodFromDate () throws IllegalArgumentException
 	{
-		IOLib.printLine("Inserisci la data [dd/MM/aaaa]");
+		IOLib.printLine(INSERT_DATE);
 		Date d = IOLib.readDate();
-		IOLib.printLine("Inserisci l'ora [hh:mm:ss]");
+		IOLib.printLine(INSERT_TIME);
 		Date time = IOLib.readTime();
 		List<AvailabilityPeriod> l = searchPeriod(d, time);
 		
@@ -1046,7 +1104,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_DATE_VOICE = 2;
 		final int SEARCH_ALL_VOICE = 3;
 		
-		MyMenu vMenu = new MyMenu("Ricerca periodi", false, "Cerca per membro", "Cerca per data", "Cerca tra tutte");
+		MyMenu vMenu = new MyMenu(PERIOD_RESEARCH, false, MEMBER_RESEARCH, DATE_RESEARCH, ALL_RESEARCH);
 		
 		AvailabilityPeriod ris = null;
 		
@@ -1088,7 +1146,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_NAME_VOICE = 1;
 		final int SEARCH_ALL_VOICE = 2;
 		
-		MyMenu vMenu = new MyMenu("Ricerca staff", false, "Cerca per nome e cognome", "Cerca tra tutti");
+		MyMenu vMenu = new MyMenu(STAFF_RESEARCH, false, NAME_AND_SURNAME_RESEARCH, ALL_RESEARCH);
 		
 		StaffMember ris = null;
 		
@@ -1150,7 +1208,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_NAME_VOICE = 1;
 		final int SEARCH_ALL_VOICE = 2;
 		
-		MyMenu vMenu = new MyMenu("Ricerca dottori", false, "Cerca per nome e cognome", "Cerca tra tutti");
+		MyMenu vMenu = new MyMenu(DOCTOR_RESEARCH_MENU, false, NAME_AND_SURNAME_RESEARCH, ALL_RESEARCH);
 		
 		Doctor ris = null;
 		
@@ -1215,7 +1273,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_SKILL_AREA_VOICE = 2;
 		final int SEARCH_ALL_VOICE = 3;
 		
-		MyMenu vMenu = new MyMenu("Ricerca dottori specialistici", false, "Cerca per nome e cognome", "Cerca per area di competenza", "Cerca tra tutti");
+		MyMenu vMenu = new MyMenu(SPECIALISTIC_DOCTOR_RESEARCH_MENU, false, NAME_AND_SURNAME_RESEARCH, SKILL_AREA_RESEARCH, ALL_RESEARCH);
 		
 		SpecialistDoctor ris = null;
 		
@@ -1267,7 +1325,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_NAME_VOICE = 1;
 		final int SEARCH_ALL_VOICE = 2;
 		
-		MyMenu vMenu = new MyMenu("Ricerca pazienti", false, "Cerca per nome e cognome", "Cerca tra tutti");
+		MyMenu vMenu = new MyMenu(PATIENT_RESEARCH_MENU, false, NAME_AND_SURNAME_RESEARCH, ALL_RESEARCH);
 		
 		Patient ris = null;
 		
@@ -1322,7 +1380,7 @@ public class Clinic implements Useable, Serializable
 			else
 				IOLib.printLine(WEEKDAY_ALREADY_INSERT_ERROR);
 			
-			another = IOLib.twoWayQuestion("Aggiungere un altro giorno?");
+			another = IOLib.twoWayQuestion(ADD_ANOTHER_DAY);
 		}
 		
 		return wd;
@@ -1337,9 +1395,9 @@ public class Clinic implements Useable, Serializable
 		final int REMOVE_PERIOD = 2;
 		final int PRINT_PERIODS = 3;
 		
-		MyMenu tMenu = new MyMenu(TIMETABLE_MENU, "Aggiungi disponibilità",
-												  "Rimuovi disponibilità",
-												  "Stampa disponibilità");
+		MyMenu tMenu = new MyMenu(TIMETABLE_MENU, ADD_AVAILABILITY,
+												  REMOVE_AVAILABILITY,
+												  PRINT_AVAILABILITY);
 		
 		int scelta, s;
 		
@@ -1367,17 +1425,17 @@ public class Clinic implements Useable, Serializable
 					
 					boolean weekday = false;
 					
-					IOLib.printLine("Inserisci data inizio:[gg/mm/aaaa] ");
+					IOLib.printLine(INSERT_BEGIN_DATE);
 					Date startDay = IOLib.readDate();
 					
-					IOLib.printLine("Inserisci data fine:[gg/mm/aaaa] ");
+					IOLib.printLine(INSERT_END_DATE);
 					Date endDay = IOLib.readDate();
 					
 					Date startTime;
 					Date endTime;
 					do
 					{
-						IOLib.printLine("Inserisci orario inizio:[hh:mm:ss] ");
+						IOLib.printLine(INSERT_BEGIN_TIME);
 						startTime = IOLib.readTimeInDate();
 						
 						if (startTime.before(Utilities.stringToTimeInDateNoException(OPEN_TIME)) && startTime.after(Utilities.stringToTimeInDateNoException(CLOSE_TIME)))
@@ -1386,14 +1444,14 @@ public class Clinic implements Useable, Serializable
 						
 					do
 					{
-						IOLib.printLine("Inserisci orario fine:[hh:mm:ss] ");
+						IOLib.printLine(INSERT_END_TIME);
 						endTime = IOLib.readTimeInDate();
 						
 						if (endTime.before(Utilities.stringToTimeInDateNoException(OPEN_TIME)) && endTime.after(Utilities.stringToTimeInDateNoException(CLOSE_TIME)))
 							IOLib.printLine(TIME_INCOMPATIBLE_WITH_CLINIC_TIME);
 					}while (endTime.before(Utilities.stringToTimeInDateNoException(OPEN_TIME)) && endTime.after(Utilities.stringToTimeInDateNoException(CLOSE_TIME)));
 					
-					weekday = IOLib.twoWayQuestion("Giorni della settimana specifici?");
+					weekday = IOLib.twoWayQuestion(SPECIFIC_WEEK_DAYS);
 					
 					AvailabilityPeriod ap;
 					
@@ -1418,44 +1476,6 @@ public class Clinic implements Useable, Serializable
 					break;
 					
 				case REMOVE_PERIOD:
-					
-//					final int VIA_PERIOD = 1;
-//					final int VIA_STAFF_MEMBER = 2;
-//					
-//					MyMenu rMenu = new MyMenu("Come cercare il periodo di disponibilità:", false, "Inserisci periodo", "Inserisci dipendente coinvolto");
-//					
-//					s = rMenu.getChoice();
-//					
-//					switch (s)
-//					{
-//						case VIA_PERIOD:
-//							
-//							
-//							try
-//							{
-//								availability.remove(getPeriodFromDate());
-//							}
-//							catch (IllegalArgumentException e)
-//							{
-//								IOLib.printLine(e.getMessage());
-//							}
-//							
-//							break;
-//							
-//						case VIA_STAFF_MEMBER:
-//							
-//							
-//							try
-//							{
-//								availability.remove(getPeriodFromStaffMember());
-//							}
-//							catch (IllegalArgumentException e)
-//							{
-//								IOLib.printLine(e.getMessage());
-//							}
-//							
-//							break;
-//					}
 					
 					try
 					{
@@ -1501,7 +1521,7 @@ public class Clinic implements Useable, Serializable
 		final int REMOVE = 4;
 		final int PRINT = 5;
 		
-		MyMenu sMenu = new MyMenu(STAFF_MENU, "Aggiungi dottore generico", "Aggiungi dottore specialistico", "Modifica dottore specialistico", "Rimuovi", "Stampa");
+		MyMenu sMenu = new MyMenu(STAFF_MENU, ADD_GENERIC_DOCTOR, ADD_SPECIALISTIC_DOCTOR, MODIFY_SPECIALIST_DOCTOR, REMOVE_PATIENT, PRINT_PATIENT);
 		int scelta;
 		
 		while ((scelta = sMenu.getChoice())!=MyMenu.EXIT_VALUE)
@@ -1514,7 +1534,7 @@ public class Clinic implements Useable, Serializable
 					
 					if (staff.contains(d))
 					{
-						IOLib.printLine("Il dottore risulta già inserito");
+						IOLib.printLine(ALREADY_INSERTED_DOCTOR);
 					}
 					else
 					{
@@ -1529,7 +1549,7 @@ public class Clinic implements Useable, Serializable
 					
 					if (staff.contains(sd))
 					{
-						IOLib.printLine("Il dottore risulta già inserito");
+						IOLib.printLine(ALREADY_INSERTED_DOCTOR);
 					}
 					else
 					{
@@ -1590,7 +1610,7 @@ public class Clinic implements Useable, Serializable
 		final int REMOVE = 3;
 		final int PRINT = 4;
 		
-		MyMenu pMenu = new MyMenu(PATIENT_MENU, "Aggiungi", "Modifica", "Rimuovi", "Stampa");
+		MyMenu pMenu = new MyMenu(PATIENT_MENU, ADD_PATIENT, MODIFY_PATIENT, REMOVE_PATIENT, PRINT_PATIENT);
 		int scelta;
 		
 		while ((scelta = pMenu.getChoice())!=MyMenu.EXIT_VALUE)
@@ -1603,7 +1623,7 @@ public class Clinic implements Useable, Serializable
 					
 					if (patients.contains(p))
 					{
-						IOLib.printLine("Il paziente risulta già inserito");
+						IOLib.printLine(ALREADY_INSERTED_PATIENT);
 					}
 					else
 					{
@@ -1665,7 +1685,7 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_NAME_VOICE = 1;
 		final int SEARCH_ALL_VOICE = 2;
 		
-		MyMenu vMenu = new MyMenu("Ricerca area di competenza", false, "Cerca per nome", "Cerca tra tutte");
+		MyMenu vMenu = new MyMenu(SKILL_AREA_RESEARCH_MENU, false, SEARCH_BY_NAME, ALL_SEARCH_SKILL_AREA);
 		
 		int scelta;
 
