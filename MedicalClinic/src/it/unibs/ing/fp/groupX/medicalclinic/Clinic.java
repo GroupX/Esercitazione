@@ -25,6 +25,19 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String STAT_MAX = "Area di competenza con più visite: %s [%.2f%%]";
+	private static final String STAT_MIN = "Area di competenza con meno visite: %s [%.2f%%]";
+	private static final String STAT_ENTRY = "\n%s [%.2f%% del totale]:";
+	private static final String STAT_DOC = "Visite per dottore";
+	private static final String STAT_MIN_MAX = "Aree con maggior e minor numero di visite";
+	private static final String STAT_AREA = "Visite totali, prenotate e concluse per area";
+	private static final String STAT_TOT = "Visite totali, prenotate e concluse";
+	private static final String STAT_MENU_TITLE = "Statistiche: ";
+	private static final String CONCLUDED_VISIT = "Visite concluse: %d [%.2f%%]";
+	private static final String PRENOTATED_VISIT = "Visite prenotate: %d [%.2f%%]";
+	private static final String TOT_VISIT = "Visite totali: %d";
+	private static final String STATISTICS_MENU = "Statistiche";
+	private static final String TYPE_SKILL_AREA_RESEARCH = "Tipo e area di competenza";
 	private static final String CONNECT_TO_PREV_VISIT = "Collegare a visita pregressa (se è presente solo una visita verrà collegata a quella)?";
 	private static final String ALREADY_INSERTED_PATIENT = "Il paziente risulta già inserito";
 	private static final String ALL_SEARCH_SKILL_AREA = "Cerca tra tutte";
@@ -47,7 +60,7 @@ public class Clinic implements Useable, Serializable
 	private static final String PATIENT_RESEARCH_MENU = "Ricerca pazienti";
 	private static final String SKILL_AREA_RESEARCH = "Cerca per area di competenza";
 	private static final String SPECIALISTIC_DOCTOR_RESEARCH_MENU = "Ricerca dottori specialistici";
-	private static final String DOCTOR_RESEARCH_MENU = "Ricerca dottori";
+	private static final String DOCTOR_RESEARCH_MENU = "\nRicerca dottori";
 	private static final String NAME_AND_SURNAME_RESEARCH = "Cerca per nome e cognome";
 	private static final String STAFF_RESEARCH = "Ricerca staff";
 	private static final String ALL_RESEARCH = "Cerca tra tutti";
@@ -273,9 +286,10 @@ public class Clinic implements Useable, Serializable
 		final int TIMETABLE_VOICE = 3;
 		final int VISIT_VOICE = 4;
 		final int SKILL_AREAS_VOICE = 5;
-		final int SAVE = 6;
+		final int STATISTICS_VOICE = 6;
+		final int SAVE = 7;
 		
-		MyMenu m = new MyMenu(MENU_TITLE, PATIENT_MENU, STAFF_MENU, TIMETABLE_MENU, VISIT_MENU, SKILL_AREAS_MENU, SAVE_MENU);
+		MyMenu m = new MyMenu(MENU_TITLE, PATIENT_MENU, STAFF_MENU, TIMETABLE_MENU, VISIT_MENU, SKILL_AREAS_MENU, STATISTICS_MENU, SAVE_MENU);
 		int scelta;
 		
 		while ((scelta = m.getChoice())!=MyMenu.EXIT_VALUE)
@@ -309,6 +323,12 @@ public class Clinic implements Useable, Serializable
 				case SKILL_AREAS_VOICE:
 					
 					useSkillAreas();
+					
+					break;
+					
+				case STATISTICS_VOICE:
+					
+					useStatistics();
 					
 					break;
 					
@@ -813,9 +833,10 @@ public class Clinic implements Useable, Serializable
 		final int SEARCH_DOCTOR_VOICE = 1;
 		final int SEARCH_PATIENT_VOICE = 2;
 		final int SEARCH_DATE_VOICE = 3;
-		final int SEARCH_ALL_VOICE = 4;
+		final int SEARCH_TYPE_SKILL_VOICE = 4;
+		final int SEARCH_ALL_VOICE = 5;
 		
-		MyMenu vMenu = new MyMenu(VISIT_RESEARCH, false, DOCTOR_RESEARCH, PATIENT_RESEARCH, DATE_RESEARCH, ALL_DATE_RESEARCH);
+		MyMenu vMenu = new MyMenu(VISIT_RESEARCH, false, DOCTOR_RESEARCH, PATIENT_RESEARCH, DATE_RESEARCH, TYPE_SKILL_AREA_RESEARCH, ALL_DATE_RESEARCH);
 		
 		Visit ris = null;
 		
@@ -856,6 +877,21 @@ public class Clinic implements Useable, Serializable
 				
 				break;	
 				
+			case SEARCH_TYPE_SKILL_VOICE:
+				
+				boolean isSpec = IOLib.twoWayQuestion("Visita specialistica? ");
+				
+				if (!isSpec)
+					ris = IOLib.getIterableElement(searchVisit(isSpec, new SkillArea(SkillAreas.GENERAL_SKILL_AREA_NAME)));
+				else
+				{
+					SkillArea skA = getSkillArea();
+					
+					ris = IOLib.getIterableElement(searchVisit(isSpec, skA));
+				}
+				
+				break;
+				
 			case SEARCH_ALL_VOICE:
 				
 				ris = IOLib.getIterableElement(visits);
@@ -881,6 +917,34 @@ public class Clinic implements Useable, Serializable
 		{
 			if (v.getDoctor().equals(d))
 				ris.add(v);
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna un elenco di visite
+	 * @param isSpecialistic true: visite specialistiche false: visite generiche
+	 * @param skArea Area di competenza
+	 * @return visite
+	 */
+	public List<Visit> searchVisit (boolean isSpecialistic, SkillArea skArea)
+	{
+		ArrayList <Visit> ris = new ArrayList<>();
+		
+		for (Visit v : visits)
+		{
+			if (!isSpecialistic && !(v instanceof SpecialisticVisit))
+				ris.add(v);
+			else if (isSpecialistic && (v instanceof SpecialisticVisit))
+			{
+				SpecialisticVisit sv = (SpecialisticVisit) v;
+				
+				if (sv.getSkillArea().equals(skArea))
+				{
+					ris.add(v);
+				}
+			}
 		}
 		
 		return ris;
@@ -1736,5 +1800,287 @@ public class Clinic implements Useable, Serializable
 
 		
 		return sk;
+	}
+	
+	/**
+	 * Ritorna il numero di visite
+	 * @return numero di visite
+	 */
+	public int getVisitAmount ()
+	{
+		return visits.size();
+	}
+	
+	/**
+	 * Ritorna il numero di visite prenotate
+	 * @return Numero di visite prenotate
+	 */
+	public int getPrenotatedVisitAmount ()
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getState() == VisitState.PRENOTATA)
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite prenotate
+	 * @return Numero di visite prenotate
+	 */
+	public int getConcludedVisitAmount ()
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getState() == VisitState.CONCLUSA || v.getState() == VisitState.REFERTATA)
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite
+	 * @param skillArea area di competenza
+	 * @return numero di visite
+	 */
+	public int getVisitAmount (SkillArea skillArea)
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getSkillArea().equals(skillArea))
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite prenotate
+	 * @param skillArea area di competenza
+	 * @return Numero di visite prenotate
+	 */
+	public int getPrenotatedVisitAmount (SkillArea skillArea)
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getSkillArea().equals(skillArea) && v.getState() == VisitState.PRENOTATA)
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite prenotate
+ 	 * @param skillArea area di competenza
+	 * @return Numero di visite prenotate
+	 */
+	public int getConcludedVisitAmount (Doctor d)
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getDoctor().equals(d) && (v.getState() == VisitState.CONCLUSA || v.getState() == VisitState.REFERTATA))
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite
+	 * @param skillArea area di competenza
+	 * @return numero di visite
+	 */
+	public int getVisitAmount (Doctor d)
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getDoctor().equals(d))
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite prenotate
+	 * @param skillArea area di competenza
+	 * @return Numero di visite prenotate
+	 */
+	public int getPrenotatedVisitAmount (Doctor d)
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getDoctor().equals(d) && v.getState() == VisitState.PRENOTATA)
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna il numero di visite prenotate
+ 	 * @param skillArea area di competenza
+	 * @return Numero di visite prenotate
+	 */
+	public int getConcludedVisitAmount (SkillArea skillArea)
+	{
+		int ris = 0;
+		
+		for (Visit v : visits)
+		{
+			if(v.getSkillArea().equals(skillArea) && (v.getState() == VisitState.CONCLUSA || v.getState() == VisitState.REFERTATA))
+				ris++;
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna l'area di competenza con meno visite
+	 * @return area di competenza con meno visite
+	 */
+	public SkillArea getMinVisitSkillArea ()
+	{
+		SkillArea ris  = skAreas.get(0);
+		int minAmount = getVisitAmount(skAreas.get(0));
+		
+		for (SkillArea sk : skAreas)
+		{
+			int act = getVisitAmount(sk);
+			
+			if (act < minAmount)
+			{
+				ris = sk;
+				minAmount = act;
+			}
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Ritorna l'area di competenza con più visite
+	 * @return area di competenza con più visite
+	 */
+	public SkillArea getMaxVisitSkillArea ()
+	{
+		SkillArea ris = skAreas.get(0);
+		int maxAmount = getVisitAmount(skAreas.get(0));
+		
+		for (SkillArea sk : skAreas)
+		{
+			int act = getVisitAmount(sk);
+			
+			if (act > maxAmount)
+			{
+				ris = sk;
+				maxAmount = act;
+			}
+		}
+		
+		return ris;
+	}
+	
+	/**
+	 * Stampa le statistiche
+	 * @param stat
+	 */
+	public void printStat (int[] stat)
+	{
+		IOLib.printLine(String.format(TOT_VISIT, stat[0]));
+		IOLib.printLine(String.format(PRENOTATED_VISIT, stat[1], Utilities.getPercentage(stat[0], stat[1])));
+		IOLib.printLine(String.format(CONCLUDED_VISIT, stat[2], Utilities.getPercentage(stat[0], stat[2])));
+	}
+	
+	public void useStatistics ()
+	{
+		final int TOT = 1;
+		final int AREA = 2;
+		final int MAX_MIN = 3;
+		final int DOCTOR = 4;
+		
+		MyMenu pMenu = new MyMenu(STAT_MENU_TITLE, STAT_TOT, STAT_AREA, STAT_MIN_MAX, STAT_DOC);
+		int scelta;
+		int [] stat ;
+		int tot = getVisitAmount();;
+		
+		while ((scelta = pMenu.getChoice())!=MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+				case TOT:
+					
+					stat = new int[3];
+					
+					stat[0] = getVisitAmount();
+					stat[1] = getPrenotatedVisitAmount();
+					stat[2] = getConcludedVisitAmount();
+					
+					printStat(stat);
+					
+					break;
+					
+				case AREA:
+					
+					for (SkillArea sk : skAreas)
+					{
+						stat = new int[3];
+						
+						stat[0] = getVisitAmount(sk);
+						stat[1] = getPrenotatedVisitAmount(sk);
+						stat[2] = getConcludedVisitAmount(sk);
+						
+						IOLib.printLine(String.format(STAT_ENTRY, sk.toString(), Utilities.getPercentage(tot, stat[0])));
+						
+						printStat(stat);
+					}
+					
+					break;
+					
+				case MAX_MIN:
+					
+					SkillArea min = getMinVisitSkillArea(), max = getMaxVisitSkillArea();
+					
+					IOLib.printLine(String.format(STAT_MIN, min , Utilities.getPercentage(tot, getVisitAmount(min))));
+					IOLib.printLine(String.format(STAT_MAX, max , Utilities.getPercentage(tot, getVisitAmount(max))));
+					
+					break;
+					
+				case DOCTOR:
+					
+					for (Doctor d: getDoctorsFromStaff())
+					{
+						stat = new int[3];
+						
+						stat[0] = getVisitAmount(d);
+						stat[1] = getPrenotatedVisitAmount(d);
+						stat[2] = getConcludedVisitAmount(d);
+						
+						IOLib.printLine(String.format(STAT_ENTRY, d.toStringShort(), Utilities.getPercentage(tot, stat[0])));
+						
+						printStat(stat);
+					}
+					
+					break;
+			}
+		}
 	}
 }

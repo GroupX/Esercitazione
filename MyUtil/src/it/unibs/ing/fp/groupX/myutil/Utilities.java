@@ -280,4 +280,15 @@ public class Utilities {
 		long t= d.getTime();
 		return new Date(t + (30 * MILLISECONDS_TO_SECONDS * SECOND_TO_MINUTE));
 	}
+	
+	/**
+	 * Calcola la percentuale
+	 * @param max Il valore massimo
+	 * @param amount Il valore attuale
+	 * @return Percentuale
+	 */
+	public static double getPercentage (double max, double amount)
+	{
+		return (amount*100.0)/max;
+	}
 }
