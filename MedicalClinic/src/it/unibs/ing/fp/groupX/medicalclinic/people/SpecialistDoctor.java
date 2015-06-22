@@ -1,6 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic.people;
 
 import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillArea;
+import it.unibs.ing.fp.groupX.medicalclinic.skillareas.SkillAreas;
 import it.unibs.ing.fp.groupX.medicalclinic.visit.Visit;
 import it.unibs.ing.fp.groupX.myutil.CodiceFiscale;
 import it.unibs.ing.fp.groupX.myutil.Gender;
@@ -55,6 +56,7 @@ public class SpecialistDoctor extends Doctor implements Readable, Useable, Seria
 	public SpecialistDoctor (String name, String surname, Date birth, String birthPlace, Gender gen, NumeroTelefonico num, CodiceFiscale cod)
 	{
 		super (name, surname, birth, birthPlace, gen, num, cod);
+		addSkill(new SkillArea(SkillAreas.GENERAL_SKILL_AREA_NAME));
 	}
 	
 	/**
@@ -65,6 +67,7 @@ public class SpecialistDoctor extends Doctor implements Readable, Useable, Seria
 	public SpecialistDoctor (Person p)
 	{
 		super(p);
+		addSkill(new SkillArea(SkillAreas.GENERAL_SKILL_AREA_NAME));
 	}
 	
 	/**
@@ -92,8 +95,33 @@ public class SpecialistDoctor extends Doctor implements Readable, Useable, Seria
 		
 		for (SkillArea sa : skills)
 		{
-			this.skills.add(sa);
+			addSkill(sa);
 		}
+	}
+	
+	/**
+	 * Costruttore
+	 * @param name
+	 * 				nome
+	 * @param surname
+	 * 				cognome
+	 * @param birth
+	 * 				data di nascita
+	 * @param birthPlace
+	 * 				luogo di nascita
+	 * @param gen
+	 * 				genere
+	 * @param num
+	 * 				numero di telefono
+	 * @param cod
+	 * 				codice fiscale
+	 * @param skill
+	 * 				competenza del medico
+	 */
+	public SpecialistDoctor (String name, String surname, Date birth, String birthPlace, Gender gen, NumeroTelefonico num, CodiceFiscale cod, SkillArea skill)
+	{
+		this (name, surname, birth, birthPlace, gen, num, cod);
+		addSkill(skill);
 	}
 	
 	/**
@@ -109,8 +137,21 @@ public class SpecialistDoctor extends Doctor implements Readable, Useable, Seria
 		
 		for (SkillArea sa : skills)
 		{
-			this.skills.add(sa);
+			addSkill(sa);
 		}
+	}
+	
+	/**
+	 * Costruttore
+	 * @param p
+	 * 				persona
+	 * @param skill
+	 * 				competenza del medico
+	 */
+	public SpecialistDoctor (Person p, SkillArea skill)
+	{
+		this(p);
+		addSkill(skill);
 	}
 	
 	/**
