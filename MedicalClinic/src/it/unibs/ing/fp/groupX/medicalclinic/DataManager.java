@@ -58,7 +58,7 @@ public class DataManager
 	
 	public static Clinic loadClinic () throws FileNotFoundException, IOException, ClassNotFoundException
 	{
-		Clinic ris;
+		Clinic ris = null;
 		File f = new File(CLINIC_FILE_NAME);
 		
 		ObjectInputStream sorgente = new ObjectInputStream(

@@ -50,6 +50,8 @@ public class Clinic implements Useable, Serializable
 	
 	/** Opzione menu principale per salvare */
 	private static final String SAVE_MENU = "Salva";
+	/** Titolo menu aree di competenza */
+	private static final String SKILL_AREAS_MENU = "Gestisci aree di competenza";
 	/** Titolo menu visite */
 	private static final String VISIT_MENU = "Gestisci visite";
 	/** Titolo menu orari */
@@ -211,9 +213,10 @@ public class Clinic implements Useable, Serializable
 		final int STAFF_VOICE = 2;
 		final int TIMETABLE_VOICE = 3;
 		final int VISIT_VOICE = 4;
-		final int SAVE = 5;
+		final int SKILL_AREAS_VOICE = 5;
+		final int SAVE = 6;
 		
-		MyMenu m = new MyMenu(MENU_TITLE, PATIENT_MENU, STAFF_MENU, TIMETABLE_MENU, VISIT_MENU, SAVE_MENU);
+		MyMenu m = new MyMenu(MENU_TITLE, PATIENT_MENU, STAFF_MENU, TIMETABLE_MENU, VISIT_MENU, SKILL_AREAS_MENU, SAVE_MENU);
 		int scelta;
 		
 		while ((scelta = m.getChoice())!=MyMenu.EXIT_VALUE)
@@ -243,6 +246,12 @@ public class Clinic implements Useable, Serializable
 					useVisit();
 					
 					break;
+				
+				case SKILL_AREAS_VOICE:
+					
+					useSkillAreas();
+					
+					break;
 					
 				case SAVE:
 					
@@ -253,6 +262,62 @@ public class Clinic implements Useable, Serializable
 		}
 	}
 	
+	private void useSkillAreas ()
+	{
+		final int ADD = 1;
+		final int REMOVE = 2;
+		final int PRINT = 3;
+		
+		MyMenu sMenu = new MyMenu(PATIENT_MENU, "Aggiungi", "Rimuovi", "Stampa");
+		int scelta;
+		
+		while ((scelta = sMenu.getChoice())!=MyMenu.EXIT_VALUE)
+		{
+			switch (scelta)
+			{
+				case ADD:
+					
+					SkillArea sa = SkillArea.readFromConsole();
+					
+					if (skAreas.contains(sa))
+					{
+						IOLib.printLine("L'area di competenza risulta già inserita");
+					}
+					else
+					{
+						skAreas.add(sa);
+					}
+					
+					break;
+					
+				case REMOVE:
+					
+					try
+					{
+						skAreas.remove(getSkillArea());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
+					
+					break;
+					
+				case PRINT:
+					
+					try
+					{
+						IOLib.printLine(getSkillArea().toString());
+					}
+					catch (IllegalArgumentException e)
+					{
+						IOLib.printLine(e.getMessage());
+					}
+					
+					break;
+			}
+		}
+	}
 	
 	/**
 	 * Ritorna una lista di dottori che possono visitare in una certa data
