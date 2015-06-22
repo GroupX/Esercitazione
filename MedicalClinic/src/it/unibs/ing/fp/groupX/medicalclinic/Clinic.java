@@ -76,12 +76,125 @@ public class Clinic implements Useable, Serializable
 		
 	}
 	
+	public void addSkillArea (SkillArea sa) throws IllegalArgumentException
+	{
+		if (skAreas.contains(sa))
+		{
+			throw new IllegalArgumentException("Area di competenza già inserita");
+		}
+		else
+		{
+			skAreas.add(sa);
+		}
+	}
 	
+	public void removeSkillArea (SkillArea sa) throws IllegalArgumentException
+	{
+		if (!skAreas.contains(sa))
+		{
+			throw new IllegalArgumentException("Area di competenza non inserita");
+		}
+		else
+		{
+			skAreas.remove(sa);
+		}
+	}
 	
+	public void addVisit (Visit v) throws IllegalArgumentException
+	{
+		if (visits.contains(v))
+		{
+			throw new IllegalArgumentException("Visita già inserita");
+		}
+		else
+		{
+			visits.add(v);
+		}
+	}
 	
+	public void removeVisit (Visit v) throws IllegalArgumentException
+	{
+		if (!visits.contains(v))
+		{
+			throw new IllegalArgumentException("Visita non inserita");
+		}
+		else
+		{
+			visits.remove(v);
+		}
+	}
 	
+	public void addStaffMember (StaffMember sm) throws IllegalArgumentException
+	{
+		if (staff.contains(sm))
+		{
+			throw new IllegalArgumentException("Dipendente già inserito");
+		}
+		else
+		{
+			staff.add(sm);
+		}
+	}
 	
+	public void removeStaffMember (StaffMember sm) throws IllegalArgumentException
+	{
+		if (!staff.contains(sm))
+		{
+			throw new IllegalArgumentException("Dipendente non inserito");
+		}
+		else
+		{
+			staff.remove(sm);
+		}
+	}
 	
+	public void addPatient (Patient p) throws IllegalArgumentException
+	{
+		if (patients.contains(p))
+		{
+			throw new IllegalArgumentException("Paziente già inserito");
+		}
+		else
+		{
+			patients.add(p);
+		}
+	}
+	
+	public void removePatient (Patient p) throws IllegalArgumentException
+	{
+		if (!patients.contains(p))
+		{
+			throw new IllegalArgumentException("Paziente non inserito");
+		}
+		else
+		{
+			patients.remove(p);
+		}
+	}
+	
+	public void addAvailability (AvailabilityPeriod ap) throws IllegalArgumentException
+	{
+		if (availability.contains(ap))
+		{
+			throw new IllegalArgumentException("Periodo di disponibilità già inserito");
+		}
+		else
+		{
+			availability.add(ap);
+		}
+	}
+	
+	public void removeAvailability (AvailabilityPeriod ap) throws IllegalArgumentException
+	{
+		if (!availability.contains(ap))
+		{
+			throw new IllegalArgumentException("Periodo di disponibilità non inserito");
+		}
+		else
+		{
+			availability.remove(ap);
+		}
+	}
 	
 	@Override
 	public void use() {

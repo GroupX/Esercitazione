@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 
+import it.unibs.ing.fp.groupX.medicalclinic.aviability.AvailabilityPeriod;
 import it.unibs.ing.fp.groupX.medicalclinic.pathologies.*;
 import it.unibs.ing.fp.groupX.medicalclinic.people.ClinicFolder;
 import it.unibs.ing.fp.groupX.medicalclinic.people.Doctor;
@@ -68,6 +69,14 @@ public class PreloadMain {
 				new Patient(DEFAULT_PEOPLE[7], new ClinicFolder())
 				};
 	
+	public static final int AVAILABILITY_PERIOD_NUMBER = STAFF_NUMBER;
+	public static final AvailabilityPeriod[] DEFAULT_AVAILABILITY_PERIODS = {
+				new AvailabilityPeriod(Utilities.stringToDateNoException("01/06/2015"), Utilities.stringToDateNoException("31/08/2015"), Utilities.stringToTimeInDateNoException("08:00"), Utilities.stringToTimeInDateNoException("18:00"), DEFAULT_STAFF[0]),
+				new AvailabilityPeriod(Utilities.stringToDateNoException("01/09/2015"), Utilities.stringToDateNoException("31/05/2016"), Utilities.stringToTimeInDateNoException("08:00"), Utilities.stringToTimeInDateNoException("18:00"), DEFAULT_STAFF[1]),
+				new AvailabilityPeriod(Utilities.stringToDateNoException("01/06/2015"), Utilities.stringToDateNoException("30/06/2015"), Utilities.stringToTimeInDateNoException("08:00"), Utilities.stringToTimeInDateNoException("12:00"), DEFAULT_STAFF[2]),
+				new AvailabilityPeriod(Utilities.stringToDateNoException("01/08/2015"), Utilities.stringToDateNoException("31/08/2015"), Utilities.stringToTimeInDateNoException("14:00"), Utilities.stringToTimeInDateNoException("18:00"), DEFAULT_STAFF[3]),
+				};
+	
 	public static final int VISIT_NUMBER = 6;
 	public static final Visit[] DEFAULT_VISIT = {
 				new Visit(DEFAULT_PATIENTS[0], "Controllo generico", new Date(), (Doctor)DEFAULT_STAFF[0]),
@@ -90,8 +99,41 @@ public class PreloadMain {
 	{
 		Clinic c = new Clinic();
 		
+		for (String s : DEFAULT_SKILL_AREAS)
+		{
+			c.addSkillArea(new SkillArea(s));
+		}
 		
+		for (StaffMember sm : DEFAULT_STAFF)
+		{
+			c.addStaffMember(sm);
+		}
 		
+		for (Patient p : DEFAULT_PATIENTS)
+		{
+			c.addPatient(p);
+		}
+		
+		for (AvailabilityPeriod ap : DEFAULT_AVAILABILITY_PERIODS)
+		{
+			c.addAvailability(ap);
+		}
+		
+		for (Visit v : DEFAULT_VISIT)
+		{
+			c.addVisit(v);
+		}
+		
+		//Salvo su file
+		try {
+			DataManager.saveClinic(c);;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void resetToDefaultPathologies ()
