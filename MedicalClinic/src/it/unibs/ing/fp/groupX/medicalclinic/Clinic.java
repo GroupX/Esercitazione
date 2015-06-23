@@ -1,5 +1,7 @@
 package it.unibs.ing.fp.groupX.medicalclinic;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Time;
 import java.text.ParseException;
@@ -25,6 +27,7 @@ import it.unibs.ing.fp.groupX.myutil.Utilities;
 @SuppressWarnings("serial")
 public class Clinic implements Useable, Serializable
 {
+	private static final String DATA_SAVE_SUCCESS_MESSAGE = "Dati clinica salvati con successo";
 	private static final String STAT_MAX = "Area di competenza con più visite: %s [%.2f%%]";
 	private static final String STAT_MIN = "Area di competenza con meno visite: %s [%.2f%%]";
 	private static final String STAT_ENTRY = "\n%s [%.2f%% del totale]:";
@@ -389,7 +392,17 @@ public class Clinic implements Useable, Serializable
 					
 				case SAVE:
 					
-					//SERVE DATAMANAGER
+					try {
+						DataManager.saveClinic(this);
+						
+						IOLib.printLine(DATA_SAVE_SUCCESS_MESSAGE);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 					break;
 			}
