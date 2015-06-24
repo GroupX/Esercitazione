@@ -1,5 +1,14 @@
 package it.unibs.ing.fp.groupX.myutil;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -603,5 +612,48 @@ public class IOLib
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Legge un oggetto (il primo) dal file passato
+	 * @param f file da dove leggere
+	 * @return l'oggetto letto
+	 * @throws FileNotFoundException file non trovato
+	 * @throws IOException errore di input/output
+	 * @throws ClassNotFoundException errore nella lettura dell'oggetto
+	 */
+	public static <E> E readObjectFromFile (File f) throws FileNotFoundException, IOException, ClassNotFoundException
+	{
+		E obj;
+		
+		ObjectInputStream sorgente = new ObjectInputStream(
+				new BufferedInputStream(
+				new FileInputStream(f)));
+		
+		obj = (E)sorgente.readObject();
+		
+		sorgente.close();
+		
+		return obj;
+	}
+	
+	/**
+	 * Scrive un oggetto generico sul file passato
+	 * @param f
+	 * 			file dove scrivere
+	 * @param obj
+	 * 			oggetto da scrivere
+	 * @throws FileNotFoundException file non trovato
+	 * @throws IOException errore di input/output
+	 */
+	public static <E> void writeObjectOnFile (File f, E obj) throws FileNotFoundException, IOException
+	{
+		ObjectOutputStream archivio = new ObjectOutputStream(
+				new BufferedOutputStream(
+				new FileOutputStream(f)));
+
+		archivio.writeObject(obj);
+				
+		archivio.close();
 	}
 }
